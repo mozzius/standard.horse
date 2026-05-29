@@ -295,15 +295,29 @@ select {
   border-radius: var(--radius);
 }
 
-/* Admonition — a callout box (e.g. a warning when content formats mismatch). */
+/* Admonition — a callout box (e.g. a warning when content formats mismatch).
+   The colored left edge is a ::before that owns the rounded left corners; the
+   thin rule sits only on top/right/bottom so no two colors miter at a corner. */
 .admonition {
+  position: relative;
   border: 1px solid var(--rule);
-  border-left: 4px solid var(--ink-faint);
+  border-left: none;
   background: #fffdf8;
-  padding: 12px 16px;
+  padding: 12px 16px 12px 22px;
   border-radius: var(--radius);
   margin-bottom: 20px;
   font-size: 0.9rem;
+}
+.admonition::before {
+  content: "";
+  position: absolute;
+  /* Overhang the top/bottom rule by 1px so the stripe forms a clean edge. */
+  top: -1px;
+  bottom: -1px;
+  left: 0;
+  width: 4px;
+  background: var(--ink-faint);
+  border-radius: var(--radius) 0 0 var(--radius);
 }
 .admonition__title {
   margin: 0 0 4px;
@@ -313,8 +327,10 @@ select {
   font-weight: 600;
 }
 .admonition--warn {
-  border-left-color: var(--warn);
   background: #fbf3df;
+}
+.admonition--warn::before {
+  background: var(--warn);
 }
 .admonition--warn .admonition__title {
   color: var(--warn);

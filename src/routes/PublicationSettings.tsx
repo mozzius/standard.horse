@@ -5,15 +5,17 @@ import { Link, useParams } from "react-router"
 import { useAuth } from "../auth/AuthProvider.tsx"
 import { blobImageUrl } from "../lib/bsky.ts"
 import {
+  errorMessage,
+  usePublications,
+  usePutPublication,
+} from "../lib/queries.ts"
+import {
   buildBasicTheme,
   hexToRgb,
-  putPublication,
   readBasicTheme,
   rgbToHex,
-  uploadImageBlob,
   type ThemeColors,
 } from "../lib/repo.ts"
-import { usePublications } from "../lib/usePublications.ts"
 
 const COLOR_FIELDS: { key: keyof ThemeColors; label: string; hint: string }[] =
   [
@@ -24,9 +26,16 @@ const COLOR_FIELDS: { key: keyof ThemeColors; label: string; hint: string }[] =
   ]
 
 export function PublicationSettings() {
-  const { client, did } = useAuth()
+  const { did } = useAuth()
   const { rkey } = useParams<{ rkey: string }>()
-  const { publications, loading, error, reload } = usePublications()
+  const { publications, loading, error } = usePublications()
+  const {
+    mutate: savePublication,
+    isPending: saving,
+    isSuccess: saved,
+    error: saveErr,
+  } = usePutPublication()
+  const saveError = saveErr ? errorMessage(saveErr, "Failed to save") : null
   // Edit the publication named in the route, falling back to the first.
   const publication = useMemo(
     () => publications.find((p) => p.rkey === rkey) ?? publications[0] ?? null,
@@ -38,9 +47,6 @@ export function PublicationSettings() {
   const [url, setUrl] = useState("")
   const [theme, setTheme] = useState<ThemeColors | null>(null)
   const [iconFile, setIconFile] = useState<File | null>(null)
-  const [saving, setSaving] = useState(false)
-  const [saveError, setSaveError] = useState<string | null>(null)
-  const [saved, setSaved] = useState(false)
 
   useEffect(() => {
     if (!publication) return
@@ -86,33 +92,25 @@ export function PublicationSettings() {
     ? URL.createObjectURL(iconFile)
     : existingIconUrl
 
-  async function onSave(e: React.FormEvent) {
+  function onSave(e: React.FormEvent) {
     e.preventDefault()
-    if (!client || !publication || !theme) return
-    setSaving(true)
-    setSaveError(null)
-    setSaved(false)
-    try {
-      let icon = publication.value.icon
-      if (iconFile) icon = await uploadImageBlob(client, iconFile)
-
-      // putRecord replaces the whole record — preserve untouched fields.
-      await putPublication(client, publication.rkey, {
-        ...publication.value,
-        name: name.trim(),
-        description: description.trim() || undefined,
-        url: url.trim() as l.UriString,
-        icon,
-        basicTheme: buildBasicTheme(theme),
-      })
-      setIconFile(null)
-      setSaved(true)
-      reload()
-    } catch (err) {
-      setSaveError(err instanceof Error ? err.message : "Failed to save")
-    } finally {
-      setSaving(false)
-    }
+    if (!publication || !theme) return
+    // putRecord replaces the whole record — preserve untouched fields. The
+    // mutation uploads `iconFile` (if any) and attaches it before writing.
+    savePublication(
+      {
+        rkey: publication.rkey,
+        iconFile,
+        value: {
+          ...publication.value,
+          name: name.trim(),
+          description: description.trim() || undefined,
+          url: url.trim() as l.UriString,
+          basicTheme: buildBasicTheme(theme),
+        },
+      },
+      { onSuccess: () => setIconFile(null) },
+    )
   }
 
   return (

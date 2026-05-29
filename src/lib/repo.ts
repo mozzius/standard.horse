@@ -33,6 +33,19 @@ export function atUriRkey(uri: string): string {
   return uri.split("/").pop() ?? ""
 }
 
+/**
+ * Does a document belong to this publication? `document.site` points at the
+ * owning publication — either its at:// record URI or its https:// url.
+ */
+export function documentBelongsTo(
+  pub: RecordEntry<PublicationRecord>,
+  site: string | undefined,
+): boolean {
+  if (!site) return false
+  const s = site.replace(/\/$/, "")
+  return s === pub.uri || s === pub.value.url?.replace(/\/$/, "")
+}
+
 // ---- Publications ----
 
 export async function listPublications(

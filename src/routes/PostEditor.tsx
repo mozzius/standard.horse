@@ -1,4 +1,4 @@
-import { getBlobCidString, l } from "@atproto/lex"
+import { l } from "@atproto/lex"
 import { markdown } from "@codemirror/lang-markdown"
 import { languages } from "@codemirror/language-data"
 import CodeMirror, { EditorView } from "@uiw/react-codemirror"
@@ -7,42 +7,61 @@ import ReactMarkdown from "react-markdown"
 import { Link, useNavigate, useParams, useSearchParams } from "react-router"
 import remarkGfm from "remark-gfm"
 import { useAuth } from "../auth/AuthProvider.tsx"
+import { blobImageUrl } from "../lib/bsky.ts"
 import { markdownToPlaintext } from "../lib/markdown.ts"
 import {
   buildMarkpubContent,
   isMarkpubMarkdown,
-  markpubTextBlob,
   readMarkpubMarkdown,
 } from "../lib/markpub.ts"
-import { blobImageUrl } from "../lib/bsky.ts"
 import {
-  createDocument,
+  errorMessage,
+  useDeleteDocument,
+  useDocuments,
+  useEditableDocument,
+  usePublications,
+  useSaveDocument,
+} from "../lib/queries.ts"
+import {
   DEFAULT_PATH_TEMPLATE,
-  deleteDocument,
+  documentBelongsTo,
   documentUrl,
-  getDocument,
   interpolatePath,
-  listDocuments,
   nextTid,
-  putDocument,
   templatizePath,
-  uploadImageBlob,
   type DocumentRecord,
-  type RecordEntry,
 } from "../lib/repo.ts"
-import { documentBelongsTo, usePublications } from "../lib/usePublications.ts"
 
 export function PostEditor() {
   const { rkey } = useParams<{ rkey: string }>()
   const isNew = !rkey
   const navigate = useNavigate()
-  const { client, did } = useAuth()
+  const { did } = useAuth()
   const { publications, loading: pubLoading } = usePublications()
   const [searchParams] = useSearchParams()
 
-  const [loading, setLoading] = useState(!isNew)
-  const [loadError, setLoadError] = useState<string | null>(null)
-  const [existing, setExisting] = useState<DocumentRecord | null>(null)
+  const {
+    data: editableDoc,
+    isPending: docPending,
+    error: docError,
+  } = useEditableDocument(isNew ? undefined : rkey)
+  const existing = editableDoc?.entry.value ?? null
+  const loading = !isNew && docPending
+  const loadError = docError
+    ? errorMessage(docError, "Failed to load post")
+    : null
+
+  const { data: allDocs } = useDocuments()
+  const {
+    mutate: saveDocument,
+    isPending: saving,
+    error: saveErr,
+  } = useSaveDocument()
+  const {
+    mutate: deleteDocument,
+    isPending: deleting,
+    error: deleteErr,
+  } = useDeleteDocument()
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -65,15 +84,16 @@ export function PostEditor() {
     }
   }, [coverObjectUrl])
 
-  const [saving, setSaving] = useState(false)
-  const [saveError, setSaveError] = useState<string | null>(null)
-  const [deleting, setDeleting] = useState(false)
-
-  // For a new post, peek at the existing posts so we can warn if the
-  // publication's content uses a richtext format we don't write (markpub).
-  const [siblingDocs, setSiblingDocs] = useState<
-    RecordEntry<DocumentRecord>[] | null
-  >(null)
+  // Synchronous form validation only; save/delete failures are derived from the
+  // mutations above.
+  const [formError, setFormError] = useState<string | null>(null)
+  const saveError =
+    formError ??
+    (saveErr
+      ? errorMessage(saveErr, "Failed to save")
+      : deleteErr
+        ? errorMessage(deleteErr, "Failed to delete")
+        : null)
 
   // For a new post the target publication is user-selectable, defaulting to
   // ?pub=<rkey>. For an existing post it's fixed to whichever publication its
@@ -84,84 +104,48 @@ export function PostEditor() {
   const publication = useMemo(() => {
     if (!publications.length) return null
     if (existing?.site) {
-      return publications.find((p) => documentBelongsTo(p, existing.site)) ?? null
+      return (
+        publications.find((p) => documentBelongsTo(p, existing.site)) ?? null
+      )
     }
     return (
       publications.find((p) => p.rkey === selectedPubRkey) ?? publications[0]
     )
   }, [publications, existing, selectedPubRkey])
 
-  // Load existing document when editing.
+  // Seed the editable form fields from the loaded document. The query result is
+  // the source of truth for `existing`; this only mirrors it into the mutable
+  // inputs. We seed once per record so a refetch (e.g. after save) doesn't
+  // clobber edits — except that if a list-cache placeholder gets upgraded to a
+  // richer body (a text blob) we adopt it, as long as the user hasn't typed yet.
+  const seededUriRef = useRef<string | null>(null)
+  const seededBodyRef = useRef("")
   useEffect(() => {
-    if (isNew || !client || !rkey) return
-    let cancelled = false
-    setLoading(true)
-    getDocument(client, rkey)
-      .then(async (entry) => {
-        if (cancelled) return
-        const v = entry.value
-        setExisting(v)
-        setTitle(v.title ?? "")
-        setDescription(v.description ?? "")
-        setTags((v.tags ?? []).join(", "))
-        setPathTemplate(templatizePath(v.path, rkey))
-
-        let md = readMarkpubMarkdown(v.content)
-        if (md == null) {
-          // Fall back to a markdown blob, or the plaintext mirror.
-          const blob = markpubTextBlob(v.content)
-          if (blob && did) {
-            try {
-              const cid = getBlobCidString(blob)
-              const res = await client.getBlob(
-                did as Parameters<typeof client.getBlob>[0],
-                cid as Parameters<typeof client.getBlob>[1],
-              )
-              md = new TextDecoder().decode(res.body as Uint8Array)
-            } catch {
-              md = v.textContent ?? ""
-            }
-          } else {
-            md = v.textContent ?? ""
-          }
-        }
-        if (!cancelled) setBody(md)
-      })
-      .catch((err) => {
-        if (!cancelled)
-          setLoadError(
-            err instanceof Error ? err.message : "Failed to load post",
-          )
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false)
-      })
-    return () => {
-      cancelled = true
+    if (!editableDoc || !rkey) return
+    const v = editableDoc.entry.value
+    if (seededUriRef.current !== editableDoc.entry.uri) {
+      seededUriRef.current = editableDoc.entry.uri
+      seededBodyRef.current = editableDoc.markdown
+      setTitle(v.title ?? "")
+      setDescription(v.description ?? "")
+      setTags((v.tags ?? []).join(", "))
+      setPathTemplate(templatizePath(v.path, rkey))
+      setBody(editableDoc.markdown)
+    } else if (
+      editableDoc.markdown !== seededBodyRef.current &&
+      body === seededBodyRef.current
+    ) {
+      seededBodyRef.current = editableDoc.markdown
+      setBody(editableDoc.markdown)
     }
-  }, [client, rkey, isNew, did])
-
-  useEffect(() => {
-    if (!isNew || !client) return
-    let cancelled = false
-    listDocuments(client)
-      .then((list) => {
-        if (!cancelled) setSiblingDocs(list)
-      })
-      .catch(() => {
-        if (!cancelled) setSiblingDocs([])
-      })
-    return () => {
-      cancelled = true
-    }
-  }, [isNew, client])
+  }, [editableDoc, rkey, body])
 
   // Names the richtext formats used by existing posts in the target publication
   // when none of them are markpub — i.e. the provider stores posts in a format
   // we don't write, so the post we're about to publish may not render there.
   const unsupportedSiblingFormats = useMemo(() => {
-    if (!isNew || !publication || !siblingDocs) return null
-    const withContent = siblingDocs.filter(
+    if (!isNew || !publication || !allDocs) return null
+    const withContent = allDocs.filter(
       (d) => documentBelongsTo(publication, d.value.site) && !!d.value.content,
     )
     if (withContent.length === 0) return null
@@ -169,11 +153,13 @@ export function PostEditor() {
     return [
       ...new Set(
         withContent.map(
-          (d) => (d.value.content as { $type?: string }).$type ?? "an unknown format",
+          (d) =>
+            (d.value.content as { $type?: string }).$type ??
+            "an unknown format",
         ),
       ),
     ]
-  }, [isNew, publication, siblingDocs])
+  }, [isNew, publication, allDocs])
 
   const cmExtensions = useMemo(
     () => [markdown({ codeLanguages: languages }), EditorView.lineWrapping],
@@ -227,76 +213,63 @@ export function PostEditor() {
     coverRemoved,
   ])
 
-  async function onSave(e: React.FormEvent) {
+  function onSave(e: React.FormEvent) {
     e.preventDefault()
-    if (!client || !publication) return
+    setFormError(null)
+    if (!publication) return
     if (!title.trim()) {
-      setSaveError("A headline is required.")
+      setFormError("A headline is required.")
       return
     }
-    setSaving(true)
-    setSaveError(null)
-    try {
-      const tagList = tags
-        .split(",")
-        .map((t) => t.trim())
-        .filter(Boolean)
 
-      const content = buildMarkpubContent(
-        body,
-      ) as unknown as DocumentRecord["content"]
+    const tagList = tags
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean)
 
-      // Resolve the cover image: a fresh upload, an explicit removal, or keep
-      // whatever the record already had.
-      let coverImage = existing?.coverImage
-      if (coverRemoved) coverImage = undefined
-      if (coverFile) coverImage = await uploadImageBlob(client, coverFile)
+    const content = buildMarkpubContent(
+      body,
+    ) as unknown as DocumentRecord["content"]
 
-      // The record key is a freshly-minted TID for new posts. The path is the
-      // user's template with `<rkey>` substituted for that key.
-      const docRkey = rkey ?? nextTid()
+    // The record key is a freshly-minted TID for new posts. The path is the
+    // user's template with `<rkey>` substituted for that key.
+    const docRkey = rkey ?? nextTid()
 
-      const value: Omit<DocumentRecord, "$type"> = {
-        ...existing, // preserve contributors, bskyPostRef, etc.
-        site: publication.uri as l.UriString,
-        title: title.trim(),
-        description: description.trim() || undefined,
-        tags: tagList.length ? tagList : undefined,
-        path: interpolatePath(pathTemplate, docRkey),
-        content,
-        coverImage,
-        textContent: markdownToPlaintext(body) || undefined,
-        publishedAt: existing?.publishedAt ?? l.currentDatetimeString(),
-        updatedAt: existing ? l.currentDatetimeString() : undefined,
-      }
-
-      if (isNew) {
-        await createDocument(client, value, docRkey)
-        navigate(`/post/${docRkey}`, { replace: true })
-      } else {
-        await putDocument(client, docRkey, value)
-        setExisting({ $type: "site.standard.document", ...value })
-        setCoverFile(null)
-        setCoverRemoved(false)
-      }
-    } catch (err) {
-      setSaveError(err instanceof Error ? err.message : "Failed to save")
-    } finally {
-      setSaving(false)
+    const value: Omit<DocumentRecord, "$type"> = {
+      ...existing, // preserve contributors, bskyPostRef, etc.
+      site: publication.uri as l.UriString,
+      title: title.trim(),
+      description: description.trim() || undefined,
+      tags: tagList.length ? tagList : undefined,
+      path: interpolatePath(pathTemplate, docRkey),
+      content,
+      coverImage: existing?.coverImage,
+      textContent: markdownToPlaintext(body) || undefined,
+      publishedAt: existing?.publishedAt ?? l.currentDatetimeString(),
+      updatedAt: existing ? l.currentDatetimeString() : undefined,
     }
+
+    // The mutation resolves the cover image (upload/remove/keep) itself.
+    saveDocument(
+      { isNew, rkey: docRkey, value, coverFile, coverRemoved },
+      {
+        onSuccess: () => {
+          if (isNew) navigate(`/post/${docRkey}`, { replace: true })
+          else {
+            setCoverFile(null)
+            setCoverRemoved(false)
+          }
+        },
+      },
+    )
   }
 
-  async function onDelete() {
-    if (!client || !rkey) return
+  function onDelete() {
+    if (!rkey) return
     if (!window.confirm("Delete this post? This cannot be undone.")) return
-    setDeleting(true)
-    try {
-      await deleteDocument(client, rkey)
-      navigate("/", { replace: true })
-    } catch (err) {
-      setSaveError(err instanceof Error ? err.message : "Failed to delete")
-      setDeleting(false)
-    }
+    deleteDocument(rkey, {
+      onSuccess: () => navigate("/", { replace: true }),
+    })
   }
 
   if (pubLoading || loading) {
@@ -333,8 +306,7 @@ export function PostEditor() {
   // overwrite the original content with markpub and lose it.
   const content = existing?.content
   if (content && !isMarkpubMarkdown(content)) {
-    const format =
-      (content as { $type?: string }).$type ?? "an unknown format"
+    const format = (content as { $type?: string }).$type ?? "an unknown format"
     const otherUrl = documentUrl(publication.value.url, existing?.path)
     return (
       <div className="container">
@@ -356,14 +328,12 @@ export function PostEditor() {
         </div>
         <div className="notice">
           <p className="kicker">Can’t edit this post</p>
-          <h2 style={{ marginTop: 0 }}>
-            {existing?.title || "Untitled"}
-          </h2>
+          <h2 style={{ marginTop: 0 }}>{existing?.title || "Untitled"}</h2>
           <p className="muted">
-            This post’s content is stored as{" "}
-            <code>{format}</code>, which standard.horse can’t edit yet — it only
-            handles markpub (<code>at.markpub.markdown</code>) markdown. Editing
-            it here would overwrite the original content, so it’s read-only.
+            This post’s content is stored as <code>{format}</code>, which
+            standard.horse can’t edit yet — it only handles markpub (
+            <code>at.markpub.markdown</code>) markdown. Editing it here would
+            overwrite the original content, so it’s read-only.
           </p>
         </div>
       </div>
@@ -515,11 +485,11 @@ export function PostEditor() {
                 onChange={(e) => {
                   const f = e.target.files?.[0] ?? null
                   if (f && f.size > 1_000_000) {
-                    setSaveError("Cover image must be under 1MB.")
+                    setFormError("Cover image must be under 1MB.")
                     e.target.value = ""
                     return
                   }
-                  setSaveError(null)
+                  setFormError(null)
                   setCoverRemoved(false)
                   setCoverFile(f)
                 }}

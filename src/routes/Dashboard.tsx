@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react"
+import { useMemo } from "react"
 import { Link } from "react-router"
 import { useAuth } from "../auth/AuthProvider.tsx"
 import { blobImageUrl } from "../lib/bsky.ts"
+import { isMarkpubMarkdown } from "../lib/markpub.ts"
+import { errorMessage, useDocuments, usePublications } from "../lib/queries.ts"
 import {
+  documentBelongsTo,
   documentUrl,
-  listDocuments,
   type DocumentRecord,
   type PublicationRecord,
   type RecordEntry,
 } from "../lib/repo.ts"
-import { isMarkpubMarkdown } from "../lib/markpub.ts"
-import { documentBelongsTo, usePublications } from "../lib/usePublications.ts"
 
 function formatDate(iso: string | undefined): string {
   if (!iso) return ""
@@ -127,32 +127,22 @@ function PublicationSection({
 }
 
 export function Dashboard() {
-  const { client } = useAuth()
-  const { publications, loading: pubLoading, error: pubError } = usePublications()
-  const [docs, setDocs] = useState<RecordEntry<DocumentRecord>[] | null>(null)
-  const [docsError, setDocsError] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (!client) return
-    let cancelled = false
-    listDocuments(client)
-      .then((list) => {
-        if (cancelled) return
-        list.sort((a, b) =>
-          (b.value.publishedAt ?? "").localeCompare(a.value.publishedAt ?? ""),
-        )
-        setDocs(list)
-      })
-      .catch((err) => {
-        if (!cancelled)
-          setDocsError(
-            err instanceof Error ? err.message : "Failed to load posts",
-          )
-      })
-    return () => {
-      cancelled = true
-    }
-  }, [client])
+  const {
+    publications,
+    loading: pubLoading,
+    error: pubError,
+  } = usePublications()
+  const { data: allDocs, error: docsErr } = useDocuments()
+  // Newest first. Sort a copy so we don't mutate the cached array.
+  const docs = useMemo(() => {
+    if (!allDocs) return null
+    return [...allDocs].sort((a, b) =>
+      (b.value.publishedAt ?? "").localeCompare(a.value.publishedAt ?? ""),
+    )
+  }, [allDocs])
+  const docsError = docsErr
+    ? errorMessage(docsErr, "Failed to load posts")
+    : null
 
   if (pubLoading) {
     return (
@@ -199,8 +189,9 @@ export function Dashboard() {
   }
 
   const unattached =
-    docs?.filter((d) => !publications.some((p) => documentBelongsTo(p, d.value.site))) ??
-    []
+    docs?.filter(
+      (d) => !publications.some((p) => documentBelongsTo(p, d.value.site)),
+    ) ?? []
 
   return (
     <div className="container">
