@@ -83,16 +83,21 @@ export function Dashboard() {
           <p className="kicker">No publication found</p>
           <h2>You don’t have a standard.site publication yet.</h2>
           <p className="muted">
-            standard.horse edits existing publications. Create one with a
-            standard.site-compatible tool (for example{" "}
+            standard.horse edits existing publications (for now!). If you want a
+            fully managed experience, create one with a standard.site-compatible
+            tool such as{" "}
             <a href="https://leaflet.pub" target="_blank" rel="noreferrer">
               Leaflet
-            </a>{" "}
-            or{" "}
-            <a href="https://standard.site" target="_blank" rel="noreferrer">
-              standard.site
             </a>
-            ), then come back here to manage it.
+            ,{" "}
+            <a href="https://pckt.blog" target="_blank" rel="noreferrer">
+              pckt
+            </a>
+            , or{" "}
+            <a href="https://offprint.app" target="_blank" rel="noreferrer">
+              Offprint
+            </a>
+            .
           </p>
         </div>
       </div>
