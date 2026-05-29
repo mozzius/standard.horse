@@ -1,0 +1,12 @@
+{
+  "client_id": "https://standard.horse/client-metadata.json",
+  "client_name": "standard.horse",
+  "client_uri": "https://standard.horse",
+  "redirect_uris": ["https://standard.horse/"],
+  "scope": "atproto blob:image/* repo:site.standard.publication repo:site.standard.document",
+  "grant_types": ["authorization_code", "refresh_token"],
+  "response_types": ["code"],
+  "token_endpoint_auth_method": "none",
+  "application_type": "web",
+  "dpop_bound_access_tokens": true
+}

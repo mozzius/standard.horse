@@ -1,0 +1,14 @@
+node_modules
+dist
+dist-ssr
+*.local
+
+# Codegen output from `lex build` — regenerated via `pnpm lex:build`.
+# The lexicon JSON inputs (lexicons/ + lexicons.json) ARE committed.
+/src/lexicons
+
+# Editor
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea
