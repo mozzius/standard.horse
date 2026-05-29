@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown"
 import { Link, useNavigate, useParams, useSearchParams } from "react-router"
 import remarkGfm from "remark-gfm"
 import { useAuth } from "../auth/AuthProvider.tsx"
+import { markdownToPlaintext } from "../lib/markdown.ts"
 import {
   buildMarkpubContent,
   isMarkpubMarkdown,
@@ -14,6 +15,7 @@ import {
   readMarkpubMarkdown,
 } from "../lib/markpub.ts"
 import {
+  blobUrl,
   createDocument,
   DEFAULT_PATH_TEMPLATE,
   deleteDocument,
@@ -23,26 +25,16 @@ import {
   nextTid,
   putDocument,
   templatizePath,
+  uploadImageBlob,
   type DocumentRecord,
 } from "../lib/repo.ts"
 import { documentBelongsTo, usePublications } from "../lib/usePublications.ts"
-
-/** Rough plaintext for the document's `textContent` (indexers, search). */
-function stripMarkdown(md: string): string {
-  return md
-    .replace(/```[\s\S]*?```/g, "")
-    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
-    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
-    .replace(/[#>*_`~-]/g, "")
-    .replace(/\n{2,}/g, "\n")
-    .trim()
-}
 
 export function PostEditor() {
   const { rkey } = useParams<{ rkey: string }>()
   const isNew = !rkey
   const navigate = useNavigate()
-  const { client, did } = useAuth()
+  const { client, did, pdsUrl } = useAuth()
   const { publications, loading: pubLoading } = usePublications()
   const [searchParams] = useSearchParams()
 
@@ -56,6 +48,20 @@ export function PostEditor() {
   const [pathTemplate, setPathTemplate] = useState(DEFAULT_PATH_TEMPLATE)
   const [body, setBody] = useState("")
   const pathDialogRef = useRef<HTMLDialogElement>(null)
+
+  // Cover image: a newly-picked file to upload, or a flag to drop the existing
+  // one. Otherwise the document's existing coverImage blob is kept.
+  const [coverFile, setCoverFile] = useState<File | null>(null)
+  const [coverRemoved, setCoverRemoved] = useState(false)
+  const coverObjectUrl = useMemo(
+    () => (coverFile ? URL.createObjectURL(coverFile) : null),
+    [coverFile],
+  )
+  useEffect(() => {
+    return () => {
+      if (coverObjectUrl) URL.revokeObjectURL(coverObjectUrl)
+    }
+  }, [coverObjectUrl])
 
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
@@ -141,8 +147,11 @@ export function PostEditor() {
       .map((t) => t.trim())
       .filter(Boolean)
 
+    const coverChanged = coverFile !== null || coverRemoved
+
     if (!existing) {
       return (
+        coverChanged ||
         title.trim() !== "" ||
         body !== "" ||
         description.trim() !== "" ||
@@ -157,13 +166,24 @@ export function PostEditor() {
     const basePath = templatizePath(existing.path, rkey ?? "")
 
     return (
+      coverChanged ||
       title.trim() !== (existing.title ?? "") ||
       description.trim() !== (existing.description ?? "") ||
       pathTemplate.trim() !== basePath ||
       body !== baseBody ||
       JSON.stringify(tagList) !== JSON.stringify(baseTags)
     )
-  }, [existing, title, description, tags, pathTemplate, body, rkey])
+  }, [
+    existing,
+    title,
+    description,
+    tags,
+    pathTemplate,
+    body,
+    rkey,
+    coverFile,
+    coverRemoved,
+  ])
 
   async function onSave(e: React.FormEvent) {
     e.preventDefault()
@@ -184,19 +204,26 @@ export function PostEditor() {
         body,
       ) as unknown as DocumentRecord["content"]
 
+      // Resolve the cover image: a fresh upload, an explicit removal, or keep
+      // whatever the record already had.
+      let coverImage = existing?.coverImage
+      if (coverRemoved) coverImage = undefined
+      if (coverFile) coverImage = await uploadImageBlob(client, coverFile)
+
       // The record key is a freshly-minted TID for new posts. The path is the
       // user's template with `<rkey>` substituted for that key.
       const docRkey = rkey ?? nextTid()
 
       const value: Omit<DocumentRecord, "$type"> = {
-        ...existing, // preserve coverImage, contributors, bskyPostRef, etc.
+        ...existing, // preserve contributors, bskyPostRef, etc.
         site: publication.uri as l.UriString,
         title: title.trim(),
         description: description.trim() || undefined,
         tags: tagList.length ? tagList : undefined,
         path: interpolatePath(pathTemplate, docRkey),
         content,
-        textContent: stripMarkdown(body) || undefined,
+        coverImage,
+        textContent: markdownToPlaintext(body) || undefined,
         publishedAt: existing?.publishedAt ?? l.currentDatetimeString(),
         updatedAt: existing ? l.currentDatetimeString() : undefined,
       }
@@ -207,6 +234,8 @@ export function PostEditor() {
       } else {
         await putDocument(client, docRkey, value)
         setExisting({ $type: "site.standard.document", ...value })
+        setCoverFile(null)
+        setCoverRemoved(false)
       }
     } catch (err) {
       setSaveError(err instanceof Error ? err.message : "Failed to save")
@@ -302,6 +331,11 @@ export function PostEditor() {
   const liveUrl = documentUrl(publication.value.url, existing?.path)
   // For new posts the record key isn't minted until publish, so show a "…".
   const resolvedPath = interpolatePath(pathTemplate, rkey ?? "…")
+  const coverPreviewUrl =
+    coverObjectUrl ??
+    (!coverRemoved && existing?.coverImage && did && pdsUrl
+      ? blobUrl(pdsUrl, did, existing.coverImage)
+      : null)
 
   return (
     <div className="container">
@@ -395,6 +429,58 @@ export function PostEditor() {
               onChange={(e) => setTags(e.target.value)}
             />
           </label>
+        </div>
+
+        <div className="field">
+          <span className="field__label">Cover image</span>
+          <div className="row" style={{ alignItems: "center" }}>
+            {coverPreviewUrl && (
+              <img
+                src={coverPreviewUrl}
+                alt=""
+                style={{
+                  width: 160,
+                  height: 90,
+                  objectFit: "cover",
+                  borderRadius: "var(--radius)",
+                  border: "1px solid var(--rule)",
+                }}
+              />
+            )}
+            <div className="stack" style={{ gap: 8 }}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const f = e.target.files?.[0] ?? null
+                  if (f && f.size > 1_000_000) {
+                    setSaveError("Cover image must be under 1MB.")
+                    e.target.value = ""
+                    return
+                  }
+                  setSaveError(null)
+                  setCoverRemoved(false)
+                  setCoverFile(f)
+                }}
+              />
+              {coverPreviewUrl && (
+                <button
+                  type="button"
+                  className="btn btn--ghost"
+                  style={{ alignSelf: "flex-start" }}
+                  onClick={() => {
+                    setCoverFile(null)
+                    setCoverRemoved(true)
+                  }}
+                >
+                  Remove cover
+                </button>
+              )}
+            </div>
+          </div>
+          <span className="muted" style={{ fontSize: "0.74rem" }}>
+            Thumbnail / cover image. Under 1MB.
+          </span>
         </div>
 
         <button
