@@ -14,6 +14,7 @@
   --accent-soft: #f0e2da;
   --danger: #8a1c1c;
   --ok: #2f5d34;
+  --warn: #8a5a00;
 
   --serif: "Newsreader", Georgia, "Times New Roman", serif;
   --sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
@@ -292,6 +293,35 @@ select {
   background: #fffdf8;
   padding: 24px;
   border-radius: var(--radius);
+}
+
+/* Admonition — a callout box (e.g. a warning when content formats mismatch). */
+.admonition {
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--ink-faint);
+  background: #fffdf8;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+.admonition__title {
+  margin: 0 0 4px;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.admonition--warn {
+  border-left-color: var(--warn);
+  background: #fbf3df;
+}
+.admonition--warn .admonition__title {
+  color: var(--warn);
+}
+.admonition code {
+  font-family: var(--mono);
+  font-size: 0.85em;
 }
 
 .divider-rule {

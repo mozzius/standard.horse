@@ -22,11 +22,13 @@ import {
   documentUrl,
   getDocument,
   interpolatePath,
+  listDocuments,
   nextTid,
   putDocument,
   templatizePath,
   uploadImageBlob,
   type DocumentRecord,
+  type RecordEntry,
 } from "../lib/repo.ts"
 import { documentBelongsTo, usePublications } from "../lib/usePublications.ts"
 
@@ -66,6 +68,12 @@ export function PostEditor() {
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
   const [deleting, setDeleting] = useState(false)
+
+  // For a new post, peek at the existing posts so we can warn if the
+  // publication's content uses a richtext format we don't write (markpub).
+  const [siblingDocs, setSiblingDocs] = useState<
+    RecordEntry<DocumentRecord>[] | null
+  >(null)
 
   // For a new post the target publication is user-selectable, defaulting to
   // ?pub=<rkey>. For an existing post it's fixed to whichever publication its
@@ -132,6 +140,40 @@ export function PostEditor() {
       cancelled = true
     }
   }, [client, rkey, isNew, did])
+
+  useEffect(() => {
+    if (!isNew || !client) return
+    let cancelled = false
+    listDocuments(client)
+      .then((list) => {
+        if (!cancelled) setSiblingDocs(list)
+      })
+      .catch(() => {
+        if (!cancelled) setSiblingDocs([])
+      })
+    return () => {
+      cancelled = true
+    }
+  }, [isNew, client])
+
+  // Names the richtext formats used by existing posts in the target publication
+  // when none of them are markpub — i.e. the provider stores posts in a format
+  // we don't write, so the post we're about to publish may not render there.
+  const unsupportedSiblingFormats = useMemo(() => {
+    if (!isNew || !publication || !siblingDocs) return null
+    const withContent = siblingDocs.filter(
+      (d) => documentBelongsTo(publication, d.value.site) && !!d.value.content,
+    )
+    if (withContent.length === 0) return null
+    if (withContent.some((d) => isMarkpubMarkdown(d.value.content))) return null
+    return [
+      ...new Set(
+        withContent.map(
+          (d) => (d.value.content as { $type?: string }).$type ?? "an unknown format",
+        ),
+      ),
+    ]
+  }, [isNew, publication, siblingDocs])
 
   const cmExtensions = useMemo(
     () => [markdown({ codeLanguages: languages }), EditorView.lineWrapping],
@@ -389,6 +431,25 @@ export function PostEditor() {
       </div>
 
       {saveError && <div className="error-banner">{saveError}</div>}
+
+      {unsupportedSiblingFormats && (
+        <div className="admonition admonition--warn" role="note">
+          <p className="admonition__title">Format mismatch</p>
+          <p style={{ margin: 0 }}>
+            The other posts in <strong>{publication.value.name}</strong> are
+            stored as{" "}
+            {unsupportedSiblingFormats.map((f, i) => (
+              <span key={f}>
+                {i > 0 && ", "}
+                <code>{f}</code>
+              </span>
+            ))}
+            , not markpub. standard.horse writes posts as markdown (
+            <code>at.markpub.markdown</code>), so your blog provider may not
+            support this richtext format.
+          </p>
+        </div>
+      )}
 
       <form id="post-form" onSubmit={onSave}>
         <input

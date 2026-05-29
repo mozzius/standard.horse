@@ -24,10 +24,10 @@ the document's open `content` union.
 
 ```bash
 pnpm install      # also runs `lex build` (postinstall) to generate src/lexicons
-pnpm dev          # serves on http://127.0.0.1:8080
+pnpm dev          # serves on http://127.0.0.1:3000
 ```
 
-Open **http://127.0.0.1:8080** (not `localhost` — see OAuth note below) and sign
+Open **http://127.0.0.1:3000** (not `localhost` — see OAuth note below) and sign
 in with a handle whose account already has a `site.standard.publication` record.
 
 > **You need an existing publication.** This first draft only _edits_ existing
