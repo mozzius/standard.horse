@@ -53,6 +53,7 @@ export function PostEditor() {
   const [tags, setTags] = useState("")
   const [pathTemplate, setPathTemplate] = useState(DEFAULT_PATH_TEMPLATE)
   const [body, setBody] = useState("")
+  const pathDialogRef = useRef<HTMLDialogElement>(null)
 
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
@@ -208,7 +209,6 @@ export function PostEditor() {
   const liveUrl = documentUrl(publication.value.url, existing?.path)
   // For new posts the record key isn't minted until publish, so show a "…".
   const resolvedPath = interpolatePath(pathTemplate, rkey ?? "…")
-  const pathDialog = pathDialogRef.current
 
   return (
     <div className="container">
@@ -290,21 +290,20 @@ export function PostEditor() {
           </label>
         </div>
 
-        <label className="field">
-          <span className="field__label">Path</span>
-          <input
-            className="input"
-            value={pathTemplate}
-            onChange={(e) => setPathTemplate(e.target.value)}
-            placeholder={DEFAULT_PATH_TEMPLATE}
-            spellCheck={false}
-            autoCapitalize="none"
-          />
-          <span className="muted" style={{ fontSize: "0.74rem" }}>
-            <code>&lt;rkey&gt;</code> is replaced with the post’s record key →{" "}
-            <code>{resolvedPath}</code>
+        <button
+          type="button"
+          className="path-chip"
+          onClick={() => pathDialogRef.current?.showModal()}
+          style={{ marginBottom: 16 }}
+        >
+          <span className="field__label" style={{ margin: 0 }}>
+            Path
           </span>
-        </label>
+          <code>{resolvedPath}</code>
+          <span className="muted" style={{ fontSize: "0.74rem" }}>
+            edit
+          </span>
+        </button>
 
         <div className="editor-split">
           <div className="editor-pane">
@@ -329,6 +328,38 @@ export function PostEditor() {
           </div>
         </div>
       </form>
+
+      <dialog ref={pathDialogRef} className="dialog">
+        <form method="dialog">
+          <h3 style={{ marginBottom: 4 }}>URL path</h3>
+          <p className="muted" style={{ fontSize: "0.84rem", marginBottom: 16 }}>
+            The path appended to your publication URL. Use the token{" "}
+            <code>&lt;rkey&gt;</code> and it’s replaced with the post’s record
+            key when saved.
+          </p>
+          <label className="field">
+            <span className="field__label">Path template</span>
+            <input
+              className="input"
+              value={pathTemplate}
+              onChange={(e) => setPathTemplate(e.target.value)}
+              placeholder={DEFAULT_PATH_TEMPLATE}
+              spellCheck={false}
+              autoCapitalize="none"
+              autoFocus
+            />
+          </label>
+          <p className="muted" style={{ fontSize: "0.78rem" }}>
+            Resolves to <code>{resolvedPath}</code>
+          </p>
+          <div className="toolbar" style={{ marginTop: 8, marginBottom: 0 }}>
+            <span className="toolbar__spacer" />
+            <button className="btn btn--accent" type="submit">
+              Done
+            </button>
+          </div>
+        </form>
+      </dialog>
     </div>
   )
 }
