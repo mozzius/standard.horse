@@ -258,10 +258,7 @@ export function interpolatePath(template: string, rkey: string): string {
  * the record key with the `<rkey>` token (so editing shows `/post/<rkey>` rather
  * than the resolved TID). Falls back to the stored path if the rkey isn't found.
  */
-export function templatizePath(
-  path: string | undefined,
-  rkey: string,
-): string {
+export function templatizePath(path: string | undefined, rkey: string): string {
   if (!path) return DEFAULT_PATH_TEMPLATE
   return rkey ? path.replaceAll(rkey, PATH_RKEY_TOKEN) : path
 }

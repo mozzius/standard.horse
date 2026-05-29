@@ -114,6 +114,39 @@ export function PostEditor() {
     [],
   )
 
+  // Derive dirtiness by diffing form state against the loaded record — no
+  // separate isDirty state to keep in sync. For a new post, "dirty" means the
+  // user has entered anything worth saving.
+  const isDirty = useMemo(() => {
+    const tagList = tags
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean)
+
+    if (!existing) {
+      return (
+        title.trim() !== "" ||
+        body !== "" ||
+        description.trim() !== "" ||
+        tagList.length > 0 ||
+        pathTemplate.trim() !== DEFAULT_PATH_TEMPLATE
+      )
+    }
+
+    const baseBody =
+      readMarkpubMarkdown(existing.content) ?? existing.textContent ?? ""
+    const baseTags = existing.tags ?? []
+    const basePath = templatizePath(existing.path, rkey ?? "")
+
+    return (
+      title.trim() !== (existing.title ?? "") ||
+      description.trim() !== (existing.description ?? "") ||
+      pathTemplate.trim() !== basePath ||
+      body !== baseBody ||
+      JSON.stringify(tagList) !== JSON.stringify(baseTags)
+    )
+  }, [existing, title, description, tags, pathTemplate, body, rkey])
+
   async function onSave(e: React.FormEvent) {
     e.preventDefault()
     if (!client || !publication) return
@@ -241,7 +274,7 @@ export function PostEditor() {
           type="submit"
           form="post-form"
           className="btn btn--accent"
-          disabled={saving}
+          disabled={saving || !isDirty}
         >
           {saving ? "Saving…" : isNew ? "Publish" : "Save"}
         </button>
@@ -332,7 +365,10 @@ export function PostEditor() {
       <dialog ref={pathDialogRef} className="dialog">
         <form method="dialog">
           <h3 style={{ marginBottom: 4 }}>URL path</h3>
-          <p className="muted" style={{ fontSize: "0.84rem", marginBottom: 16 }}>
+          <p
+            className="muted"
+            style={{ fontSize: "0.84rem", marginBottom: 16 }}
+          >
             The path appended to your publication URL. Use the token{" "}
             <code>&lt;rkey&gt;</code> and it’s replaced with the post’s record
             key when saved.
