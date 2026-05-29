@@ -36,9 +36,8 @@ function Masthead() {
         <div className="container">
           <nav className="masthead__nav">
             <NavLink to="/" end>
-              Posts
+              Publications
             </NavLink>
-            <NavLink to="/settings">Masthead &amp; Theme</NavLink>
             <NavLink to="/post/new">Write</NavLink>
             <span className="masthead__spacer" />
             {profile?.avatar && (
@@ -102,14 +101,6 @@ export function App() {
               ) : (
                 <Login />
               )
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <RequireAuth>
-                <PublicationSettings />
-              </RequireAuth>
             }
           />
           <Route
