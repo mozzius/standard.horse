@@ -16,6 +16,7 @@ import { AuthProvider } from "./auth/AuthProvider.tsx"
 
 init({
   domain: "standard.horse",
+  endpoint: "https://plausible.mozzius.dev/api/event",
 })
 
 createRoot(document.getElementById("root")!).render(
