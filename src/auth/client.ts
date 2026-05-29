@@ -37,7 +37,9 @@ function isLoopbackHost(hostname: string): boolean {
  *   loopback clients. We encode our redirect URI and granular `scope` into the
  *   `http://localhost?...` client_id so the consent screen reflects them.
  * - **Production:** the metadata document must be hosted at the app origin; see
- *   `public/client-metadata.json` and the README.
+ *   `public/oauth-client-metadata.json` and the README. The filename matters —
+ *   atproto's consent UI hides the raw client_id URL when it ends in exactly
+ *   `/oauth-client-metadata.json`.
  */
 export async function createOAuthClient(): Promise<BrowserOAuthClient> {
   const { origin, hostname } = window.location
@@ -54,7 +56,7 @@ export async function createOAuthClient(): Promise<BrowserOAuthClient> {
   }
 
   return BrowserOAuthClient.load({
-    clientId: `${origin}/client-metadata.json`,
+    clientId: `${origin}/oauth-client-metadata.json`,
     handleResolver: HANDLE_RESOLVER,
   })
 }

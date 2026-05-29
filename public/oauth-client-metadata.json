@@ -1,5 +1,5 @@
 {
-  "client_id": "https://standard.horse/client-metadata.json",
+  "client_id": "https://standard.horse/oauth-client-metadata.json",
   "client_name": "standard.horse",
   "client_uri": "https://standard.horse",
   "redirect_uris": ["https://standard.horse/"],

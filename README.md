@@ -58,9 +58,11 @@ atproto blob:image/* repo:site.standard.publication repo:site.standard.document
   granular scopes above on the consent screen. The dev server binds `127.0.0.1`
   because loopback clients must use an IP origin, not `localhost`.
 - **Production** must host a client metadata document at the app origin. Edit
-  [`public/client-metadata.json`](./public/client-metadata.json) so every URL
-  points at your real domain, deploy it, and the app loads it automatically via
-  `BrowserOAuthClient.load({ clientId: '<origin>/client-metadata.json' })`.
+  [`public/oauth-client-metadata.json`](./public/oauth-client-metadata.json) so
+  every URL points at your real domain, deploy it, and the app loads it via
+  `BrowserOAuthClient.load({ clientId: '<origin>/oauth-client-metadata.json' })`.
+  The filename is deliberate: atproto's consent screen hides the raw client_id
+  URL when it ends in exactly `/oauth-client-metadata.json`.
 
 Handle resolution uses `bsky.social` by default (it will see handles + IPs).
 Self-hosters can point `HANDLE_RESOLVER` in `src/auth/client.ts` at their PDS.
