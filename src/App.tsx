@@ -103,6 +103,14 @@ export function App() {
             }
           />
           <Route
+            path="/settings/:rkey"
+            element={
+              <RequireAuth>
+                <PublicationSettings />
+              </RequireAuth>
+            }
+          />
+          <Route
             path="/post/new"
             element={
               <RequireAuth>

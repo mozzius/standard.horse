@@ -6,9 +6,11 @@ import {
   documentUrl,
   listDocuments,
   type DocumentRecord,
+  type PublicationRecord,
   type RecordEntry,
 } from "../lib/repo.ts"
-import { usePublication } from "../lib/usePublication.ts"
+import { isMarkpubMarkdown } from "../lib/markpub.ts"
+import { documentBelongsTo, usePublications } from "../lib/usePublications.ts"
 
 function formatDate(iso: string | undefined): string {
   if (!iso) return ""
@@ -21,33 +23,125 @@ function formatDate(iso: string | undefined): string {
   })
 }
 
+function PostRow({
+  doc,
+  pubUrl,
+}: {
+  doc: RecordEntry<DocumentRecord>
+  pubUrl: string | undefined
+}) {
+  const url = documentUrl(pubUrl, doc.value.path)
+  // Only markpub posts are editable; flag others so the click isn't a dead end.
+  const readOnly = !!doc.value.content && !isMarkpubMarkdown(doc.value.content)
+  return (
+    <Link to={`/post/${doc.rkey}`} className="post-row">
+      <div>
+        <h2 className="post-row__title">
+          {doc.value.title || "Untitled"}
+          {readOnly && <span className="tag">read-only</span>}
+        </h2>
+        {doc.value.description && (
+          <p className="muted" style={{ margin: 0, maxWidth: "60ch" }}>
+            {doc.value.description}
+          </p>
+        )}
+        {url && (
+          <span className="muted" style={{ fontSize: "0.74rem" }}>
+            {url}
+          </span>
+        )}
+      </div>
+      <span className="post-row__meta">
+        {formatDate(doc.value.publishedAt)}
+      </span>
+    </Link>
+  )
+}
+
+function PublicationSection({
+  pub,
+  docs,
+}: {
+  pub: RecordEntry<PublicationRecord>
+  docs: RecordEntry<DocumentRecord>[]
+}) {
+  const { did, pdsUrl } = useAuth()
+  const v = pub.value
+  const iconUrl = v.icon && did && pdsUrl ? blobUrl(pdsUrl, did, v.icon) : null
+
+  return (
+    <section style={{ marginBottom: 48 }}>
+      <div className="toolbar">
+        <div className="row" style={{ alignItems: "center", gap: 14 }}>
+          {iconUrl && (
+            <img
+              src={iconUrl}
+              alt=""
+              width={52}
+              height={52}
+              style={{
+                borderRadius: 4,
+                objectFit: "cover",
+                border: "1px solid var(--rule)",
+              }}
+            />
+          )}
+          <div className="stack">
+            <span className="kicker" style={{ margin: 0 }}>
+              Publication
+            </span>
+            <h1 style={{ margin: 0, fontSize: "2rem" }}>{v.name}</h1>
+            <a href={v.url} target="_blank" rel="noreferrer" className="muted">
+              {v.url}
+            </a>
+          </div>
+        </div>
+        <span className="toolbar__spacer" />
+        <Link className="btn btn--ghost" to={`/settings/${pub.rkey}`}>
+          Masthead &amp; Theme
+        </Link>
+        <Link className="btn btn--accent" to={`/post/new?pub=${pub.rkey}`}>
+          Write a post
+        </Link>
+      </div>
+
+      <hr />
+
+      {docs.length === 0 ? (
+        <div className="notice">
+          <h3>No posts yet.</h3>
+          <p className="muted">
+            This publication’s front page is blank.{" "}
+            <Link to={`/post/new?pub=${pub.rkey}`}>Write the first post.</Link>
+          </p>
+        </div>
+      ) : (
+        <div>
+          {docs.map((doc) => (
+            <PostRow key={doc.uri} doc={doc} pubUrl={v.url} />
+          ))}
+        </div>
+      )}
+    </section>
+  )
+}
+
 export function Dashboard() {
-  const { client, did, pdsUrl } = useAuth()
-  const { publication, loading: pubLoading, error: pubError } = usePublication()
+  const { client } = useAuth()
+  const { publications, loading: pubLoading, error: pubError } = usePublications()
   const [docs, setDocs] = useState<RecordEntry<DocumentRecord>[] | null>(null)
   const [docsError, setDocsError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (!client || !publication) return
+    if (!client) return
     let cancelled = false
-    // A repo can hold documents for several publications (e.g. a Leaflet blog
-    // alongside this one). `document.site` points at the owning publication —
-    // either its at:// record URI or its https:// url — so keep only matches.
-    const pubUri = publication.uri
-    const pubUrl = publication.value.url?.replace(/\/$/, "")
-    const belongsHere = (site: string | undefined) => {
-      if (!site) return false
-      const s = site.replace(/\/$/, "")
-      return s === pubUri || s === pubUrl
-    }
     listDocuments(client)
       .then((list) => {
         if (cancelled) return
-        const mine = list.filter((d) => belongsHere(d.value.site))
-        mine.sort((a, b) =>
+        list.sort((a, b) =>
           (b.value.publishedAt ?? "").localeCompare(a.value.publishedAt ?? ""),
         )
-        setDocs(mine)
+        setDocs(list)
       })
       .catch((err) => {
         if (!cancelled)
@@ -58,7 +152,7 @@ export function Dashboard() {
     return () => {
       cancelled = true
     }
-  }, [client, publication])
+  }, [client])
 
   if (pubLoading) {
     return (
@@ -76,7 +170,7 @@ export function Dashboard() {
     )
   }
 
-  if (!publication) {
+  if (publications.length === 0) {
     return (
       <div className="container">
         <div className="notice">
@@ -104,96 +198,39 @@ export function Dashboard() {
     )
   }
 
-  const pub = publication.value
-  const iconUrl =
-    pub.icon && did && pdsUrl ? blobUrl(pdsUrl, did, pub.icon) : null
+  const unattached =
+    docs?.filter((d) => !publications.some((p) => documentBelongsTo(p, d.value.site))) ??
+    []
 
   return (
     <div className="container">
-      <div className="toolbar">
-        <div className="row" style={{ alignItems: "center", gap: 14 }}>
-          {iconUrl && (
-            <img
-              src={iconUrl}
-              alt=""
-              width={52}
-              height={52}
-              style={{
-                borderRadius: 4,
-                objectFit: "cover",
-                border: "1px solid var(--rule)",
-              }}
-            />
-          )}
-          <div className="stack">
-            <span className="kicker" style={{ margin: 0 }}>
-              Your publication
-            </span>
-            <h1 style={{ margin: 0, fontSize: "2rem" }}>{pub.name}</h1>
-            <a
-              href={pub.url}
-              target="_blank"
-              rel="noreferrer"
-              className="muted"
-            >
-              {pub.url}
-            </a>
-          </div>
-        </div>
-        <span className="toolbar__spacer" />
-        <Link className="btn btn--ghost" to="/settings">
-          Masthead &amp; Theme
-        </Link>
-        <Link className="btn btn--accent" to="/post/new">
-          Write a post
-        </Link>
-      </div>
-
-      <hr />
-
       {docsError && <div className="error-banner">{docsError}</div>}
 
       {!docs ? (
         <p className="spinner">Gathering the morning’s posts…</p>
-      ) : docs.length === 0 ? (
-        <div className="notice">
-          <h3>No posts yet.</h3>
-          <p className="muted">
-            Your front page is blank.{" "}
-            <Link to="/post/new">Write your first post.</Link>
-          </p>
-        </div>
       ) : (
-        <div>
-          {docs.map((doc) => {
-            const url = documentUrl(pub.url, doc.value.path)
-            return (
-              <Link key={doc.uri} to={`/post/${doc.rkey}`} className="post-row">
-                <div>
-                  <h2 className="post-row__title">
-                    {doc.value.title || "Untitled"}
-                  </h2>
-                  {doc.value.description && (
-                    <p
-                      className="muted"
-                      style={{ margin: 0, maxWidth: "60ch" }}
-                    >
-                      {doc.value.description}
-                    </p>
-                  )}
-                  {url && (
-                    <span className="muted" style={{ fontSize: "0.74rem" }}>
-                      {url}
-                    </span>
-                  )}
-                </div>
-                <span className="post-row__meta">
-                  {formatDate(doc.value.publishedAt)}
-                </span>
-              </Link>
-            )
-          })}
-        </div>
+        <>
+          {publications.map((pub) => (
+            <PublicationSection
+              key={pub.uri}
+              pub={pub}
+              docs={docs.filter((d) => documentBelongsTo(pub, d.value.site))}
+            />
+          ))}
+
+          {unattached.length > 0 && (
+            <section style={{ marginBottom: 48 }}>
+              <span className="kicker">Unattached documents</span>
+              <h2 style={{ marginTop: 0 }}>Not linked to a publication</h2>
+              <hr />
+              <div>
+                {unattached.map((doc) => (
+                  <PostRow key={doc.uri} doc={doc} pubUrl={undefined} />
+                ))}
+              </div>
+            </section>
+          )}
+        </>
       )}
     </div>
   )

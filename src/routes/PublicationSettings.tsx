@@ -1,7 +1,7 @@
 import type { l } from "@atproto/lex"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { HexColorPicker } from "react-colorful"
-import { Link } from "react-router"
+import { Link, useParams } from "react-router"
 import { useAuth } from "../auth/AuthProvider.tsx"
 import {
   blobUrl,
@@ -13,7 +13,7 @@ import {
   uploadImageBlob,
   type ThemeColors,
 } from "../lib/repo.ts"
-import { usePublication } from "../lib/usePublication.ts"
+import { usePublications } from "../lib/usePublications.ts"
 
 const COLOR_FIELDS: { key: keyof ThemeColors; label: string; hint: string }[] =
   [
@@ -25,7 +25,13 @@ const COLOR_FIELDS: { key: keyof ThemeColors; label: string; hint: string }[] =
 
 export function PublicationSettings() {
   const { client, did, pdsUrl } = useAuth()
-  const { publication, loading, error, reload } = usePublication()
+  const { rkey } = useParams<{ rkey: string }>()
+  const { publications, loading, error, reload } = usePublications()
+  // Edit the publication named in the route, falling back to the first.
+  const publication = useMemo(
+    () => publications.find((p) => p.rkey === rkey) ?? publications[0] ?? null,
+    [publications, rkey],
+  )
 
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")

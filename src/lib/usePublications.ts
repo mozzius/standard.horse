@@ -6,25 +6,22 @@ import {
   type RecordEntry,
 } from "./repo.ts"
 
-interface PublicationState {
+interface PublicationsState {
   loading: boolean
   error: string | null
-  /** The user's first publication, or null if they have none. */
-  publication: RecordEntry<PublicationRecord> | null
+  /** All of the signed-in user's publications. */
+  publications: RecordEntry<PublicationRecord>[]
   reload: () => void
 }
 
-/**
- * Loads the signed-in user's publication. We only edit existing publications
- * (first draft), so if a user has more than one we use the first; if they have
- * none, screens render an empty state pointing them to standard.site.
- */
-export function usePublication(): PublicationState {
+/** Loads all of the signed-in user's site.standard.publication records. */
+export function usePublications(): PublicationsState {
   const { client } = useAuth()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [publication, setPublication] =
-    useState<RecordEntry<PublicationRecord> | null>(null)
+  const [publications, setPublications] = useState<
+    RecordEntry<PublicationRecord>[]
+  >([])
   const [nonce, setNonce] = useState(0)
 
   const reload = useCallback(() => setNonce((n) => n + 1), [])
@@ -37,12 +34,12 @@ export function usePublication(): PublicationState {
     listPublications(client)
       .then((pubs) => {
         if (cancelled) return
-        setPublication(pubs[0] ?? null)
+        setPublications(pubs)
       })
       .catch((err) => {
         if (cancelled) return
         setError(
-          err instanceof Error ? err.message : "Failed to load publication",
+          err instanceof Error ? err.message : "Failed to load publications",
         )
       })
       .finally(() => {
@@ -53,5 +50,18 @@ export function usePublication(): PublicationState {
     }
   }, [client, nonce])
 
-  return { loading, error, publication, reload }
+  return { loading, error, publications, reload }
+}
+
+/**
+ * Does a document belong to this publication? `document.site` points at the
+ * owning publication — either its at:// record URI or its https:// url.
+ */
+export function documentBelongsTo(
+  pub: RecordEntry<PublicationRecord>,
+  site: string | undefined,
+): boolean {
+  if (!site) return false
+  const s = site.replace(/\/$/, "")
+  return s === pub.uri || s === pub.value.url?.replace(/\/$/, "")
 }

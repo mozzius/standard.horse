@@ -4,11 +4,12 @@ import { languages } from "@codemirror/language-data"
 import CodeMirror, { EditorView } from "@uiw/react-codemirror"
 import { useEffect, useMemo, useRef, useState } from "react"
 import ReactMarkdown from "react-markdown"
-import { Link, useNavigate, useParams } from "react-router"
+import { Link, useNavigate, useParams, useSearchParams } from "react-router"
 import remarkGfm from "remark-gfm"
 import { useAuth } from "../auth/AuthProvider.tsx"
 import {
   buildMarkpubContent,
+  isMarkpubMarkdown,
   markpubTextBlob,
   readMarkpubMarkdown,
 } from "../lib/markpub.ts"
@@ -24,7 +25,7 @@ import {
   templatizePath,
   type DocumentRecord,
 } from "../lib/repo.ts"
-import { usePublication } from "../lib/usePublication.ts"
+import { documentBelongsTo, usePublications } from "../lib/usePublications.ts"
 
 /** Rough plaintext for the document's `textContent` (indexers, search). */
 function stripMarkdown(md: string): string {
@@ -42,7 +43,8 @@ export function PostEditor() {
   const isNew = !rkey
   const navigate = useNavigate()
   const { client, did } = useAuth()
-  const { publication, loading: pubLoading } = usePublication()
+  const { publications, loading: pubLoading } = usePublications()
+  const [searchParams] = useSearchParams()
 
   const [loading, setLoading] = useState(!isNew)
   const [loadError, setLoadError] = useState<string | null>(null)
@@ -58,6 +60,22 @@ export function PostEditor() {
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
   const [deleting, setDeleting] = useState(false)
+
+  // For a new post the target publication is user-selectable, defaulting to
+  // ?pub=<rkey>. For an existing post it's fixed to whichever publication its
+  // `site` points at.
+  const [selectedPubRkey, setSelectedPubRkey] = useState<string | null>(
+    searchParams.get("pub"),
+  )
+  const publication = useMemo(() => {
+    if (!publications.length) return null
+    if (existing?.site) {
+      return publications.find((p) => documentBelongsTo(p, existing.site)) ?? null
+    }
+    return (
+      publications.find((p) => p.rkey === selectedPubRkey) ?? publications[0]
+    )
+  }, [publications, existing, selectedPubRkey])
 
   // Load existing document when editing.
   useEffect(() => {
@@ -239,6 +257,48 @@ export function PostEditor() {
     )
   }
 
+  // This editor only understands markpub (GFM markdown). If an existing post's
+  // content is some other richtext format, refuse to edit it — saving would
+  // overwrite the original content with markpub and lose it.
+  const content = existing?.content
+  if (content && !isMarkpubMarkdown(content)) {
+    const format =
+      (content as { $type?: string }).$type ?? "an unknown format"
+    const otherUrl = documentUrl(publication.value.url, existing?.path)
+    return (
+      <div className="container">
+        <div className="toolbar">
+          <Link to="/" className="muted" style={{ textDecoration: "none" }}>
+            ← All posts
+          </Link>
+          <span className="toolbar__spacer" />
+          {otherUrl && (
+            <a
+              className="btn btn--ghost"
+              href={otherUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              View live
+            </a>
+          )}
+        </div>
+        <div className="notice">
+          <p className="kicker">Can’t edit this post</p>
+          <h2 style={{ marginTop: 0 }}>
+            {existing?.title || "Untitled"}
+          </h2>
+          <p className="muted">
+            This post’s content is stored as{" "}
+            <code>{format}</code>, which standard.horse can’t edit yet — it only
+            handles markpub (<code>at.markpub.markdown</code>) markdown. Editing
+            it here would overwrite the original content, so it’s read-only.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   const liveUrl = documentUrl(publication.value.url, existing?.path)
   // For new posts the record key isn't minted until publish, so show a "…".
   const resolvedPath = interpolatePath(pathTemplate, rkey ?? "…")
@@ -269,6 +329,20 @@ export function PostEditor() {
           >
             {deleting ? "Deleting…" : "Delete"}
           </button>
+        )}
+        {isNew && publications.length > 1 && (
+          <select
+            className="select"
+            value={publication?.rkey ?? ""}
+            onChange={(e) => setSelectedPubRkey(e.target.value)}
+            title="Which publication to publish to"
+          >
+            {publications.map((p) => (
+              <option key={p.rkey} value={p.rkey}>
+                {p.value.name}
+              </option>
+            ))}
+          </select>
         )}
         <button
           type="submit"

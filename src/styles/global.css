@@ -252,6 +252,27 @@ select {
 .muted {
   color: var(--ink-faint);
 }
+.tag {
+  display: inline-block;
+  margin-left: 10px;
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 2px 8px;
+  vertical-align: middle;
+}
+.select {
+  background: #fffdf8;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  padding: 9px 12px;
+  font-size: 0.85rem;
+}
 .error-banner {
   border: 1px solid var(--danger);
   background: #f7e9e7;
