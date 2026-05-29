@@ -15,9 +15,9 @@
   --danger: #8a1c1c;
   --ok: #2f5d34;
 
-  --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
-  --sans: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
-  --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   --measure: 68ch;
   --radius: 3px;
@@ -129,7 +129,10 @@ select {
   align-items: baseline;
   justify-content: space-between;
   gap: 16px;
-  padding: 14px 0 10px;
+  /* Only set vertical padding — this element also carries `.container`, whose
+     horizontal padding must survive so the masthead lines up with body content. */
+  padding-top: 14px;
+  padding-bottom: 10px;
 }
 .masthead__title {
   font-family: var(--serif);
@@ -321,17 +324,32 @@ select {
   border-bottom: 1px solid var(--rule);
   background: var(--paper-edge);
 }
+/* Make CodeMirror fill the whole grid cell so the editor column is at least as
+   tall as the rendered preview next to it. The @uiw wrapper, the editor and the
+   scroller all need to stretch down the flex chain. */
 .cm-host {
   flex: 1;
   min-height: 0;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+.cm-host > * {
+  flex: 1;
+  min-height: 0;
 }
 .cm-host .cm-editor {
   height: 100%;
 }
+.cm-host .cm-scroller {
+  overflow: auto;
+}
 .cm-host .cm-content {
   font-family: var(--mono);
   font-size: 14px;
+}
+/* Long lines (e.g. image URLs) wrap instead of scrolling horizontally. */
+.cm-host .cm-line {
+  word-break: break-word;
 }
 
 /* Rendered markdown preview, styled like print */

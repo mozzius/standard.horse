@@ -1,23 +1,23 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router'
-import { useAuth } from '../auth/AuthProvider.tsx'
-import { usePublication } from '../lib/usePublication.ts'
+import { useEffect, useState } from "react"
+import { Link } from "react-router"
+import { useAuth } from "../auth/AuthProvider.tsx"
 import {
   blobUrl,
   documentUrl,
   listDocuments,
   type DocumentRecord,
   type RecordEntry,
-} from '../lib/repo.ts'
+} from "../lib/repo.ts"
+import { usePublication } from "../lib/usePublication.ts"
 
 function formatDate(iso: string | undefined): string {
-  if (!iso) return ''
+  if (!iso) return ""
   const d = new Date(iso)
-  if (Number.isNaN(d.getTime())) return ''
-  return d.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
+  if (Number.isNaN(d.getTime())) return ""
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   })
 }
 
@@ -34,10 +34,10 @@ export function Dashboard() {
     // alongside this one). `document.site` points at the owning publication —
     // either its at:// record URI or its https:// url — so keep only matches.
     const pubUri = publication.uri
-    const pubUrl = publication.value.url?.replace(/\/$/, '')
+    const pubUrl = publication.value.url?.replace(/\/$/, "")
     const belongsHere = (site: string | undefined) => {
       if (!site) return false
-      const s = site.replace(/\/$/, '')
+      const s = site.replace(/\/$/, "")
       return s === pubUri || s === pubUrl
     }
     listDocuments(client)
@@ -45,13 +45,15 @@ export function Dashboard() {
         if (cancelled) return
         const mine = list.filter((d) => belongsHere(d.value.site))
         mine.sort((a, b) =>
-          (b.value.publishedAt ?? '').localeCompare(a.value.publishedAt ?? ''),
+          (b.value.publishedAt ?? "").localeCompare(a.value.publishedAt ?? ""),
         )
         setDocs(mine)
       })
       .catch((err) => {
         if (!cancelled)
-          setDocsError(err instanceof Error ? err.message : 'Failed to load posts')
+          setDocsError(
+            err instanceof Error ? err.message : "Failed to load posts",
+          )
       })
     return () => {
       cancelled = true
@@ -82,11 +84,11 @@ export function Dashboard() {
           <h2>You don’t have a standard.site publication yet.</h2>
           <p className="muted">
             standard.horse edits existing publications. Create one with a
-            standard.site-compatible tool (for example{' '}
+            standard.site-compatible tool (for example{" "}
             <a href="https://leaflet.pub" target="_blank" rel="noreferrer">
               Leaflet
-            </a>{' '}
-            or{' '}
+            </a>{" "}
+            or{" "}
             <a href="https://standard.site" target="_blank" rel="noreferrer">
               standard.site
             </a>
@@ -98,28 +100,36 @@ export function Dashboard() {
   }
 
   const pub = publication.value
-  const iconUrl =
-    pub.icon && did ? blobUrl(client!, did, pub.icon) : null
+  const iconUrl = pub.icon && did ? blobUrl(client!, did, pub.icon) : null
 
   return (
     <div className="container">
       <div className="toolbar">
-        <div className="row" style={{ alignItems: 'center', gap: 14 }}>
+        <div className="row" style={{ alignItems: "center", gap: 14 }}>
           {iconUrl && (
             <img
               src={iconUrl}
               alt=""
               width={52}
               height={52}
-              style={{ borderRadius: 4, objectFit: 'cover', border: '1px solid var(--rule)' }}
+              style={{
+                borderRadius: 4,
+                objectFit: "cover",
+                border: "1px solid var(--rule)",
+              }}
             />
           )}
           <div className="stack">
             <span className="kicker" style={{ margin: 0 }}>
               Your publication
             </span>
-            <h1 style={{ margin: 0, fontSize: '2rem' }}>{pub.name}</h1>
-            <a href={pub.url} target="_blank" rel="noreferrer" className="muted">
+            <h1 style={{ margin: 0, fontSize: "2rem" }}>{pub.name}</h1>
+            <a
+              href={pub.url}
+              target="_blank"
+              rel="noreferrer"
+              className="muted"
+            >
               {pub.url}
             </a>
           </div>
@@ -143,7 +153,8 @@ export function Dashboard() {
         <div className="notice">
           <h3>No posts yet.</h3>
           <p className="muted">
-            Your front page is blank. <Link to="/post/new">Write your first post.</Link>
+            Your front page is blank.{" "}
+            <Link to="/post/new">Write your first post.</Link>
           </p>
         </div>
       ) : (
@@ -154,15 +165,18 @@ export function Dashboard() {
               <Link key={doc.uri} to={`/post/${doc.rkey}`} className="post-row">
                 <div>
                   <h2 className="post-row__title">
-                    {doc.value.title || 'Untitled'}
+                    {doc.value.title || "Untitled"}
                   </h2>
                   {doc.value.description && (
-                    <p className="muted" style={{ margin: 0, maxWidth: '60ch' }}>
+                    <p
+                      className="muted"
+                      style={{ margin: 0, maxWidth: "60ch" }}
+                    >
                       {doc.value.description}
                     </p>
                   )}
                   {url && (
-                    <span className="muted" style={{ fontSize: '0.74rem' }}>
+                    <span className="muted" style={{ fontSize: "0.74rem" }}>
                       {url}
                     </span>
                   )}

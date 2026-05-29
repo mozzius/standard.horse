@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import { useAuth } from '../auth/AuthProvider.tsx'
+import { useState } from "react"
+import { useAuth } from "../auth/AuthProvider.tsx"
 
 export function Login() {
   const { signIn, error } = useAuth()
-  const [handle, setHandle] = useState('')
+  const [handle, setHandle] = useState("")
   const [submitting, setSubmitting] = useState(false)
   const [localError, setLocalError] = useState<string | null>(null)
 
@@ -16,7 +16,7 @@ export function Login() {
       await signIn(handle)
       // signIn redirects away; if we get here the user likely cancelled.
     } catch (err) {
-      setLocalError(err instanceof Error ? err.message : 'Sign in failed')
+      setLocalError(err instanceof Error ? err.message : "Sign in failed")
       setSubmitting(false)
     }
   }
@@ -27,10 +27,10 @@ export function Login() {
         <p className="kicker">Sign in with atproto</p>
         <h1>Your printing press for standard.site.</h1>
         <p className="muted">
-          standard.horse is a plain-spoken editor for your{' '}
+          standard.horse is a plain-spoken editor for your{" "}
           <a href="https://standard.site" target="_blank" rel="noreferrer">
             standard.site
-          </a>{' '}
+          </a>{" "}
           publication. Edit your masthead, set your theme, and write posts in
           Markdown — all stored on your own PDS.
         </p>
@@ -54,12 +54,16 @@ export function Login() {
               disabled={submitting}
             />
           </label>
-          <button className="btn btn--accent" type="submit" disabled={submitting}>
-            {submitting ? 'Redirecting…' : 'Sign in'}
+          <button
+            className="btn btn--accent"
+            type="submit"
+            disabled={submitting}
+          >
+            {submitting ? "Redirecting…" : "Sign in"}
           </button>
         </form>
 
-        <p className="muted" style={{ fontSize: '0.78rem', marginTop: 24 }}>
+        <p className="muted" style={{ fontSize: "0.78rem", marginTop: 24 }}>
           Handle resolution is performed via bsky.social, which will see your
           handle and IP address.
         </p>

@@ -1,20 +1,27 @@
-import { NavLink, Link, Navigate, Route, Routes, useLocation } from 'react-router'
-import { useAuth } from './auth/AuthProvider.tsx'
-import { Login } from './routes/Login.tsx'
-import { Dashboard } from './routes/Dashboard.tsx'
-import { PublicationSettings } from './routes/PublicationSettings.tsx'
-import { PostEditor } from './routes/PostEditor.tsx'
+import {
+  Link,
+  Navigate,
+  NavLink,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router"
+import { useAuth } from "./auth/AuthProvider.tsx"
+import { Dashboard } from "./routes/Dashboard.tsx"
+import { Login } from "./routes/Login.tsx"
+import { PostEditor } from "./routes/PostEditor.tsx"
+import { PublicationSettings } from "./routes/PublicationSettings.tsx"
 
-const DATELINE = new Date().toLocaleDateString('en-US', {
-  weekday: 'long',
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
+const DATELINE = new Date().toLocaleDateString("en-US", {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
 })
 
 function Masthead() {
   const { status, signOut } = useAuth()
-  const signedIn = status === 'signed-in'
+  const signedIn = status === "signed-in"
   return (
     <header className="masthead">
       <div className="masthead__bar">
@@ -53,14 +60,14 @@ function Masthead() {
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { status } = useAuth()
   const location = useLocation()
-  if (status === 'loading') {
+  if (status === "loading") {
     return (
       <div className="container content">
         <p className="spinner">Setting the type…</p>
       </div>
     )
   }
-  if (status === 'signed-out') {
+  if (status === "signed-out") {
     return <Navigate to="/" replace state={{ from: location.pathname }} />
   }
   return <>{children}</>
@@ -76,9 +83,9 @@ export function App() {
           <Route
             path="/"
             element={
-              status === 'signed-in' ? (
+              status === "signed-in" ? (
                 <Dashboard />
-              ) : status === 'loading' ? (
+              ) : status === "loading" ? (
                 <div className="container">
                   <p className="spinner">Setting the type…</p>
                 </div>

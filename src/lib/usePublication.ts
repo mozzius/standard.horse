@@ -1,6 +1,10 @@
-import { useCallback, useEffect, useState } from 'react'
-import { useAuth } from '../auth/AuthProvider.tsx'
-import { listPublications, type PublicationRecord, type RecordEntry } from './repo.ts'
+import { useCallback, useEffect, useState } from "react"
+import { useAuth } from "../auth/AuthProvider.tsx"
+import {
+  listPublications,
+  type PublicationRecord,
+  type RecordEntry,
+} from "./repo.ts"
 
 interface PublicationState {
   loading: boolean
@@ -37,7 +41,9 @@ export function usePublication(): PublicationState {
       })
       .catch((err) => {
         if (cancelled) return
-        setError(err instanceof Error ? err.message : 'Failed to load publication')
+        setError(
+          err instanceof Error ? err.message : "Failed to load publication",
+        )
       })
       .finally(() => {
         if (!cancelled) setLoading(false)

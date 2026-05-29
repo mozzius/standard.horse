@@ -1,7 +1,7 @@
 import {
-  BrowserOAuthClient,
   atprotoLoopbackClientMetadata,
-} from '@atproto/oauth-client-browser'
+  BrowserOAuthClient,
+} from "@atproto/oauth-client-browser"
 
 /**
  * Granular OAuth scopes. Reads (getRecord/listRecords) are public and need no
@@ -11,22 +11,22 @@ import {
  * Omitting `?action` on a `repo:` scope grants create + update + delete.
  */
 export const SCOPE = [
-  'atproto',
-  'blob:image/*',
-  'repo:site.standard.publication',
-  'repo:site.standard.document',
-].join(' ')
+  "atproto",
+  "blob:image/*",
+  "repo:site.standard.publication",
+  "repo:site.standard.document",
+].join(" ")
 
 /**
  * Handle resolution happens over the network. Using a Bluesky-hosted endpoint
  * leaks handles/IPs to a third party; self-hosters should point this at their
  * own PDS. Fine as a default for now.
  */
-const HANDLE_RESOLVER = 'https://bsky.social'
+const HANDLE_RESOLVER = "https://bsky.social"
 
 function isLoopbackHost(hostname: string): boolean {
   return (
-    hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]'
+    hostname === "localhost" || hostname === "127.0.0.1" || hostname === "[::1]"
   )
 }
 

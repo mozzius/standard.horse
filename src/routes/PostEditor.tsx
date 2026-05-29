@@ -1,37 +1,36 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router'
-import CodeMirror from '@uiw/react-codemirror'
-import { markdown } from '@codemirror/lang-markdown'
-import { languages } from '@codemirror/language-data'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import { l, getBlobCidString } from '@atproto/lex'
-
-import { useAuth } from '../auth/AuthProvider.tsx'
-import { usePublication } from '../lib/usePublication.ts'
+import { getBlobCidString, l } from "@atproto/lex"
+import { markdown } from "@codemirror/lang-markdown"
+import { languages } from "@codemirror/language-data"
+import CodeMirror, { EditorView } from "@uiw/react-codemirror"
+import { useEffect, useMemo, useState } from "react"
+import ReactMarkdown from "react-markdown"
+import { Link, useNavigate, useParams } from "react-router"
+import remarkGfm from "remark-gfm"
+import { useAuth } from "../auth/AuthProvider.tsx"
 import {
   buildMarkpubContent,
   markpubTextBlob,
   readMarkpubMarkdown,
-} from '../lib/markpub.ts'
+} from "../lib/markpub.ts"
 import {
   createDocument,
   deleteDocument,
   documentUrl,
   getDocument,
+  nextTid,
   putDocument,
-  slugify,
   type DocumentRecord,
-} from '../lib/repo.ts'
+} from "../lib/repo.ts"
+import { usePublication } from "../lib/usePublication.ts"
 
 /** Rough plaintext for the document's `textContent` (indexers, search). */
 function stripMarkdown(md: string): string {
   return md
-    .replace(/```[\s\S]*?```/g, '')
-    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
-    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
-    .replace(/[#>*_`~-]/g, '')
-    .replace(/\n{2,}/g, '\n')
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/[#>*_`~-]/g, "")
+    .replace(/\n{2,}/g, "\n")
     .trim()
 }
 
@@ -46,12 +45,10 @@ export function PostEditor() {
   const [loadError, setLoadError] = useState<string | null>(null)
   const [existing, setExisting] = useState<DocumentRecord | null>(null)
 
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [tags, setTags] = useState('')
-  const [path, setPath] = useState('')
-  const [pathDirty, setPathDirty] = useState(false)
-  const [body, setBody] = useState('')
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+  const [tags, setTags] = useState("")
+  const [body, setBody] = useState("")
 
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
@@ -67,11 +64,9 @@ export function PostEditor() {
         if (cancelled) return
         const v = entry.value
         setExisting(v)
-        setTitle(v.title ?? '')
-        setDescription(v.description ?? '')
-        setTags((v.tags ?? []).join(', '))
-        setPath(v.path ?? '')
-        setPathDirty(true) // don't auto-rewrite an existing path from the title
+        setTitle(v.title ?? "")
+        setDescription(v.description ?? "")
+        setTags((v.tags ?? []).join(", "))
 
         let md = readMarkpubMarkdown(v.content)
         if (md == null) {
@@ -86,17 +81,19 @@ export function PostEditor() {
               )
               md = new TextDecoder().decode(res.body as Uint8Array)
             } catch {
-              md = v.textContent ?? ''
+              md = v.textContent ?? ""
             }
           } else {
-            md = v.textContent ?? ''
+            md = v.textContent ?? ""
           }
         }
         if (!cancelled) setBody(md)
       })
       .catch((err) => {
         if (!cancelled)
-          setLoadError(err instanceof Error ? err.message : 'Failed to load post')
+          setLoadError(
+            err instanceof Error ? err.message : "Failed to load post",
+          )
       })
       .finally(() => {
         if (!cancelled) setLoading(false)
@@ -106,13 +103,8 @@ export function PostEditor() {
     }
   }, [client, rkey, isNew, did])
 
-  // Auto-derive the path slug from the title until the user edits it.
-  useEffect(() => {
-    if (!pathDirty) setPath(title ? `/${slugify(title)}` : '')
-  }, [title, pathDirty])
-
   const cmExtensions = useMemo(
-    () => [markdown({ codeLanguages: languages })],
+    () => [markdown({ codeLanguages: languages }), EditorView.lineWrapping],
     [],
   )
 
@@ -120,28 +112,32 @@ export function PostEditor() {
     e.preventDefault()
     if (!client || !publication) return
     if (!title.trim()) {
-      setSaveError('A headline is required.')
+      setSaveError("A headline is required.")
       return
     }
     setSaving(true)
     setSaveError(null)
     try {
       const tagList = tags
-        .split(',')
+        .split(",")
         .map((t) => t.trim())
         .filter(Boolean)
 
       const content = buildMarkpubContent(
         body,
-      ) as unknown as DocumentRecord['content']
+      ) as unknown as DocumentRecord["content"]
 
-      const value: Omit<DocumentRecord, '$type'> = {
+      // The record key is a TID, and the URL path is that same TID — so posts
+      // get a stable, sortable slug without the user inventing one.
+      const docRkey = rkey ?? nextTid()
+
+      const value: Omit<DocumentRecord, "$type"> = {
         ...existing, // preserve coverImage, contributors, bskyPostRef, etc.
         site: publication.uri as l.UriString,
         title: title.trim(),
         description: description.trim() || undefined,
         tags: tagList.length ? tagList : undefined,
-        path: path.trim() || undefined,
+        path: existing?.path ?? `/${docRkey}`,
         content,
         textContent: stripMarkdown(body) || undefined,
         publishedAt: existing?.publishedAt ?? l.currentDatetimeString(),
@@ -149,14 +145,14 @@ export function PostEditor() {
       }
 
       if (isNew) {
-        const { rkey: newRkey } = await createDocument(client, value)
-        navigate(`/post/${newRkey}`, { replace: true })
+        await createDocument(client, value, docRkey)
+        navigate(`/post/${docRkey}`, { replace: true })
       } else {
-        await putDocument(client, rkey!, value)
-        setExisting({ $type: 'site.standard.document', ...value })
+        await putDocument(client, docRkey, value)
+        setExisting({ $type: "site.standard.document", ...value })
       }
     } catch (err) {
-      setSaveError(err instanceof Error ? err.message : 'Failed to save')
+      setSaveError(err instanceof Error ? err.message : "Failed to save")
     } finally {
       setSaving(false)
     }
@@ -164,13 +160,13 @@ export function PostEditor() {
 
   async function onDelete() {
     if (!client || !rkey) return
-    if (!window.confirm('Delete this post? This cannot be undone.')) return
+    if (!window.confirm("Delete this post? This cannot be undone.")) return
     setDeleting(true)
     try {
       await deleteDocument(client, rkey)
-      navigate('/', { replace: true })
+      navigate("/", { replace: true })
     } catch (err) {
-      setSaveError(err instanceof Error ? err.message : 'Failed to delete')
+      setSaveError(err instanceof Error ? err.message : "Failed to delete")
       setDeleting(false)
     }
   }
@@ -204,17 +200,22 @@ export function PostEditor() {
     )
   }
 
-  const liveUrl = documentUrl(publication.value.url, path)
+  const liveUrl = documentUrl(publication.value.url, existing?.path)
 
   return (
     <div className="container">
       <div className="toolbar">
-        <Link to="/" className="muted" style={{ textDecoration: 'none' }}>
+        <Link to="/" className="muted" style={{ textDecoration: "none" }}>
           ← All posts
         </Link>
         <span className="toolbar__spacer" />
         {!isNew && liveUrl && (
-          <a className="btn btn--ghost" href={liveUrl} target="_blank" rel="noreferrer">
+          <a
+            className="btn btn--ghost"
+            href={liveUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
             View live
           </a>
         )}
@@ -225,7 +226,7 @@ export function PostEditor() {
             onClick={onDelete}
             disabled={deleting}
           >
-            {deleting ? 'Deleting…' : 'Delete'}
+            {deleting ? "Deleting…" : "Delete"}
           </button>
         )}
         <button
@@ -234,7 +235,7 @@ export function PostEditor() {
           className="btn btn--accent"
           disabled={saving}
         >
-          {saving ? 'Saving…' : isNew ? 'Publish' : 'Save'}
+          {saving ? "Saving…" : isNew ? "Publish" : "Save"}
         </button>
       </div>
 
@@ -244,11 +245,11 @@ export function PostEditor() {
         <input
           className="input"
           style={{
-            fontFamily: 'var(--serif)',
-            fontSize: '2rem',
-            border: 'none',
-            background: 'transparent',
-            padding: '4px 0',
+            fontFamily: "var(--serif)",
+            fontSize: "2rem",
+            border: "none",
+            background: "transparent",
+            padding: "4px 0",
             marginBottom: 8,
           }}
           placeholder="Headline"
@@ -257,7 +258,10 @@ export function PostEditor() {
         />
 
         <div className="row" style={{ marginBottom: 16 }}>
-          <label className="field" style={{ flex: 2, minWidth: 240, marginBottom: 0 }}>
+          <label
+            className="field"
+            style={{ flex: 2, minWidth: 240, marginBottom: 0 }}
+          >
             <span className="field__label">Description / standfirst</span>
             <input
               className="input"
@@ -265,19 +269,10 @@ export function PostEditor() {
               onChange={(e) => setDescription(e.target.value)}
             />
           </label>
-          <label className="field" style={{ flex: 1, minWidth: 160, marginBottom: 0 }}>
-            <span className="field__label">Path</span>
-            <input
-              className="input"
-              value={path}
-              onChange={(e) => {
-                setPathDirty(true)
-                setPath(e.target.value)
-              }}
-              placeholder="/my-post"
-            />
-          </label>
-          <label className="field" style={{ flex: 1, minWidth: 160, marginBottom: 0 }}>
+          <label
+            className="field"
+            style={{ flex: 1, minWidth: 160, marginBottom: 0 }}
+          >
             <span className="field__label">Tags (comma-separated)</span>
             <input
               className="input"
@@ -304,7 +299,7 @@ export function PostEditor() {
             <div className="editor-pane__head">Preview</div>
             <article className="prose">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {body || '*Nothing written yet.*'}
+                {body || "*Nothing written yet.*"}
               </ReactMarkdown>
             </article>
           </div>

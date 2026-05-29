@@ -1,3 +1,8 @@
+import { Client } from "@atproto/lex"
+import type {
+  BrowserOAuthClient,
+  OAuthSession,
+} from "@atproto/oauth-client-browser"
 import {
   createContext,
   useContext,
@@ -6,12 +11,10 @@ import {
   useRef,
   useState,
   type ReactNode,
-} from 'react'
-import type { BrowserOAuthClient, OAuthSession } from '@atproto/oauth-client-browser'
-import { Client } from '@atproto/lex'
-import { createOAuthClient } from './client.ts'
+} from "react"
+import { createOAuthClient } from "./client.ts"
 
-type AuthStatus = 'loading' | 'signed-in' | 'signed-out'
+type AuthStatus = "loading" | "signed-in" | "signed-out"
 
 interface AuthState {
   status: AuthStatus
@@ -50,7 +53,7 @@ function bootstrap() {
 export function AuthProvider({ children }: { children: ReactNode }) {
   const oauthRef = useRef<BrowserOAuthClient | null>(null)
   const sessionRef = useRef<OAuthSession | null>(null)
-  const [status, setStatus] = useState<AuthStatus>('loading')
+  const [status, setStatus] = useState<AuthStatus>("loading")
   const [did, setDid] = useState<string | null>(null)
   const [client, setClient] = useState<Client | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -60,11 +63,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (session) {
       setDid(session.did)
       setClient(new Client(session))
-      setStatus('signed-in')
+      setStatus("signed-in")
     } else {
       setDid(null)
       setClient(null)
-      setStatus('signed-out')
+      setStatus("signed-out")
     }
   }
 
@@ -78,9 +81,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
       .catch((err) => {
         if (cancelled) return
-        console.error('OAuth init failed', err)
-        setError(err instanceof Error ? err.message : 'Failed to initialise auth')
-        setStatus('signed-out')
+        console.error("OAuth init failed", err)
+        setError(
+          err instanceof Error ? err.message : "Failed to initialise auth",
+        )
+        setStatus("signed-out")
       })
     return () => {
       cancelled = true
@@ -95,7 +100,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       error,
       async signIn(handle: string) {
         const oauth = oauthRef.current
-        if (!oauth) throw new Error('Auth not ready yet')
+        if (!oauth) throw new Error("Auth not ready yet")
         setError(null)
         // Redirects away; the promise only rejects if the user cancels.
         await oauth.signIn(handle.trim())
@@ -106,7 +111,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         try {
           await session?.signOut()
         } catch (err) {
-          console.error('Sign out failed', err)
+          console.error("Sign out failed", err)
         }
       },
     }),
@@ -118,6 +123,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth(): AuthState {
   const ctx = useContext(AuthContext)
-  if (!ctx) throw new Error('useAuth must be used within <AuthProvider>')
+  if (!ctx) throw new Error("useAuth must be used within <AuthProvider>")
   return ctx
 }

@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router'
-import { HexColorPicker } from 'react-colorful'
-import type { l } from '@atproto/lex'
-import { useAuth } from '../auth/AuthProvider.tsx'
-import { usePublication } from '../lib/usePublication.ts'
+import type { l } from "@atproto/lex"
+import { useEffect, useState } from "react"
+import { HexColorPicker } from "react-colorful"
+import { Link } from "react-router"
+import { useAuth } from "../auth/AuthProvider.tsx"
 import {
   blobUrl,
   buildBasicTheme,
@@ -13,22 +12,24 @@ import {
   rgbToHex,
   uploadImageBlob,
   type ThemeColors,
-} from '../lib/repo.ts'
+} from "../lib/repo.ts"
+import { usePublication } from "../lib/usePublication.ts"
 
-const COLOR_FIELDS: { key: keyof ThemeColors; label: string; hint: string }[] = [
-  { key: 'background', label: 'Background', hint: 'Page background' },
-  { key: 'foreground', label: 'Foreground', hint: 'Body text' },
-  { key: 'accent', label: 'Accent', hint: 'Links & buttons' },
-  { key: 'accentForeground', label: 'Accent text', hint: 'Text on buttons' },
-]
+const COLOR_FIELDS: { key: keyof ThemeColors; label: string; hint: string }[] =
+  [
+    { key: "background", label: "Background", hint: "Page background" },
+    { key: "foreground", label: "Foreground", hint: "Body text" },
+    { key: "accent", label: "Accent", hint: "Links & buttons" },
+    { key: "accentForeground", label: "Accent text", hint: "Text on buttons" },
+  ]
 
 export function PublicationSettings() {
   const { client, did } = useAuth()
   const { publication, loading, error, reload } = usePublication()
 
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [url, setUrl] = useState('')
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [url, setUrl] = useState("")
   const [theme, setTheme] = useState<ThemeColors | null>(null)
   const [iconFile, setIconFile] = useState<File | null>(null)
   const [saving, setSaving] = useState(false)
@@ -38,9 +39,9 @@ export function PublicationSettings() {
   useEffect(() => {
     if (!publication) return
     const v = publication.value
-    setName(v.name ?? '')
-    setDescription(v.description ?? '')
-    setUrl(v.url ?? '')
+    setName(v.name ?? "")
+    setDescription(v.description ?? "")
+    setUrl(v.url ?? "")
     setTheme(readBasicTheme(v.basicTheme))
   }, [publication])
 
@@ -102,7 +103,7 @@ export function PublicationSettings() {
       setSaved(true)
       reload()
     } catch (err) {
-      setSaveError(err instanceof Error ? err.message : 'Failed to save')
+      setSaveError(err instanceof Error ? err.message : "Failed to save")
     } finally {
       setSaving(false)
     }
@@ -148,7 +149,7 @@ export function PublicationSettings() {
 
         <div className="field">
           <span className="field__label">Icon</span>
-          <div className="row" style={{ alignItems: 'center' }}>
+          <div className="row" style={{ alignItems: "center" }}>
             {previewIconUrl && (
               <img
                 src={previewIconUrl}
@@ -157,8 +158,8 @@ export function PublicationSettings() {
                 height={64}
                 style={{
                   borderRadius: 6,
-                  objectFit: 'cover',
-                  border: '1px solid var(--rule)',
+                  objectFit: "cover",
+                  border: "1px solid var(--rule)",
                 }}
               />
             )}
@@ -168,7 +169,7 @@ export function PublicationSettings() {
               onChange={(e) => setIconFile(e.target.files?.[0] ?? null)}
             />
           </div>
-          <span className="muted" style={{ fontSize: '0.74rem' }}>
+          <span className="muted" style={{ fontSize: "0.74rem" }}>
             Square image, at least 256×256, under 1MB.
           </span>
         </div>
@@ -187,8 +188,8 @@ export function PublicationSettings() {
                   aria-hidden
                 />
                 <div className="stack" style={{ marginBottom: 8 }}>
-                  <strong style={{ fontSize: '0.9rem' }}>{label}</strong>
-                  <span className="muted" style={{ fontSize: '0.74rem' }}>
+                  <strong style={{ fontSize: "0.9rem" }}>{label}</strong>
+                  <span className="muted" style={{ fontSize: "0.74rem" }}>
                     {hint} · {hex}
                   </span>
                 </div>
@@ -207,7 +208,7 @@ export function PublicationSettings() {
 
         <div className="toolbar">
           <button className="btn btn--accent" type="submit" disabled={saving}>
-            {saving ? 'Saving…' : 'Save changes'}
+            {saving ? "Saving…" : "Save changes"}
           </button>
           <Link className="btn btn--ghost" to="/">
             Back

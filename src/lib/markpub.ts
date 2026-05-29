@@ -13,12 +13,12 @@
  * GFM, but we *read* both.
  */
 
-import type { l } from '@atproto/lex'
+import type { l } from "@atproto/lex"
 
-export const MARKPUB_MARKDOWN = 'at.markpub.markdown'
-export const MARKPUB_TEXT = 'at.markpub.text'
+export const MARKPUB_MARKDOWN = "at.markpub.markdown"
+export const MARKPUB_TEXT = "at.markpub.text"
 
-export type MarkpubFlavor = 'gfm' | 'commonmark'
+export type MarkpubFlavor = "gfm" | "commonmark"
 
 export interface MarkpubText {
   $type: typeof MARKPUB_TEXT
@@ -47,8 +47,8 @@ export interface MarkpubMarkdown {
 export function buildMarkpubContent(markdown: string): MarkpubMarkdown {
   return {
     $type: MARKPUB_MARKDOWN,
-    flavor: 'gfm',
-    renderingRules: 'markdown-it',
+    flavor: "gfm",
+    renderingRules: "markdown-it",
     text: {
       $type: MARKPUB_TEXT,
       markdown,
@@ -57,9 +57,11 @@ export function buildMarkpubContent(markdown: string): MarkpubMarkdown {
 }
 
 /** Narrowing type-guard for an unknown open-union content member. */
-export function isMarkpubMarkdown(content: unknown): content is MarkpubMarkdown {
+export function isMarkpubMarkdown(
+  content: unknown,
+): content is MarkpubMarkdown {
   return (
-    typeof content === 'object' &&
+    typeof content === "object" &&
     content !== null &&
     (content as { $type?: unknown }).$type === MARKPUB_MARKDOWN
   )

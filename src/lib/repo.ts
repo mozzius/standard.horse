@@ -5,15 +5,13 @@
  * user's DID, so reads/writes target the signed-in user's own PDS.
  */
 
-import type { Client } from '@atproto/lex'
-import { getBlobCidString, type BlobRef } from '@atproto/lex'
-
-import publication from '../lexicons/site/standard/publication.js'
-import document from '../lexicons/site/standard/document.js'
-import { rgb } from '../lexicons/site/standard/theme/color.js'
-import type { Main as PublicationRecord } from '../lexicons/site/standard/publication.defs.js'
-import type { Main as DocumentRecord } from '../lexicons/site/standard/document.defs.js'
-import type { Main as BasicTheme } from '../lexicons/site/standard/theme/basic.defs.js'
+import { getBlobCidString, type BlobRef, type Client } from "@atproto/lex"
+import type { Main as DocumentRecord } from "../lexicons/site/standard/document.defs.js"
+import document from "../lexicons/site/standard/document.js"
+import type { Main as PublicationRecord } from "../lexicons/site/standard/publication.defs.js"
+import publication from "../lexicons/site/standard/publication.js"
+import type { Main as BasicTheme } from "../lexicons/site/standard/theme/basic.defs.js"
+import { rgb } from "../lexicons/site/standard/theme/color.js"
 
 export type { PublicationRecord, DocumentRecord, BasicTheme }
 
@@ -32,7 +30,7 @@ export interface Rgb {
 
 /** Extract the record key (last path segment) from an at:// URI. */
 export function atUriRkey(uri: string): string {
-  return uri.split('/').pop() ?? ''
+  return uri.split("/").pop() ?? ""
 }
 
 // ---- Publications ----
@@ -46,7 +44,12 @@ export async function listPublications(
   // signature (value: LexMap), while the iterator keeps the record value type.
   const out: RecordEntry<PublicationRecord>[] = []
   for (const r of res.records) {
-    out.push({ uri: r.uri, cid: r.cid, rkey: atUriRkey(r.uri), value: r.value })
+    out.push({
+      uri: r.uri,
+      cid: r.cid,
+      rkey: atUriRkey(r.uri),
+      value: r.value,
+    })
   }
   return out
 }
@@ -54,7 +57,7 @@ export async function listPublications(
 export async function putPublication(
   client: Client,
   rkey: string,
-  value: Omit<PublicationRecord, '$type'>,
+  value: Omit<PublicationRecord, "$type">,
 ): Promise<void> {
   await client.put(publication, value, { rkey })
 }
@@ -67,7 +70,12 @@ export async function listDocuments(
   const res = await client.list(document, { limit: 100 })
   const out: RecordEntry<DocumentRecord>[] = []
   for (const r of res.records) {
-    out.push({ uri: r.uri, cid: r.cid, rkey: atUriRkey(r.uri), value: r.value })
+    out.push({
+      uri: r.uri,
+      cid: r.cid,
+      rkey: atUriRkey(r.uri),
+      value: r.value,
+    })
   }
   return out
 }
@@ -79,7 +87,7 @@ export async function getDocument(
   const res = await client.get(document, { rkey })
   return {
     uri: res.uri,
-    cid: res.cid ?? '',
+    cid: res.cid ?? "",
     rkey,
     value: res.value,
   }
@@ -87,16 +95,17 @@ export async function getDocument(
 
 export async function createDocument(
   client: Client,
-  value: Omit<DocumentRecord, '$type'>,
+  value: Omit<DocumentRecord, "$type">,
+  rkey: string,
 ): Promise<{ uri: string; rkey: string }> {
-  const res = await client.create(document, value)
+  const res = await client.create(document, value, { rkey })
   return { uri: res.uri, rkey: atUriRkey(res.uri) }
 }
 
 export async function putDocument(
   client: Client,
   rkey: string,
-  value: Omit<DocumentRecord, '$type'>,
+  value: Omit<DocumentRecord, "$type">,
 ): Promise<void> {
   await client.put(document, value, { rkey })
 }
@@ -153,7 +162,7 @@ function buildColor(c: Rgb) {
 /** Build a site.standard.theme.basic object from four RGB colors. */
 export function buildBasicTheme(colors: ThemeColors): BasicTheme {
   return {
-    $type: 'site.standard.theme.basic',
+    $type: "site.standard.theme.basic",
     background: buildColor(colors.background),
     foreground: buildColor(colors.foreground),
     accent: buildColor(colors.accent),
@@ -162,12 +171,12 @@ export function buildBasicTheme(colors: ThemeColors): BasicTheme {
 }
 
 function readColor(value: unknown, fallback: Rgb): Rgb {
-  if (value && typeof value === 'object') {
+  if (value && typeof value === "object") {
     const v = value as Partial<Rgb>
     if (
-      typeof v.r === 'number' &&
-      typeof v.g === 'number' &&
-      typeof v.b === 'number'
+      typeof v.r === "number" &&
+      typeof v.g === "number" &&
+      typeof v.b === "number"
     ) {
       return { r: v.r, g: v.g, b: v.b }
     }
@@ -189,12 +198,12 @@ export function readBasicTheme(theme: BasicTheme | undefined): ThemeColors {
 }
 
 export function rgbToHex({ r, g, b }: Rgb): string {
-  const h = (n: number) => n.toString(16).padStart(2, '0')
+  const h = (n: number) => n.toString(16).padStart(2, "0")
   return `#${h(r)}${h(g)}${h(b)}`
 }
 
 export function hexToRgb(hex: string): Rgb {
-  const m = hex.replace('#', '')
+  const m = hex.replace("#", "")
   return {
     r: parseInt(m.slice(0, 2), 16) || 0,
     g: parseInt(m.slice(2, 4), 16) || 0,
@@ -204,16 +213,29 @@ export function hexToRgb(hex: string): Rgb {
 
 // ---- Misc ----
 
-/** Slugify a title into a URL path segment. */
-export function slugify(title: string): string {
-  return title
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .slice(0, 80)
-    .replace(/^-|-$/g, '')
+// base32-sortable alphabet used by atproto TIDs.
+const S32 = "234567abcdefghijklmnopqrstuvwxyz"
+let lastTidMicros = 0
+const tidClockId = Math.floor(Math.random() * 1024)
+
+/**
+ * Generate an atproto TID (timestamp identifier): 13 base32-sortable chars
+ * encoding microsecond time + a random clock id. Used as both the document's
+ * record key and its URL path, so posts get a stable, sortable slug without the
+ * user inventing one. (`@atproto/lex` exposes `isTidString` but no generator,
+ * and pnpm doesn't surface the transitive `@atproto/common-web`.)
+ */
+export function nextTid(): string {
+  let micros = Date.now() * 1000
+  if (micros <= lastTidMicros) micros = lastTidMicros + 1
+  lastTidMicros = micros
+  let n = (BigInt(micros) << 10n) | BigInt(tidClockId)
+  let out = ""
+  for (let i = 0; i < 13; i++) {
+    out = S32[Number(n & 31n)] + out
+    n >>= 5n
+  }
+  return out
 }
 
 /** Build a canonical URL to a document from its publication url + path. */
@@ -222,5 +244,5 @@ export function documentUrl(
   path: string | undefined,
 ): string | null {
   if (!pubUrl || !path) return null
-  return pubUrl.replace(/\/$/, '') + (path.startsWith('/') ? path : `/${path}`)
+  return pubUrl.replace(/\/$/, "") + (path.startsWith("/") ? path : `/${path}`)
 }
