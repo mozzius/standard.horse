@@ -238,6 +238,34 @@ export function nextTid(): string {
   return out
 }
 
+/**
+ * The path field is edited as a *template* that may contain the literal token
+ * `<rkey>`, which is substituted with the document's record key (a TID). This
+ * lets the path track the record key while matching whatever route shape the
+ * user's frontend uses (e.g. `/post/<rkey>`).
+ */
+export const PATH_RKEY_TOKEN = "<rkey>"
+export const DEFAULT_PATH_TEMPLATE = `/post/${PATH_RKEY_TOKEN}`
+
+/** Substitute `<rkey>` in a path template with the actual record key. */
+export function interpolatePath(template: string, rkey: string): string {
+  const t = template.trim() || DEFAULT_PATH_TEMPLATE
+  return t.replaceAll(PATH_RKEY_TOKEN, rkey)
+}
+
+/**
+ * Turn a stored path back into an editable template by replacing occurrences of
+ * the record key with the `<rkey>` token (so editing shows `/post/<rkey>` rather
+ * than the resolved TID). Falls back to the stored path if the rkey isn't found.
+ */
+export function templatizePath(
+  path: string | undefined,
+  rkey: string,
+): string {
+  if (!path) return DEFAULT_PATH_TEMPLATE
+  return rkey ? path.replaceAll(rkey, PATH_RKEY_TOKEN) : path
+}
+
 /** Build a canonical URL to a document from its publication url + path. */
 export function documentUrl(
   pubUrl: string | undefined,

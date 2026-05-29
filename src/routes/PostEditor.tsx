@@ -2,7 +2,7 @@ import { getBlobCidString, l } from "@atproto/lex"
 import { markdown } from "@codemirror/lang-markdown"
 import { languages } from "@codemirror/language-data"
 import CodeMirror, { EditorView } from "@uiw/react-codemirror"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import ReactMarkdown from "react-markdown"
 import { Link, useNavigate, useParams } from "react-router"
 import remarkGfm from "remark-gfm"
@@ -14,11 +14,14 @@ import {
 } from "../lib/markpub.ts"
 import {
   createDocument,
+  DEFAULT_PATH_TEMPLATE,
   deleteDocument,
   documentUrl,
   getDocument,
+  interpolatePath,
   nextTid,
   putDocument,
+  templatizePath,
   type DocumentRecord,
 } from "../lib/repo.ts"
 import { usePublication } from "../lib/usePublication.ts"
@@ -48,6 +51,7 @@ export function PostEditor() {
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [tags, setTags] = useState("")
+  const [pathTemplate, setPathTemplate] = useState(DEFAULT_PATH_TEMPLATE)
   const [body, setBody] = useState("")
 
   const [saving, setSaving] = useState(false)
@@ -67,6 +71,7 @@ export function PostEditor() {
         setTitle(v.title ?? "")
         setDescription(v.description ?? "")
         setTags((v.tags ?? []).join(", "))
+        setPathTemplate(templatizePath(v.path, rkey))
 
         let md = readMarkpubMarkdown(v.content)
         if (md == null) {
@@ -127,8 +132,8 @@ export function PostEditor() {
         body,
       ) as unknown as DocumentRecord["content"]
 
-      // The record key is a TID, and the URL path is that same TID — so posts
-      // get a stable, sortable slug without the user inventing one.
+      // The record key is a freshly-minted TID for new posts. The path is the
+      // user's template with `<rkey>` substituted for that key.
       const docRkey = rkey ?? nextTid()
 
       const value: Omit<DocumentRecord, "$type"> = {
@@ -137,7 +142,7 @@ export function PostEditor() {
         title: title.trim(),
         description: description.trim() || undefined,
         tags: tagList.length ? tagList : undefined,
-        path: existing?.path ?? `/${docRkey}`,
+        path: interpolatePath(pathTemplate, docRkey),
         content,
         textContent: stripMarkdown(body) || undefined,
         publishedAt: existing?.publishedAt ?? l.currentDatetimeString(),
@@ -201,6 +206,9 @@ export function PostEditor() {
   }
 
   const liveUrl = documentUrl(publication.value.url, existing?.path)
+  // For new posts the record key isn't minted until publish, so show a "…".
+  const resolvedPath = interpolatePath(pathTemplate, rkey ?? "…")
+  const pathDialog = pathDialogRef.current
 
   return (
     <div className="container">
@@ -281,6 +289,22 @@ export function PostEditor() {
             />
           </label>
         </div>
+
+        <label className="field">
+          <span className="field__label">Path</span>
+          <input
+            className="input"
+            value={pathTemplate}
+            onChange={(e) => setPathTemplate(e.target.value)}
+            placeholder={DEFAULT_PATH_TEMPLATE}
+            spellCheck={false}
+            autoCapitalize="none"
+          />
+          <span className="muted" style={{ fontSize: "0.74rem" }}>
+            <code>&lt;rkey&gt;</code> is replaced with the post’s record key →{" "}
+            <code>{resolvedPath}</code>
+          </span>
+        </label>
 
         <div className="editor-split">
           <div className="editor-pane">
