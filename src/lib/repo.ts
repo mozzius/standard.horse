@@ -131,12 +131,44 @@ export async function uploadImageBlob(
   return res.body.blob
 }
 
-/** Resolve a blob ref on the given repo to a fetchable PDS URL. */
-export function blobUrl(_client: Client, did: string, ref: BlobRef): string {
+/**
+ * Build a public, durable URL for a blob: `<pds>/xrpc/com.atproto.sync.getBlob`.
+ * getBlob is an unauthenticated read served by the repo's own PDS, so these URLs
+ * work anywhere (in our preview, and on the user's published site).
+ */
+export function blobUrl(pdsUrl: string, did: string, ref: BlobRef): string {
   const cid = getBlobCidString(ref)
-  // com.atproto.sync.getBlob is a public read endpoint; the AppView/relay also
-  // serves a CDN-backed copy, which is fine for displaying icons.
-  return `https://bsky.social/xrpc/com.atproto.sync.getBlob?did=${encodeURIComponent(did)}&cid=${encodeURIComponent(cid)}`
+  const base = pdsUrl.replace(/\/$/, "")
+  return `${base}/xrpc/com.atproto.sync.getBlob?did=${encodeURIComponent(did)}&cid=${encodeURIComponent(cid)}`
+}
+
+/**
+ * Resolve a DID's PDS service endpoint from its DID document. Used to build
+ * getBlob URLs that point at the user's actual host (e.g.
+ * `https://amanita.us-east.host.bsky.network`).
+ */
+export async function resolvePdsUrl(did: string): Promise<string | null> {
+  try {
+    let doc: {
+      service?: { id?: string; type?: string; serviceEndpoint?: unknown }[]
+    }
+    if (did.startsWith("did:plc:")) {
+      doc = await fetch(`https://plc.directory/${did}`).then((r) => r.json())
+    } else if (did.startsWith("did:web:")) {
+      const host = decodeURIComponent(did.slice("did:web:".length))
+      doc = await fetch(`https://${host}/.well-known/did.json`).then((r) =>
+        r.json(),
+      )
+    } else {
+      return null
+    }
+    const svc = doc.service?.find(
+      (s) => s.id === "#atproto_pds" || s.type === "AtprotoPersonalDataServer",
+    )
+    return typeof svc?.serviceEndpoint === "string" ? svc.serviceEndpoint : null
+  } catch {
+    return null
+  }
 }
 
 // ---- Theme helpers ----

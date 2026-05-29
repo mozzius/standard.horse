@@ -24,7 +24,7 @@ const COLOR_FIELDS: { key: keyof ThemeColors; label: string; hint: string }[] =
   ]
 
 export function PublicationSettings() {
-  const { client, did } = useAuth()
+  const { client, did, pdsUrl } = useAuth()
   const { publication, loading, error, reload } = usePublication()
 
   const [name, setName] = useState("")
@@ -73,8 +73,8 @@ export function PublicationSettings() {
   }
 
   const existingIconUrl =
-    publication.value.icon && did
-      ? blobUrl(client!, did, publication.value.icon)
+    publication.value.icon && did && pdsUrl
+      ? blobUrl(pdsUrl, did, publication.value.icon)
       : null
   const previewIconUrl = iconFile
     ? URL.createObjectURL(iconFile)

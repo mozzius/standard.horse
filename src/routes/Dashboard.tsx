@@ -22,7 +22,7 @@ function formatDate(iso: string | undefined): string {
 }
 
 export function Dashboard() {
-  const { client, did } = useAuth()
+  const { client, did, pdsUrl } = useAuth()
   const { publication, loading: pubLoading, error: pubError } = usePublication()
   const [docs, setDocs] = useState<RecordEntry<DocumentRecord>[] | null>(null)
   const [docsError, setDocsError] = useState<string | null>(null)
@@ -105,7 +105,8 @@ export function Dashboard() {
   }
 
   const pub = publication.value
-  const iconUrl = pub.icon && did ? blobUrl(client!, did, pub.icon) : null
+  const iconUrl =
+    pub.icon && did && pdsUrl ? blobUrl(pdsUrl, did, pub.icon) : null
 
   return (
     <div className="container">
