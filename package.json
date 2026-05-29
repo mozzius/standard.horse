@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "lex:install": "lex install site.standard.publication site.standard.document",
     "lex:build": "lex build --index-file --override",
+    "gen:og": "node scripts/gen-og.mjs",
     "postinstall": "lex build --index-file --override",
     "prebuild": "lex build --index-file --override",
     "format:check": "prettier --check .",
@@ -37,10 +38,12 @@
     "@fontsource/ibm-plex-sans": "^5.2.8",
     "@fontsource/newsreader": "^5.2.10",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
+    "@resvg/resvg-js": "^2.6.2",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",
     "prettier": "^3.8.3",
+    "satori": "^0.26.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.14"
   }
