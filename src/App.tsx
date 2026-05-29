@@ -20,7 +20,7 @@ const DATELINE = new Date().toLocaleDateString("en-US", {
 })
 
 function Masthead() {
-  const { status, signOut } = useAuth()
+  const { status, signOut, profile } = useAuth()
   const signedIn = status === "signed-in"
   return (
     <header className="masthead">
@@ -41,6 +41,16 @@ function Masthead() {
             <NavLink to="/settings">Masthead &amp; Theme</NavLink>
             <NavLink to="/post/new">Write</NavLink>
             <span className="masthead__spacer" />
+            {profile?.avatar && (
+              <img
+                className="masthead__avatar"
+                src={profile.avatar}
+                alt={profile.handle ? `@${profile.handle}` : ""}
+                title={profile.handle ? `@${profile.handle}` : undefined}
+                width={26}
+                height={26}
+              />
+            )}
             <a
               href="#sign-out"
               onClick={(e) => {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router"
 import { useAuth } from "../auth/AuthProvider.tsx"
+import { blobImageUrl } from "../lib/bsky.ts"
 import {
-  blobUrl,
   documentUrl,
   listDocuments,
   type DocumentRecord,
@@ -65,9 +65,9 @@ function PublicationSection({
   pub: RecordEntry<PublicationRecord>
   docs: RecordEntry<DocumentRecord>[]
 }) {
-  const { did, pdsUrl } = useAuth()
+  const { did } = useAuth()
   const v = pub.value
-  const iconUrl = v.icon && did && pdsUrl ? blobUrl(pdsUrl, did, v.icon) : null
+  const iconUrl = v.icon && did ? blobImageUrl(did, v.icon, "avatar") : null
 
   return (
     <section style={{ marginBottom: 48 }}>

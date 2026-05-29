@@ -14,8 +14,8 @@ import {
   markpubTextBlob,
   readMarkpubMarkdown,
 } from "../lib/markpub.ts"
+import { blobImageUrl } from "../lib/bsky.ts"
 import {
-  blobUrl,
   createDocument,
   DEFAULT_PATH_TEMPLATE,
   deleteDocument,
@@ -34,7 +34,7 @@ export function PostEditor() {
   const { rkey } = useParams<{ rkey: string }>()
   const isNew = !rkey
   const navigate = useNavigate()
-  const { client, did, pdsUrl } = useAuth()
+  const { client, did } = useAuth()
   const { publications, loading: pubLoading } = usePublications()
   const [searchParams] = useSearchParams()
 
@@ -333,8 +333,8 @@ export function PostEditor() {
   const resolvedPath = interpolatePath(pathTemplate, rkey ?? "…")
   const coverPreviewUrl =
     coverObjectUrl ??
-    (!coverRemoved && existing?.coverImage && did && pdsUrl
-      ? blobUrl(pdsUrl, did, existing.coverImage)
+    (!coverRemoved && existing?.coverImage && did
+      ? blobImageUrl(did, existing.coverImage, "feed_fullsize")
       : null)
 
   return (

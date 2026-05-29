@@ -12,7 +12,7 @@ import {
   useState,
   type ReactNode,
 } from "react"
-import { resolvePdsUrl } from "../lib/repo.ts"
+import { fetchBlueskyProfile, type BlueskyProfile } from "../lib/bsky.ts"
 import { createOAuthClient } from "./client.ts"
 
 type AuthStatus = "loading" | "signed-in" | "signed-out"
@@ -22,8 +22,8 @@ interface AuthState {
   did: string | null
   /** Authenticated lex Client, ready for repo/blob calls. Null until signed in. */
   client: Client | null
-  /** The user's PDS endpoint, for building public getBlob URLs. */
-  pdsUrl: string | null
+  /** The signed-in user's Bluesky profile (avatar/handle), once loaded. */
+  profile: BlueskyProfile | null
   error: string | null
   signIn: (handle: string) => Promise<void>
   signOut: () => Promise<void>
@@ -59,7 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<AuthStatus>("loading")
   const [did, setDid] = useState<string | null>(null)
   const [client, setClient] = useState<Client | null>(null)
-  const [pdsUrl, setPdsUrl] = useState<string | null>(null)
+  const [profile, setProfile] = useState<BlueskyProfile | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   function adopt(session: OAuthSession | null) {
@@ -68,14 +68,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setDid(session.did)
       setClient(new Client(session))
       setStatus("signed-in")
-      // Resolve the PDS host (for getBlob URLs) in the background.
-      void resolvePdsUrl(session.did).then((url) => {
-        if (sessionRef.current === session) setPdsUrl(url)
+      // Load the user's Bluesky profile (avatar/handle) in the background.
+      void fetchBlueskyProfile(session.did).then((p) => {
+        if (sessionRef.current === session) setProfile(p)
       })
     } else {
       setDid(null)
       setClient(null)
-      setPdsUrl(null)
+      setProfile(null)
       setStatus("signed-out")
     }
   }
@@ -106,7 +106,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       status,
       did,
       client,
-      pdsUrl,
+      profile,
       error,
       async signIn(handle: string) {
         const oauth = oauthRef.current
@@ -125,7 +125,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       },
     }),
-    [status, did, client, pdsUrl, error],
+    [status, did, client, profile, error],
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

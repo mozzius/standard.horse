@@ -3,8 +3,8 @@ import { useEffect, useMemo, useState } from "react"
 import { HexColorPicker } from "react-colorful"
 import { Link, useParams } from "react-router"
 import { useAuth } from "../auth/AuthProvider.tsx"
+import { blobImageUrl } from "../lib/bsky.ts"
 import {
-  blobUrl,
   buildBasicTheme,
   hexToRgb,
   putPublication,
@@ -24,7 +24,7 @@ const COLOR_FIELDS: { key: keyof ThemeColors; label: string; hint: string }[] =
   ]
 
 export function PublicationSettings() {
-  const { client, did, pdsUrl } = useAuth()
+  const { client, did } = useAuth()
   const { rkey } = useParams<{ rkey: string }>()
   const { publications, loading, error, reload } = usePublications()
   // Edit the publication named in the route, falling back to the first.
@@ -79,8 +79,8 @@ export function PublicationSettings() {
   }
 
   const existingIconUrl =
-    publication.value.icon && did && pdsUrl
-      ? blobUrl(pdsUrl, did, publication.value.icon)
+    publication.value.icon && did
+      ? blobImageUrl(did, publication.value.icon, "avatar")
       : null
   const previewIconUrl = iconFile
     ? URL.createObjectURL(iconFile)
