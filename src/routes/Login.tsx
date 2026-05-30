@@ -25,7 +25,7 @@ export function Login() {
     <div className="container">
       <div className="center-narrow">
         <p className="kicker">Atmospheric editing</p>
-        <h1>Your printing press for standard.site.</h1>
+        <h1>Your printing press for standard.site</h1>
         <p className="muted">
           standard.horse is a plain-spoken editor for your{" "}
           <a href="https://standard.site" target="_blank" rel="noreferrer">
