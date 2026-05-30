@@ -20,6 +20,7 @@ export const markpubProvider: ContentProvider = {
   id: "markpub",
   label: "Markdown (markpub)",
   contentType: MARKPUB_MARKDOWN,
+  supportsImages: false,
   matches: isMarkpubMarkdown,
 
   async toMarkdown(content: unknown, ctx: ReadCtx) {

@@ -307,6 +307,7 @@ export const leafletProvider: ContentProvider = {
   id: "leaflet",
   label: "Leaflet",
   contentType: CONTENT,
+  supportsImages: true,
   matches: (c) => (c as Obj | null)?.$type === CONTENT,
 
   async toMarkdown(content: unknown, ctx: ReadCtx) {

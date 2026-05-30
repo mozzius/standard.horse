@@ -38,6 +38,9 @@ export interface ContentProvider {
   label: string
   /** The content object's `$type` this provider reads and writes. */
   contentType: string
+  /** Whether in-post image upload works. False for markpub: it stores only a
+   * markdown string with no blob slot, so an uploaded blob would be GC'd. */
+  supportsImages: boolean
   /** True if this provider handles the given stored content object. */
   matches(content: unknown): boolean
   /** Read stored content into editable markdown (may fetch a body blob). */

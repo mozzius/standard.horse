@@ -3,13 +3,14 @@ import { markdown } from "@codemirror/lang-markdown"
 import { languages } from "@codemirror/language-data"
 import CodeMirror, { EditorView } from "@uiw/react-codemirror"
 import { useEffect, useMemo, useRef, useState } from "react"
-import ReactMarkdown from "react-markdown"
+import ReactMarkdown, { type Components } from "react-markdown"
 import { Link, useNavigate, useParams, useSearchParams } from "react-router"
 import remarkGfm from "remark-gfm"
 import { useAuth } from "../auth/AuthProvider.tsx"
 import { blobImageUrl, cdnImageUrl } from "../lib/bsky.ts"
 import { markdownToPlaintext } from "../lib/markdown.ts"
 import {
+  cidFromUrl,
   defaultProvider,
   detectProvider,
   providerById,
@@ -92,6 +93,14 @@ export function PostEditor() {
   // In-post images uploaded this session, keyed by blob CID, so the provider
   // can reattach their blob refs on save.
   const uploadedImagesRef = useRef<Map<string, UploadedImage>>(new Map())
+  // Local object-URL previews for those uploads, keyed by CID. The bsky CDN
+  // can't serve a blob until it's referenced by a committed record, so until
+  // the post is saved we render the local file instead of the (404ing) CDN URL.
+  const previewUrlsRef = useRef<Map<string, string>>(new Map())
+  useEffect(() => {
+    const urls = previewUrlsRef.current
+    return () => urls.forEach((u) => URL.revokeObjectURL(u))
+  }, [])
 
   // Cover image: a newly-picked file to upload, or a flag to drop the existing
   // one. Otherwise the document's existing coverImage blob is kept.
@@ -203,6 +212,19 @@ export function PostEditor() {
     [],
   )
 
+  // Preview renderer: swap a just-uploaded image's CDN URL (which 404s until
+  // the blob is committed to the record) for its local object-URL preview.
+  const mdComponents = useMemo<Components>(
+    () => ({
+      img({ node: _node, src, alt, ...rest }) {
+        const cid = typeof src === "string" ? cidFromUrl(src) : null
+        const local = cid ? previewUrlsRef.current.get(cid) : undefined
+        return <img {...rest} src={local ?? src} alt={alt ?? ""} />
+      },
+    }),
+    [],
+  )
+
   // Derive dirtiness by diffing form state against the loaded record — no
   // separate isDirty state to keep in sync. For a new post, "dirty" means the
   // user has entered anything worth saving.
@@ -283,6 +305,7 @@ export function PostEditor() {
           mimeType: file.type,
           alt,
         })
+        previewUrlsRef.current.set(cid, URL.createObjectURL(file))
         const url = did ? cdnImageUrl(did, cid, "feed_fullsize") : ""
         insertAtCursor(`![${alt}](${url})`)
       },
@@ -428,6 +451,8 @@ export function PostEditor() {
       ? blobImageUrl(did, existing.coverImage, "feed_fullsize")
       : null)
   const lost = editableDoc?.lost ?? []
+  // markpub can't reference image blobs, so in-post upload is disabled there.
+  const canUploadImages = !!activeProvider?.supportsImages
 
   return (
     <div className="container">
@@ -626,27 +651,30 @@ export function PostEditor() {
             <div className="editor-pane__head">
               <span>Markdown · GFM</span>
               <span className="toolbar__spacer" />
-              <label
-                className="editor-pane__action"
-                title="Insert an image (or drag &amp; drop / paste into the editor)"
-              >
-                {uploadingImage ? "Uploading…" : "+ Image"}
-                <input
-                  type="file"
-                  accept="image/*"
-                  hidden
-                  disabled={uploadingImage}
-                  onChange={(e) => {
-                    const f = e.target.files?.[0]
-                    if (f) void handleImageFile(f)
-                    e.target.value = ""
-                  }}
-                />
-              </label>
+              {canUploadImages && (
+                <label
+                  className="editor-pane__action"
+                  title="Insert an image (or drag &amp; drop / paste into the editor)"
+                >
+                  {uploadingImage ? "Uploading…" : "+ Image"}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    disabled={uploadingImage}
+                    onChange={(e) => {
+                      const f = e.target.files?.[0]
+                      if (f) void handleImageFile(f)
+                      e.target.value = ""
+                    }}
+                  />
+                </label>
+              )}
             </div>
             <div
               className="cm-host"
               onDrop={(e) => {
+                if (!canUploadImages) return
                 const f = e.dataTransfer.files?.[0]
                 if (f && f.type.startsWith("image/")) {
                   e.preventDefault()
@@ -654,6 +682,7 @@ export function PostEditor() {
                 }
               }}
               onPaste={(e) => {
+                if (!canUploadImages) return
                 const f = [...e.clipboardData.items]
                   .find((i) => i.type.startsWith("image/"))
                   ?.getAsFile()
@@ -678,7 +707,7 @@ export function PostEditor() {
           <div className="editor-pane">
             <div className="editor-pane__head">Preview</div>
             <article className="prose">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
                 {body || "*Nothing written yet.*"}
               </ReactMarkdown>
             </article>

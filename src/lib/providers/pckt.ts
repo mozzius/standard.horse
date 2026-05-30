@@ -311,6 +311,7 @@ export const pcktProvider: ContentProvider = {
   id: "pckt",
   label: "pckt",
   contentType: CONTENT,
+  supportsImages: true,
   matches: (c) => (c as Obj | null)?.$type === CONTENT,
 
   async toMarkdown(content: unknown, ctx: ReadCtx) {
