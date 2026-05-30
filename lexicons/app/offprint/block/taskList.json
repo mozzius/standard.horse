@@ -1,0 +1,52 @@
+{
+  "id": "app.offprint.block.taskList",
+  "defs": {
+    "main": {
+      "type": "object",
+      "required": [
+        "children"
+      ],
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": {
+            "ref": "#taskItem",
+            "type": "ref"
+          },
+          "required": true,
+          "description": "Task items"
+        }
+      }
+    },
+    "taskItem": {
+      "type": "object",
+      "required": [
+        "content",
+        "checked"
+      ],
+      "properties": {
+        "checked": {
+          "type": "boolean",
+          "required": true,
+          "description": "Whether the task is completed"
+        },
+        "content": {
+          "ref": "app.offprint.block.text",
+          "type": "ref",
+          "required": true,
+          "description": "Text content of the task item"
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "ref": "#taskItem",
+            "type": "ref"
+          },
+          "description": "Nested task items"
+        }
+      }
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1
+}

@@ -1,0 +1,29 @@
+{
+  "id": "app.offprint.block.imageCarousel",
+  "defs": {
+    "main": {
+      "type": "object",
+      "required": [
+        "images"
+      ],
+      "properties": {
+        "images": {
+          "type": "array",
+          "items": {
+            "ref": "app.offprint.block.imageGrid#gridImage",
+            "type": "ref"
+          },
+          "maxLength": 6,
+          "minLength": 2,
+          "description": "Array of images in the carousel (2-6)"
+        },
+        "caption": {
+          "type": "string",
+          "description": "Carousel caption"
+        }
+      }
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1
+}

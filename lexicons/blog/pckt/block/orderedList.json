@@ -1,0 +1,29 @@
+{
+  "id": "blog.pckt.block.orderedList",
+  "defs": {
+    "main": {
+      "type": "object",
+      "required": [
+        "content"
+      ],
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Starting number for the ordered list (default: 1)"
+        },
+        "content": {
+          "type": "array",
+          "items": {
+            "ref": "blog.pckt.block.listItem",
+            "type": "ref"
+          },
+          "description": "Array of list items"
+        }
+      }
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1,
+  "description": "Ordered numbered list. Each item can contain rich content including nested lists."
+}

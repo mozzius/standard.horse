@@ -388,6 +388,9 @@ select {
   border-left: 1px solid var(--rule);
 }
 .editor-pane__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 0.68rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -395,6 +398,16 @@ select {
   padding: 8px 14px;
   border-bottom: 1px solid var(--rule);
   background: var(--paper-edge);
+}
+/* "+ Image" upload trigger in the editor head (a styled <label> over a hidden
+   file input). */
+.editor-pane__action {
+  cursor: pointer;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+.editor-pane__action:hover {
+  text-decoration: underline;
 }
 /* Make CodeMirror fill the whole grid cell so the editor column is at least as
    tall as the rendered preview next to it. The @uiw wrapper, the editor and the

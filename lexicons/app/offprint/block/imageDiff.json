@@ -1,0 +1,42 @@
+{
+  "id": "app.offprint.block.imageDiff",
+  "defs": {
+    "main": {
+      "type": "object",
+      "required": [
+        "images"
+      ],
+      "properties": {
+        "width": {
+          "type": "string",
+          "description": "CSS width value"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "ref": "app.offprint.block.imageGrid#gridImage",
+            "type": "ref"
+          },
+          "maxLength": 2,
+          "minLength": 2,
+          "description": "Exactly 2 images for comparison [before, after]"
+        },
+        "caption": {
+          "type": "string",
+          "description": "Comparison caption"
+        },
+        "alignment": {
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
+          "type": "string",
+          "description": "Horizontal alignment"
+        }
+      }
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1
+}

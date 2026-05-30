@@ -1,4 +1,4 @@
-import { l } from "@atproto/lex"
+import { getBlobCidString, l } from "@atproto/lex"
 import { markdown } from "@codemirror/lang-markdown"
 import { languages } from "@codemirror/language-data"
 import CodeMirror, { EditorView } from "@uiw/react-codemirror"
@@ -7,13 +7,15 @@ import ReactMarkdown from "react-markdown"
 import { Link, useNavigate, useParams, useSearchParams } from "react-router"
 import remarkGfm from "remark-gfm"
 import { useAuth } from "../auth/AuthProvider.tsx"
-import { blobImageUrl } from "../lib/bsky.ts"
+import { blobImageUrl, cdnImageUrl } from "../lib/bsky.ts"
 import { markdownToPlaintext } from "../lib/markdown.ts"
 import {
-  buildMarkpubContent,
-  isMarkpubMarkdown,
-  readMarkpubMarkdown,
-} from "../lib/markpub.ts"
+  defaultProvider,
+  detectProvider,
+  providerById,
+  providers,
+  type UploadedImage,
+} from "../lib/providers/index.ts"
 import {
   errorMessage,
   useDeleteDocument,
@@ -21,6 +23,7 @@ import {
   useEditableDocument,
   usePublications,
   useSaveDocument,
+  useUploadImage,
 } from "../lib/queries.ts"
 import {
   DEFAULT_PATH_TEMPLATE,
@@ -31,6 +34,20 @@ import {
   templatizePath,
   type DocumentRecord,
 } from "../lib/repo.ts"
+
+/** Read an image file's pixel dimensions (for the stored aspect ratio). */
+async function readImageSize(
+  file: File,
+): Promise<{ width: number; height: number }> {
+  try {
+    const bmp = await createImageBitmap(file)
+    const size = { width: bmp.width, height: bmp.height }
+    bmp.close()
+    return size
+  } catch {
+    return { width: 0, height: 0 }
+  }
+}
 
 export function PostEditor() {
   const { rkey } = useParams<{ rkey: string }>()
@@ -62,6 +79,7 @@ export function PostEditor() {
     isPending: deleting,
     error: deleteErr,
   } = useDeleteDocument()
+  const { mutate: uploadImage, isPending: uploadingImage } = useUploadImage()
 
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
@@ -69,6 +87,11 @@ export function PostEditor() {
   const [pathTemplate, setPathTemplate] = useState(DEFAULT_PATH_TEMPLATE)
   const [body, setBody] = useState("")
   const pathDialogRef = useRef<HTMLDialogElement>(null)
+  // The live CodeMirror view, so we can insert uploaded images at the cursor.
+  const viewRef = useRef<EditorView | null>(null)
+  // In-post images uploaded this session, keyed by blob CID, so the provider
+  // can reattach their blob refs on save.
+  const uploadedImagesRef = useRef<Map<string, UploadedImage>>(new Map())
 
   // Cover image: a newly-picked file to upload, or a flag to drop the existing
   // one. Otherwise the document's existing coverImage blob is kept.
@@ -113,11 +136,46 @@ export function PostEditor() {
     )
   }, [publications, existing, selectedPubRkey])
 
+  // New posts default to whatever richtext format the other posts in the target
+  // publication use, so a post lands in a format the blog's reader understands.
+  const siblingProviderId = useMemo(() => {
+    if (!isNew || !publication || !allDocs) return null
+    const counts = new Map<string, number>()
+    for (const d of allDocs) {
+      if (!documentBelongsTo(publication, d.value.site)) continue
+      const p = detectProvider(d.value.content)
+      if (p) counts.set(p.id, (counts.get(p.id) ?? 0) + 1)
+    }
+    let best: string | null = null
+    let most = 0
+    for (const [id, c] of counts) if (c > most) ((best = id), (most = c))
+    return best
+  }, [isNew, publication, allDocs])
+
+  // The format this post is read from / written in. New posts: the dropdown
+  // selection, else the sibling default, else markpub. Existing posts: whatever
+  // provider read them (null = an unrecognised format → read-only below).
+  const [selectedProviderId, setSelectedProviderId] = useState<string | null>(
+    null,
+  )
+  const activeProvider = useMemo(() => {
+    if (isNew)
+      return (
+        providerById(
+          selectedProviderId ?? siblingProviderId ?? defaultProvider.id,
+        ) ?? defaultProvider
+      )
+    if (editableDoc?.providerId)
+      return providerById(editableDoc.providerId) ?? defaultProvider
+    // Existing post with content we couldn't read → unknown format.
+    return existing?.content ? null : defaultProvider
+  }, [isNew, selectedProviderId, siblingProviderId, editableDoc, existing])
+
   // Seed the editable form fields from the loaded document. The query result is
   // the source of truth for `existing`; this only mirrors it into the mutable
   // inputs. We seed once per record so a refetch (e.g. after save) doesn't
-  // clobber edits — except that if a list-cache placeholder gets upgraded to a
-  // richer body (a text blob) we adopt it, as long as the user hasn't typed yet.
+  // clobber edits — except that a list-cache placeholder upgraded to a richer
+  // body is adopted, as long as the user hasn't typed yet.
   const seededUriRef = useRef<string | null>(null)
   const seededBodyRef = useRef("")
   useEffect(() => {
@@ -139,27 +197,6 @@ export function PostEditor() {
       setBody(editableDoc.markdown)
     }
   }, [editableDoc, rkey, body])
-
-  // Names the richtext formats used by existing posts in the target publication
-  // when none of them are markpub — i.e. the provider stores posts in a format
-  // we don't write, so the post we're about to publish may not render there.
-  const unsupportedSiblingFormats = useMemo(() => {
-    if (!isNew || !publication || !allDocs) return null
-    const withContent = allDocs.filter(
-      (d) => documentBelongsTo(publication, d.value.site) && !!d.value.content,
-    )
-    if (withContent.length === 0) return null
-    if (withContent.some((d) => isMarkpubMarkdown(d.value.content))) return null
-    return [
-      ...new Set(
-        withContent.map(
-          (d) =>
-            (d.value.content as { $type?: string }).$type ??
-            "an unknown format",
-        ),
-      ),
-    ]
-  }, [isNew, publication, allDocs])
 
   const cmExtensions = useMemo(
     () => [markdown({ codeLanguages: languages }), EditorView.lineWrapping],
@@ -188,8 +225,6 @@ export function PostEditor() {
       )
     }
 
-    const baseBody =
-      readMarkpubMarkdown(existing.content) ?? existing.textContent ?? ""
     const baseTags = existing.tags ?? []
     const basePath = templatizePath(existing.path, rkey ?? "")
 
@@ -198,7 +233,7 @@ export function PostEditor() {
       title.trim() !== (existing.title ?? "") ||
       description.trim() !== (existing.description ?? "") ||
       pathTemplate.trim() !== basePath ||
-      body !== baseBody ||
+      body !== seededBodyRef.current ||
       JSON.stringify(tagList) !== JSON.stringify(baseTags)
     )
   }, [
@@ -213,10 +248,52 @@ export function PostEditor() {
     coverRemoved,
   ])
 
+  /** Insert markdown at the cursor (or append if the editor isn't mounted). */
+  function insertAtCursor(text: string) {
+    const view = viewRef.current
+    if (!view) {
+      setBody((b) => (b ? `${b}\n\n${text}` : text))
+      return
+    }
+    const { from, to } = view.state.selection.main
+    view.dispatch({
+      changes: { from, to, insert: text },
+      selection: { anchor: from + text.length },
+    })
+    view.focus()
+  }
+
+  /** Upload an image file and insert a markdown image referencing its blob. */
+  async function handleImageFile(file: File) {
+    setFormError(null)
+    if (!file.type.startsWith("image/")) return
+    if (file.size > 1_000_000) {
+      setFormError("Images must be under 1MB.")
+      return
+    }
+    const { width, height } = await readImageSize(file)
+    const alt = file.name.replace(/\.[^.]+$/, "")
+    uploadImage(file, {
+      onSuccess: (ref) => {
+        const cid = getBlobCidString(ref)
+        uploadedImagesRef.current.set(cid, {
+          ref,
+          width,
+          height,
+          mimeType: file.type,
+          alt,
+        })
+        const url = did ? cdnImageUrl(did, cid, "feed_fullsize") : ""
+        insertAtCursor(`![${alt}](${url})`)
+      },
+      onError: (e) => setFormError(errorMessage(e, "Failed to upload image.")),
+    })
+  }
+
   function onSave(e: React.FormEvent) {
     e.preventDefault()
     setFormError(null)
-    if (!publication) return
+    if (!publication || !activeProvider) return
     if (!title.trim()) {
       setFormError("A headline is required.")
       return
@@ -227,9 +304,13 @@ export function PostEditor() {
       .map((t) => t.trim())
       .filter(Boolean)
 
-    const content = buildMarkpubContent(
-      body,
-    ) as unknown as DocumentRecord["content"]
+    // Convert the edited markdown into the active format's content object,
+    // reattaching existing/uploaded image blobs by CID.
+    const content = activeProvider.fromMarkdown(body, {
+      did,
+      previousContent: existing?.content,
+      uploadedImages: uploadedImagesRef.current,
+    }) as unknown as DocumentRecord["content"]
 
     // The record key is a freshly-minted TID for new posts. The path is the
     // user's template with `<rkey>` substituted for that key.
@@ -301,12 +382,11 @@ export function PostEditor() {
     )
   }
 
-  // This editor only understands markpub (GFM markdown). If an existing post's
-  // content is some other richtext format, refuse to edit it — saving would
-  // overwrite the original content with markpub and lose it.
-  const content = existing?.content
-  if (content && !isMarkpubMarkdown(content)) {
-    const format = (content as { $type?: string }).$type ?? "an unknown format"
+  // An existing post whose content is a format no provider understands: editing
+  // would overwrite the original content, so keep it read-only.
+  if (!isNew && existing?.content && !activeProvider) {
+    const format =
+      (existing.content as { $type?: string }).$type ?? "an unknown format"
     const otherUrl = documentUrl(publication.value.url, existing?.path)
     return (
       <div className="container">
@@ -331,9 +411,8 @@ export function PostEditor() {
           <h2 style={{ marginTop: 0 }}>{existing?.title || "Untitled"}</h2>
           <p className="muted">
             This post’s content is stored as <code>{format}</code>, which
-            standard.horse can’t edit yet — it only handles markpub (
-            <code>at.markpub.markdown</code>) markdown. Editing it here would
-            overwrite the original content, so it’s read-only.
+            standard.horse doesn’t support yet. Editing it here would overwrite
+            the original content, so it’s read-only.
           </p>
         </div>
       </div>
@@ -348,6 +427,7 @@ export function PostEditor() {
     (!coverRemoved && existing?.coverImage && did
       ? blobImageUrl(did, existing.coverImage, "feed_fullsize")
       : null)
+  const lost = editableDoc?.lost ?? []
 
   return (
     <div className="container">
@@ -390,6 +470,20 @@ export function PostEditor() {
             ))}
           </select>
         )}
+        {isNew && (
+          <select
+            className="select"
+            value={activeProvider?.id ?? defaultProvider.id}
+            onChange={(e) => setSelectedProviderId(e.target.value)}
+            title="Richtext format to save this post in"
+          >
+            {providers.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.label}
+              </option>
+            ))}
+          </select>
+        )}
         <button
           type="submit"
           form="post-form"
@@ -402,21 +496,19 @@ export function PostEditor() {
 
       {saveError && <div className="error-banner">{saveError}</div>}
 
-      {unsupportedSiblingFormats && (
+      {lost.length > 0 && (
         <div className="admonition admonition--warn" role="note">
-          <p className="admonition__title">Format mismatch</p>
+          <p className="admonition__title">Some content can’t be edited here</p>
           <p style={{ margin: 0 }}>
-            The other posts in <strong>{publication.value.name}</strong> are
-            stored as{" "}
-            {unsupportedSiblingFormats.map((f, i) => (
+            This {activeProvider?.label ?? ""} post contains{" "}
+            {lost.map((f, i) => (
               <span key={f}>
-                {i > 0 && ", "}
-                <code>{f}</code>
+                {i > 0 && (i === lost.length - 1 ? " and " : ", ")}
+                <strong>{f}</strong>
               </span>
-            ))}
-            , not markpub. standard.horse writes posts as markdown (
-            <code>at.markpub.markdown</code>), so your blog provider may not
-            support this richtext format.
+            ))}{" "}
+            that markdown can’t represent. You can still edit the text, but
+            saving will drop {lost.length > 1 ? "those" : "that"}.
           </p>
         </div>
       )}
@@ -531,13 +623,54 @@ export function PostEditor() {
 
         <div className="editor-split">
           <div className="editor-pane">
-            <div className="editor-pane__head">Markdown · GFM</div>
-            <div className="cm-host">
+            <div className="editor-pane__head">
+              <span>Markdown · GFM</span>
+              <span className="toolbar__spacer" />
+              <label
+                className="editor-pane__action"
+                title="Insert an image (or drag &amp; drop / paste into the editor)"
+              >
+                {uploadingImage ? "Uploading…" : "+ Image"}
+                <input
+                  type="file"
+                  accept="image/*"
+                  hidden
+                  disabled={uploadingImage}
+                  onChange={(e) => {
+                    const f = e.target.files?.[0]
+                    if (f) void handleImageFile(f)
+                    e.target.value = ""
+                  }}
+                />
+              </label>
+            </div>
+            <div
+              className="cm-host"
+              onDrop={(e) => {
+                const f = e.dataTransfer.files?.[0]
+                if (f && f.type.startsWith("image/")) {
+                  e.preventDefault()
+                  void handleImageFile(f)
+                }
+              }}
+              onPaste={(e) => {
+                const f = [...e.clipboardData.items]
+                  .find((i) => i.type.startsWith("image/"))
+                  ?.getAsFile()
+                if (f) {
+                  e.preventDefault()
+                  void handleImageFile(f)
+                }
+              }}
+            >
               <CodeMirror
                 value={body}
                 height="100%"
                 extensions={cmExtensions}
                 onChange={setBody}
+                onCreateEditor={(view) => {
+                  viewRef.current = view
+                }}
                 basicSetup={{ lineNumbers: false, foldGutter: false }}
               />
             </div>

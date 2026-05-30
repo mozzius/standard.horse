@@ -1,0 +1,71 @@
+{
+  "id": "app.offprint.block.image",
+  "defs": {
+    "main": {
+      "type": "object",
+      "properties": {
+        "alt": {
+          "type": "string",
+          "description": "Alt text for accessibility",
+          "maxGraphemes": 300
+        },
+        "blob": {
+          "type": "blob",
+          "accept": [
+            "image/*"
+          ],
+          "maxSize": 1000000,
+          "description": "The image blob"
+        },
+        "width": {
+          "type": "string",
+          "description": "CSS width value (e.g., \"50%\", \"300px\")"
+        },
+        "caption": {
+          "type": "string",
+          "description": "Image caption"
+        },
+        "alignment": {
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
+          "type": "string",
+          "description": "Horizontal alignment"
+        },
+        "aspectRatio": {
+          "ref": "#aspectRatio",
+          "type": "ref"
+        },
+        "captionFacets": {
+          "type": "array",
+          "items": {
+            "ref": "app.offprint.richtext.facet",
+            "type": "ref"
+          },
+          "description": "Facets for caption formatting"
+        }
+      }
+    },
+    "aspectRatio": {
+      "type": "object",
+      "required": [
+        "width",
+        "height"
+      ],
+      "properties": {
+        "width": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1
+}

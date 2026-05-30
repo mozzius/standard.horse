@@ -1,0 +1,4709 @@
+{
+  "handle": "pckt.blog",
+  "did": "did:plc:revjuqmkvrw6fnkxppqtszpv",
+  "posts": [
+    {
+      "rkey": "3lwag24nlc2be",
+      "title": "Looking for Beta Testers 👀",
+      "content": {
+        "$type": "blog.pckt.content",
+        "items": [
+          {
+            "$type": "blog.pckt.block.heading",
+            "level": 2,
+            "plaintext": "Hello World 🌎"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 20,
+                  "byteStart": 11
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#code"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Welcome to pckt.blog! 👋"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 18,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "What is pckt blog? It’s an entire blogging platform that fits in your pocket."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "The idea behind pckt is to have a place to jot down and share your ideas, opinions, hobbies, and anything else you’d like to share with the world, quickly and easily."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 181,
+                  "byteStart": 159
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "We wanted to make pckt easy and seamless to use. No lengthy signup process or bulky blog setup. Just create an account, choose a blog name, and start writing. Distraction free. 🤗"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 19,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 202,
+                  "byteStart": 130
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 209,
+                  "byteStart": 202
+                },
+                "features": [
+                  {
+                    "uri": "https://bsky.app/profile/pckt.blog",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  },
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 210,
+                  "byteStart": 209
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Sound interesting? We are looking for beta testers to test drive pckt and provide valuable feedback to help improve the platform! If you would be interested in beta testing send us a message or @ us on Bluesky."
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "IMG_3129.jpeg",
+              "src": "blob:bafkreihehyzfmmdd2p7ufgo7iv5izoxwzbsgxx4tiwmm2hl2jxmv5ne2ie",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreihehyzfmmdd2p7ufgo7iv5izoxwzbsgxx4tiwmm2hl2jxmv5ne2ie"
+                },
+                "size": 242478,
+                "$type": "blob",
+                "mimeType": "image/jpeg"
+              },
+              "align": "center",
+              "width": "500"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.blockquote",
+            "content": [
+              {
+                "$type": "blog.pckt.block.text",
+                "facets": [
+                  {
+                    "index": {
+                      "byteEnd": 35,
+                      "byteStart": 26
+                    },
+                    "features": [
+                      {
+                        "uri": "http://pckt.blog",
+                        "$type": "blog.pckt.richtext.facet#link"
+                      }
+                    ]
+                  }
+                ],
+                "plaintext": "Early concept drawing for pckt.blog"
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3lxtardeii2xu",
+      "title": "Embed Bluesky Posts on pckt !",
+      "content": {
+        "$type": "blog.pckt.content",
+        "items": [
+          {
+            "$type": "blog.pckt.block.blueskyEmbed",
+            "postRef": {
+              "cid": "bafyreiddjgazq6gtadg6qboszb6ribffkaatnboglknhrytbdpvv5xahbe",
+              "uri": "at://did:plc:revjuqmkvrw6fnkxppqtszpv/app.bsky.feed.post/3lxtb4iu6s22u"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 29,
+                  "byteStart": 22
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 44,
+                  "byteStart": 40
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Embedding a post from Bluesky into your pckt blog is easy !"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Just copy the link to the post you’d like to embed:"
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "IMG_1097.jpeg",
+              "src": "blob:bafkreieivwog4l4e2fhrpcgddjsxda777lyb6lshfn6rkxb6357rgbuftm",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreieivwog4l4e2fhrpcgddjsxda777lyb6lshfn6rkxb6357rgbuftm"
+                },
+                "size": 27908,
+                "$type": "blob",
+                "mimeType": "image/jpeg"
+              }
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 34,
+                  "byteStart": 30
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Then, paste the link into the pckt editor. You will see a text preview of the post you are embedding:"
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "IMG_1095.jpeg",
+              "src": "blob:bafkreifahcsjxyit4ae53xoa3efnmurwxy3bic743sgwfojredfrhh4fme",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreifahcsjxyit4ae53xoa3efnmurwxy3bic743sgwfojredfrhh4fme"
+                },
+                "size": 92727,
+                "$type": "blob",
+                "mimeType": "image/jpeg"
+              }
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Don’t worry, the full embedded post will appear on your live blog page !"
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "bafkreih46z4efdh5witru2zwssar4y4gktmbfcqnyzidvfyguparm5bdmy.jpg",
+              "src": "blob:bafkreifuwyfu6rvpmhivlsflu5sc3jb4my3ebrg2gfoecz2swqazfdwolu",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreifuwyfu6rvpmhivlsflu5sc3jb4my3ebrg2gfoecz2swqazfdwolu"
+                },
+                "size": 67728,
+                "$type": "blob",
+                "mimeType": "image/jpeg"
+              }
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3lxzxqeevu2cn",
+      "title": "Set an icon for your pckt blog !",
+      "content": {
+        "$type": "blog.pckt.content",
+        "items": [
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "You can now set a blog icon to be displayed at the top of your blog !"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "We think that blog icons are an important way to make your pckt blog more personal, and show others what the vibe of your blog will be."
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "Screenshot 2025-09-11 at 1.23.55 PM.png",
+              "src": "blob:bafkreidcp7yoeriuembblm7gsk236vghvjmut5akzu6oubvslynv2igbcm",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreidcp7yoeriuembblm7gsk236vghvjmut5akzu6oubvslynv2igbcm"
+                },
+                "size": 113854,
+                "$type": "blob",
+                "mimeType": "image/jpeg"
+              }
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "We made it quick and easy to add or modify your blog icon."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Go to your blog settings (gear icon), then tap or click the blog icon area to upload your icon."
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "IMG_1146.jpeg",
+              "src": "blob:bafkreia7toml4w6eokrvw77jzww5purmiyrxrxpx2jnnjpcu3bcoaj6hn4",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreia7toml4w6eokrvw77jzww5purmiyrxrxpx2jnnjpcu3bcoaj6hn4"
+                },
+                "size": 53442,
+                "$type": "blob",
+                "mimeType": "image/jpeg"
+              }
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Once you’ve added one, just tap or click it again to change or delete it."
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "IMG_1150.jpeg",
+              "src": "blob:bafkreibhpqhcy54b5goqmhbrdferztwbhvvkrickyhrw7s5yttffno3lfu",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreibhpqhcy54b5goqmhbrdferztwbhvvkrickyhrw7s5yttffno3lfu"
+                },
+                "size": 47455,
+                "$type": "blob",
+                "mimeType": "image/jpeg"
+              }
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "That’s it ! That’s icons !"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Now get out there and give your blog a fresh new look ☺️"
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "bafkreia2tqg4rg7p5uev36uqku3sbggpq5pcsxzj7of3iq4ublwi5hkwny.jpg",
+              "src": "blob:bafkreicpgfqtnwdhhd2nrk2n3ldnj7sinlu3gmzwqw7whuz3fanfx4qhzu",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreicpgfqtnwdhhd2nrk2n3ldnj7sinlu3gmzwqw7whuz3fanfx4qhzu"
+                },
+                "size": 19342,
+                "$type": "blob",
+                "mimeType": "image/jpeg"
+              }
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 91,
+                  "byteStart": 82
+                },
+                "features": [
+                  {
+                    "uri": "http://pckt.blog",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Fun fact: Blog icons are one of the first things we implemented on the backend of pckt.blog. We just forgot to implement the frontend for it 😅 oops ! We are glad to see it finally come to fruition."
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3m3ym5rnr42rg",
+      "title": "What's new on pckt.blog?",
+      "content": {
+        "$type": "blog.pckt.content",
+        "items": [
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 28,
+                  "byteStart": 19
+                },
+                "features": [
+                  {
+                    "uri": "http://pckt.blog",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Hey Bloggers! 👋 pckt.blog has changed a bit since our last post. Our platform is beginning to feel more polished and we have been very pleased with the direction things have been going from both the user experience and design perspective. We hope that you will enjoy the changes and improvements we've made so far."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Let's take a look at some of the enhancements we have made: "
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 1
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "facets": [
+                      {
+                        "index": {
+                          "byteEnd": 79,
+                          "byteStart": 73
+                        },
+                        "features": [
+                          {
+                            "uri": "https://lucide.dev",
+                            "$type": "blog.pckt.richtext.facet#link"
+                          }
+                        ]
+                      }
+                    ],
+                    "plaintext": "We've upgraded to a nicer set of icons throughout the platform thanks to Lucide. (maybe someday we'll have icons made from scratch 🤞) "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "Screenshot 2025-10-24 at 10.31.37 PM.png",
+              "src": "blob:bafkreiccme7flrnzurejquo3h2p24emffob6tcox4uogkrd346kcxr2ebi",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreiccme7flrnzurejquo3h2p24emffob6tcox4uogkrd346kcxr2ebi"
+                },
+                "size": 19980,
+                "$type": "blob",
+                "mimeType": "image/png"
+              },
+              "align": "center"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 2
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "Preview cards for blog posts have a clean new look. A subtly colored bar along the left side with a soft gradient behind the thumbnail image provides clear indication of the post's draft / published status. The cards also now have a much cleaner layout making posts much easier to manage.  "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "Screenshot 2025-10-24 at 10.37.46 PM.png",
+              "src": "blob:bafkreicbz4yctlnbctwkpqpo3rwnxw6wyi3f6duqw47msmxd46o3eeuqwu",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreicbz4yctlnbctwkpqpo3rwnxw6wyi3f6duqw47msmxd46o3eeuqwu"
+                },
+                "size": 187483,
+                "$type": "blob",
+                "mimeType": "image/png"
+              },
+              "align": "center"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 3
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "facets": [
+                      {
+                        "index": {
+                          "byteEnd": 119,
+                          "byteStart": 110
+                        },
+                        "features": [
+                          {
+                            "uri": "http://pckt.blog",
+                            "$type": "blog.pckt.richtext.facet#link"
+                          }
+                        ]
+                      }
+                    ],
+                    "plaintext": "In addition to blog icons, we have added blog backgrounds which extend the customization options available on pckt.blog making it even more personal."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "Screenshot 2025-10-24 at 10.51.59 PM.png",
+              "src": "blob:bafkreibtiigyihnm6i62sayf24oz3jhu4r5f4sszrrywezjjj6yd65zlsi",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreibtiigyihnm6i62sayf24oz3jhu4r5f4sszrrywezjjj6yd65zlsi"
+                },
+                "size": 48177,
+                "$type": "blob",
+                "mimeType": "image/png"
+              }
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Background images are fantastic for blog pages and even work well with the dark mode version of the blog!"
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 4
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "Speaking of blog pages, when sharing a blog link on social media, a screenshot of your blog will be shown in the link preview. (The same thing will happen when you share a blog posts without a thumbnail image. 😌)  "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "Screenshot 2025-10-24 at 10.48.45 PM.png",
+              "src": "blob:bafkreie3nsigxzgktr7ch7nzyej3s3kf4vgh25if5osf6s2csn2jppfgz4",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreie3nsigxzgktr7ch7nzyej3s3kf4vgh25if5osf6s2csn2jppfgz4"
+                },
+                "size": 624662,
+                "$type": "blob",
+                "mimeType": "image/png"
+              },
+              "align": "center"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 5
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "All of our existing content blocks now follow the blog theme, including code blocks with syntax highlighting. (We may add more varied highlight colors for each theme in the future.) "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "Screenshot 2025-10-24 at 11.03.06 PM.png",
+              "src": "blob:bafkreifbl5o5335ih3vr4doadp2slrvhonjyy5lqnuhqwu4eadco2kijwm",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreifbl5o5335ih3vr4doadp2slrvhonjyy5lqnuhqwu4eadco2kijwm"
+                },
+                "size": 39047,
+                "$type": "blob",
+                "mimeType": "image/png"
+              },
+              "align": "center"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 6
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "One more thing that we're very excited about ! We've added a new share menu for sharing quotes from blog posts. Select a portion of text in the document and press copy or share. A link will be generated with a preview image showcasing the highlighted section."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "Screenshot 2025-11-02 at 6.04.00 PM.png",
+              "src": "blob:bafkreifclk57vimsrsrsysav2s7kgrf2pnm4upddqbwhfttd4ot3rp4p6m",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreifclk57vimsrsrsysav2s7kgrf2pnm4upddqbwhfttd4ot3rp4p6m"
+                },
+                "size": 248053,
+                "$type": "blob",
+                "mimeType": "image/png"
+              }
+            }
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 7
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "We've also added a handful of other quality of life updates like the ability to edit post categories, additional themes, an easier way to visit your live blogs from the dashboard, and even more changes to blog and dashboard layouts. "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 321,
+                  "byteStart": 312
+                },
+                "features": [
+                  {
+                    "uri": "http://pckt.blog",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "That's it for now ! More to come soon. If you're a writer on pckt, thank you for being here and for providing feedback to improve the platform. Every bit helps ! If you're new here, we're excited about where things are headed and would love to have you join us as a writer. Now is a great time to start your own pckt.blog and see how simple writing and publishing a blog can feel. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 88,
+                  "byteStart": 54
+                },
+                "features": [
+                  {
+                    "uri": "https://bsky.app/profile/pckt.blog",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Follow along on Bluesky for invite links and updates: https://bsky.app/profile/pckt.blog"
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3m5qmnkrgs2xb",
+      "title": "We've got a new look ! (and other exciting updates)",
+      "content": {
+        "$type": "blog.pckt.content",
+        "items": [
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Hello again everyone ! Where do we even start... pckt is growing quickly and becoming a beautiful place to start and write a blog. Our look and feel is continuing to evolve into something that feels increasingly organized, polished, and enjoyable to use. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 97,
+                  "byteStart": 89
+                },
+                "features": [
+                  {
+                    "uri": "https://bsky.app/profile/pckt.blog/post/3m5enzksfhk2n",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  },
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Just as our platform has become more polished, our branding has as well. We have a whole identity now ! Check out our new logo: "
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "bafkreie65zawhfi2rktclyzr4rk2y3s4p743q47qavukj4tdho7vakvsva.jpg",
+              "src": "blob:bafkreid5df4bvnvpn2gjzeghtu6qmm47f6zh4r4yhxbi4otcmf7fz34ina",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreid5df4bvnvpn2gjzeghtu6qmm47f6zh4r4yhxbi4otcmf7fz34ina"
+                },
+                "size": 22617,
+                "$type": "blob",
+                "mimeType": "image/jpeg"
+              },
+              "align": "center",
+              "width": "500"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.blockquote",
+            "content": [
+              {
+                "$type": "blog.pckt.block.text",
+                "facets": [
+                  {
+                    "index": {
+                      "byteEnd": 24,
+                      "byteStart": 16
+                    },
+                    "features": [
+                      {
+                        "did": "did:plc:eob75vcjtmbaef2tn4evc4sl",
+                        "$type": "blog.pckt.richtext.facet#didMention"
+                      }
+                    ]
+                  }
+                ],
+                "plaintext": "A big thanks to @aka.dad for taking our branding to the next level !"
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "We're really excited about our new look and think it really captures our intentions with pckt. Writing a blog should be an inviting and playful experience. One that encourages expressing your creativity. Blogging shouldn't be an intimidating and unapproachable task. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "We hope pckt feels like home—a space where you’re free to express yourself and craft your own corner of the internet filled to the brim with your interests."
+          },
+          {
+            "$type": "blog.pckt.block.horizontalRule"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 13,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "New Features:"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "We'd like to formally share some of the new features we've rolled out over the past few weeks. "
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 1
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "facets": [
+                      {
+                        "index": {
+                          "byteEnd": 213,
+                          "byteStart": 205
+                        },
+                        "features": [
+                          {
+                            "uri": "https://blacksky.community",
+                            "$type": "blog.pckt.richtext.facet#link"
+                          }
+                        ]
+                      }
+                    ],
+                    "plaintext": "Starting with Bluesky embeds that are fully revamped and better than ever. Just paste a link to a Bluesky post of your choice and press \"embed.\" (This will work for 3rd party Bluesky AppViews as well like Blacksky or similar.)"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.blueskyEmbed",
+            "postRef": {
+              "cid": "bafyreibej2kvclteogrftzyvjp7555p3u7agog5pbonkqvd4el4uimqfpm",
+              "uri": "at://did:plc:revjuqmkvrw6fnkxppqtszpv/app.bsky.feed.post/3m5krwevvz22i"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 2
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "facets": [
+                      {
+                        "index": {
+                          "byteEnd": 72,
+                          "byteStart": 71
+                        },
+                        "features": [
+                          {
+                            "$type": "blog.pckt.richtext.facet#code"
+                          }
+                        ]
+                      },
+                      {
+                        "index": {
+                          "byteEnd": 130,
+                          "byteStart": 120
+                        },
+                        "features": [
+                          {
+                            "did": "did:plc:revjuqmkvrw6fnkxppqtszpv",
+                            "$type": "blog.pckt.richtext.facet#didMention"
+                          }
+                        ]
+                      }
+                    ],
+                    "plaintext": "Mention your favorite Bluesky posters in your blog posts. Just type an @ sign followed by the user's handle. Like this: @pckt.blog "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "Screenshot 2025-11-22 at 5.59.25 PM.png",
+              "src": "blob:bafkreig2czw4xsz6whcya6fm3harw6zh6rdem7st2fhszzgmwja6on4a3e",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreig2czw4xsz6whcya6fm3harw6zh6rdem7st2fhszzgmwja6on4a3e"
+                },
+                "size": 27070,
+                "$type": "blob",
+                "mimeType": "image/png"
+              },
+              "align": "center",
+              "width": "500"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 3
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "facets": [
+                      {
+                        "index": {
+                          "byteEnd": 71,
+                          "byteStart": 62
+                        },
+                        "features": [
+                          {
+                            "uri": "http://pckt.blog",
+                            "$type": "blog.pckt.richtext.facet#link"
+                          }
+                        ]
+                      }
+                    ],
+                    "plaintext": "Even more embeds ! You can embed all kinds of rich content on pckt.blog just by pasting the link, or highlighting an existing link. Think media players, YouTube videos, websites... Check it out, you can even embed that new Ice Spice song: "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "url": "https://embed.music.apple.com/us/album/big-guy-from-the-spongebob-movie-search-for/1850034311?i=1850034312",
+            "$type": "blog.pckt.block.iframe",
+            "height": 175
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 4
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "Image size adjustments help you make your uploaded images just the right size so they look perfect in your blog post."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "Screenshot 2025-11-22 at 7.03.18 PM.png",
+              "src": "blob:bafkreicy4acgbaiubqyvrtkpnzxnciyhk6awryhmmr7jjxbdedqlrtnivi",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreicy4acgbaiubqyvrtkpnzxnciyhk6awryhmmr7jjxbdedqlrtnivi"
+                },
+                "size": 19248,
+                "$type": "blob",
+                "mimeType": "image/png"
+              },
+              "align": "center",
+              "width": "500"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 5
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "It's easier than ever to share a quote from a blog post you enjoyed. Just highlight a selection of the post and press \"Copy Link\" or \"Share.\" A preview image will be created highlighting the section you'd like to share, perfect for posting or sending to a friend. "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "IMG_2586.jpg",
+              "src": "blob:bafkreidvvqcoo7ampcnp7wt22rlrl3u5kcqvbc2b4a52cfmdbqx57ba3da",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreidvvqcoo7ampcnp7wt22rlrl3u5kcqvbc2b4a52cfmdbqx57ba3da"
+                },
+                "size": 92650,
+                "$type": "blob",
+                "mimeType": "image/jpeg"
+              },
+              "align": "center",
+              "width": "500"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.blockquote",
+            "content": [
+              {
+                "$type": "blog.pckt.block.text",
+                "facets": [
+                  {
+                    "index": {
+                      "byteEnd": 53,
+                      "byteStart": 34
+                    },
+                    "features": [
+                      {
+                        "uri": "https://figonfilm.pckt.blog/diabolique-1955-yqke174",
+                        "$type": "blog.pckt.richtext.facet#link"
+                      }
+                    ]
+                  }
+                ],
+                "plaintext": "Screenshot of a shared quote from figonfilm.pckt.blog"
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.horizontalRule"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 35,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "More New Features and Improvements:"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "In addition to these key features, we've made a number of enhancements to existing features improving performance and reliability. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "We've also made some key visual changes to our dashboard to make the layout feel more cohesive and intuitive. Our \"category\" section has gotten a cleaned up design intended to make it less distracting. And we've added pagination for blogs that have many posts. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Additionally, we've added the \"invite a friend\" and \"plan usage\" sections onto our mobile layout, making this useful information even easier to access. "
+          },
+          {
+            "$type": "blog.pckt.block.horizontalRule"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 21,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Plans for the Future:"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "We're building pckt to make blogging fun, easy, and accessible. Alongside these values, we strongly believe that owning your creative work is essential. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 66,
+                  "byteStart": 57
+                },
+                "features": [
+                  {
+                    "uri": "https://pckt.blog",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 86,
+                  "byteStart": 76
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "It is for this reason that we have been working to bring pckt.blog into the ATmosphere. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 52,
+                  "byteStart": 41
+                },
+                "features": [
+                  {
+                    "uri": "https://docs.bsky.app/docs/advanced-guides/atproto",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 153,
+                  "byteStart": 133
+                },
+                "features": [
+                  {
+                    "uri": "https://docs.bsky.app/docs/advanced-guides/federation-architecture#personal-data-server-pds",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Behind the scenes, we've been developing AT Protocol integrations that will allow your blogs and published posts to live on your own Personal Data Server (PDS). "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 59,
+                  "byteStart": 52
+                },
+                "features": [
+                  {
+                    "uri": "https://bsky.app",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "This integration will make it possible to link your Bluesky and other ATProto accounts to your existing pckt account—or even completely skip our registration process by signing in with an ATproto account directly if you prefer. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "While we'd like to have this implemented sooner than later, we want to take all the time we need to explore the options available to us to ensure we are creating an experience that we're proud of. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 105,
+                  "byteStart": 93
+                },
+                "features": [
+                  {
+                    "did": "did:plc:btxrwcaeyodrap5mnjw2fvmz",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 123,
+                  "byteStart": 110
+                },
+                "features": [
+                  {
+                    "did": "did:plc:pgjkomf37an4czloay5zeth6",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 160,
+                  "byteStart": 149
+                },
+                "features": [
+                  {
+                    "did": "did:plc:7puq73yz2hkvbcpdhnsze2qw",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "We've also been in touch with the teams behind other ATproto-focused writing experience like @leaflet.pub and @offprint.app along with projects like @wisp.place to explore ways we can encourage greater interoperability between our platforms, and those yet to come. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "(More information soon™)"
+          },
+          {
+            "$type": "blog.pckt.block.horizontalRule"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Anyways ! Thank you so much for being here. We really hope you're enjoying pckt so far."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": ""
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 109,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Questions? Concerns? Bug reports? Feature Requests? Just want to say hello? Send us an email: hello@pckt.blog"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3m7sqbwsnkc24",
+      "title": "Untitled",
+      "content": {
+        "$type": "pub.leaflet.content",
+        "pages": [
+          {
+            "id": "019b13d8-9849-700b-8bf8-4faf4a6972e5",
+            "$type": "pub.leaflet.pages.linearDocument",
+            "blocks": [
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [],
+                  "plaintext": "lol oops ! "
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3mbfqhezge25u",
+      "title": "Blogging on the open social web - and more exciting features",
+      "content": {
+        "$type": "blog.pckt.content",
+        "items": [
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "Screenshot 2026-01-03 at 11.02.41 PM.png",
+              "src": "blob:bafkreid3eywsawe7ynon3cecxng52n2hxz3c36vrbz3bire4bt47emrpjy",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreid3eywsawe7ynon3cecxng52n2hxz3c36vrbz3bire4bt47emrpjy"
+                },
+                "size": 62432,
+                "$type": "blob",
+                "mimeType": "image/png"
+              },
+              "align": "center"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.blockquote",
+            "content": [
+              {
+                "$type": "blog.pckt.block.text",
+                "facets": [
+                  {
+                    "index": {
+                      "byteEnd": 10,
+                      "byteStart": 0
+                    },
+                    "features": [
+                      {
+                        "$type": "blog.pckt.richtext.facet#bold"
+                      },
+                      {
+                        "$type": "blog.pckt.richtext.facet#italic"
+                      }
+                    ]
+                  },
+                  {
+                    "index": {
+                      "byteEnd": 90,
+                      "byteStart": 79
+                    },
+                    "features": [
+                      {
+                        "uri": "https://atproto.com/specs/atp",
+                        "$type": "blog.pckt.richtext.facet#link"
+                      }
+                    ]
+                  }
+                ],
+                "plaintext": "ATmosphere — referring to the growing ecosystem of applications built on the AT Protocol, a federated protocol for open social platforms. "
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 27,
+                  "byteStart": 24
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  },
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Not to be confused with the atmosphere (the layer of gas surrounding our planet), or the kind of atmosphere you'll find at a hipster coffee shop. "
+          },
+          {
+            "$type": "blog.pckt.block.horizontalRule"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 23,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 33,
+                  "byteStart": 23
+                },
+                "features": [
+                  {
+                    "did": "did:plc:revjuqmkvrw6fnkxppqtszpv",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 63,
+                  "byteStart": 53
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  },
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "AT-tention bloggers !! @pckt.blog has arrived in the ATmosphere. Since the early days of our development, we have been immensely interested in building out features to support ATproto and the open social web."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 82,
+                  "byteStart": 70
+                },
+                "features": [
+                  {
+                    "did": "did:plc:btxrwcaeyodrap5mnjw2fvmz",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 100,
+                  "byteStart": 87
+                },
+                "features": [
+                  {
+                    "did": "did:plc:pgjkomf37an4czloay5zeth6",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 215,
+                  "byteStart": 195
+                },
+                "features": [
+                  {
+                    "uri": "https://atproto.com/guides/glossary#pds-personal-data-server",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 322,
+                  "byteStart": 309
+                },
+                "features": [
+                  {
+                    "uri": "https://standard.site",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "We have worked closely with other long-form publishing platforms like @leaflet.pub and @offprint.app to collaborate on a shared data structure for storing blog details and posts in your very own Personal Data Server. If you're more technically inclined, more information about this project can be found here: Standard.site."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 10,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 64,
+                  "byteStart": 13
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 67,
+                  "byteStart": 64
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  },
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 68,
+                  "byteStart": 67
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Okay, okay—enough of the tech jargon, what does this mean for you?"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "It means your writing can grow with you over time, and live alongside the rest of your social data without the need for multiple accounts. We want pckt.blog to be something you can trust long term. By storing your posts in the ATmosphere, your work isn't locked up or controlled by a single company. It's controlled by you.  "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "The most obvious feature is that you can now bring your identity from another space, like Bluesky, Blacksky, self-hosted servers, and more! If you already have one of these accounts, there's no need to make a new one for pckt. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 22,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "If you're new to pckt, you can start writing from your handle here:"
+          },
+          {
+            "src": "https://pckt.blog/atproto/identify",
+            "$type": "blog.pckt.block.website",
+            "title": "Sign in with AT Protocol - pckt.blog",
+            "description": "Sign in to pckt.blog with your AT Protocol account",
+            "previewImage": "https://pckt.blog/og-image.png?v=1766303927"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 36,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 68,
+                  "byteStart": 52
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  },
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 69,
+                  "byteStart": 68
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 116,
+                  "byteStart": 109
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  },
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 126,
+                  "byteStart": 125
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "If you're an existing pckt blogger, navigate to the Account Settings section of your dashboard and press the Connect button.  "
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "Screenshot 2026-01-03 at 10.40.21 PM.png",
+              "src": "blob:bafkreigc7bbmn7pb7xlqykf4lq6opqnz3l6kcit6jiykentzldx5ar4jza",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreigc7bbmn7pb7xlqykf4lq6opqnz3l6kcit6jiykentzldx5ar4jza"
+                },
+                "size": 46363,
+                "$type": "blob",
+                "mimeType": "image/png"
+              },
+              "align": "center",
+              "width": "700"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 121,
+                  "byteStart": 120
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Your existing blogs and published posts will now be linked to your identity and sync to your Personal Data Server (PDS). You’ll be able to see sync progress and details about your connected identity directly in your dashboard."
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "Screenshot 2026-01-03 at 10.42.56 PM.png",
+              "src": "blob:bafkreibh5gj7pctdaaig646m2uduem5u2vg3f3swldqtzrkwtjpawgv2uy",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreibh5gj7pctdaaig646m2uduem5u2vg3f3swldqtzrkwtjpawgv2uy"
+                },
+                "size": 83527,
+                "$type": "blob",
+                "mimeType": "image/png"
+              },
+              "align": "center",
+              "width": "700"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 27,
+                  "byteStart": 22
+                },
+                "features": [
+                  {
+                    "uri": "https://pdsls.dev",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "We've integrated with pdsls to provide a direct link to view all of the records stored on your PDS. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Any changes made to the records on your PDS will be reflected on pckt.blog as well. However, if the records stored in your PDS are deleted, we will maintain a copy locally within your dashboard. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "ATproto integration has been a long work in progress. We hope that these features will be as exciting to you as they are to us. In the future, we'd love to add more social features utilizing this protocol. Think subscriptions, comments, reader views, shared tags, and other social tools. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 20,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 30,
+                  "byteStart": 20
+                },
+                "features": [
+                  {
+                    "did": "did:plc:revjuqmkvrw6fnkxppqtszpv",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 33,
+                  "byteStart": 31
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Happy New Year from @pckt.blog ! "
+          },
+          {
+            "$type": "blog.pckt.block.horizontalRule"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 19,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Bonus announcement:"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "We've re-designed our blog settings page. Find it by pressing the gear icon beside your blog's name in the dashboard, or by pressing the \"Customize\" button from your blog's home page. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "We've cleaned up the look of this section and added support for customizable blog themes ! Choose a favorite color and play around with the settings to create a stunning and unique theme for your blog. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "You'll also be able to adjust various blog settings from this section, including the option to toggle on or off the author credit line for your blog."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 86,
+                  "byteStart": 76
+                },
+                "features": [
+                  {
+                    "did": "did:plc:revjuqmkvrw6fnkxppqtszpv",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Hope you enjoy !  And as always, please reach out if you have any questions @pckt.blog "
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3md4kgq3iks2g",
+      "title": "This is a test of standard.site",
+      "content": {
+        "$type": "pub.leaflet.content",
+        "pages": [
+          {
+            "id": "019bec91-5d72-788e-9aad-bf9c644ebd1b",
+            "$type": "pub.leaflet.pages.linearDocument",
+            "blocks": [
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [],
+                  "plaintext": "Testing ! "
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3mdq4trxw222y",
+      "title": "From WhiteWind to pckt.blog in Just One Click",
+      "content": {
+        "$type": "blog.pckt.content",
+        "items": [
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "og-image copy.png",
+              "src": "blob:bafkreigvyx5lewh2zkrfi43wndg5ktq47tgaocwdcdaomhwl22zpuihnau",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreigvyx5lewh2zkrfi43wndg5ktq47tgaocwdcdaomhwl22zpuihnau"
+                },
+                "size": 119703,
+                "$type": "blob",
+                "mimeType": "image/png"
+              },
+              "align": "center"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.heading",
+            "level": 2,
+            "plaintext": "Hey bloggers and WhiteWinders ! "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 9,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "uri": "https://whtwnd.com/",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  },
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 27,
+                  "byteStart": 14
+                },
+                "features": [
+                  {
+                    "uri": "https://atprotocol.dev/tech-talk-building-long-form-blogging-with-whitewind/",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 65,
+                  "byteStart": 54
+                },
+                "features": [
+                  {
+                    "uri": "https://atproto.com/articles/atproto-ethos",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 271,
+                  "byteStart": 262
+                },
+                "features": [
+                  {
+                    "uri": "https://pckt.blog",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  },
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "WhiteWind has paved the way for long-form blogging on AT Protocol, but as the ecosystem evolves, your blog needs a platform that grows with it. While WhiteWind has remained a widely used classic, development of the platform has lately gone quiet. We're building pckt.blog, a fun and cute take on blogging that makes it easy to make a blog and start writing."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 4,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 105,
+                  "byteStart": 99
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 361,
+                  "byteStart": 346
+                },
+                "features": [
+                  {
+                    "uri": "https://read.pckt.blog",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "pckt is actively maintained, and designed with simplicity and ease of use in mind. We believe that anyone should be able to quickly create a blog to share their thoughts, passions, and stories. We also offer a powerful dashboard to manage posts, an intuitive editor with rich content types and embeds, and a variety of theming options. Plus, our built-in reader lets you discover writing across the entire atmosphere, keeping you connected to the community."
+          },
+          {
+            "$type": "blog.pckt.block.heading",
+            "level": 2,
+            "plaintext": "One-Click WhiteWind Migration"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 88,
+                  "byteStart": 84
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "We are excited to announce that as of today, you can import your WhiteWind posts to pckt with just a click."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 65,
+                  "byteStart": 61
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 99,
+                  "byteStart": 88
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 129,
+                  "byteStart": 109
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 188,
+                  "byteStart": 182
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 211,
+                  "byteStart": 198
+                },
+                "features": [
+                  {
+                    "uri": "https://standard.site",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "When importing, a copy of your posts will be created on your pckt blog. Posts that are \"Author Only\" or for \"Anyone with the link\" will stay as private drafts in your dashboard. For Public posts, a Standard.site document record will be created on your Personal Data Server (PDS) and your post will be published to your blog, ready to read and share."
+          },
+          {
+            "$type": "blog.pckt.block.table",
+            "content": [
+              {
+                "$type": "blog.pckt.block.tableRow",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.tableHeader",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 7,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "Feature"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableHeader",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1,
+                      "colwidth": [
+                        127
+                      ]
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 9,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "WhiteWind"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableHeader",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 9,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "pckt.blog"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.tableRow",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 11,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "Look & Feel"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1,
+                      "colwidth": [
+                        127
+                      ]
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "plaintext": "One-size-fits-all"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 11,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "Your Style: Custom themes, fonts, and backgrounds."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.tableRow",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 10,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "The Editor"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1,
+                      "colwidth": [
+                        127
+                      ]
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "plaintext": "Basic Markdown"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 11,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "Rich Media: Use Markdown-like syntax + Bluesky embeds, mentions, and other rich blocks."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.tableRow",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 9,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "Discovery"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1,
+                      "colwidth": [
+                        127
+                      ]
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "plaintext": "Hard to find"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 11,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "Integrated: Built-in reader and Standard.site for instant reach."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.tableRow",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 14,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "Multiple Blogs"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1,
+                      "colwidth": [
+                        127
+                      ]
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "plaintext": "Limit of one"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 11,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "Expandable: Manage multiple blogs from one dashboard."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.tableRow",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 12,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "Organization"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1,
+                      "colwidth": [
+                        127
+                      ]
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "plaintext": "No tags"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 11,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "Categories: Labels to help with sorting and discovery."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.tableRow",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 10,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "Experience"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1,
+                      "colwidth": [
+                        127
+                      ]
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "plaintext": "Desktop-focused"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 11,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "Responsive: A seamless experience on your phone, tablet, or desktop."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.tableRow",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "plaintext": "SEO & Links"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1,
+                      "colwidth": [
+                        127
+                      ]
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "plaintext": "Limited control"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 17,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "Search Optimized: Meta tags and clean URLs to help you rank."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.tableRow",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "plaintext": "Support"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1,
+                      "colwidth": [
+                        127
+                      ]
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "plaintext": "Unmaintained"
+                      }
+                    ]
+                  },
+                  {
+                    "$type": "blog.pckt.block.tableCell",
+                    "attrs": {
+                      "colspan": 1,
+                      "rowspan": 1
+                    },
+                    "content": [
+                      {
+                        "$type": "blog.pckt.block.text",
+                        "facets": [
+                          {
+                            "index": {
+                              "byteEnd": 7,
+                              "byteStart": 0
+                            },
+                            "features": [
+                              {
+                                "$type": "blog.pckt.richtext.facet#bold"
+                              }
+                            ]
+                          },
+                          {
+                            "index": {
+                              "byteEnd": 57,
+                              "byteStart": 47
+                            },
+                            "features": [
+                              {
+                                "did": "did:plc:revjuqmkvrw6fnkxppqtszpv",
+                                "$type": "blog.pckt.richtext.facet#didMention"
+                              }
+                            ]
+                          }
+                        ],
+                        "plaintext": "Active: Reach out for help any time on Bluesky @pckt.blog "
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 4,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "pckt.blog offers a unique writing experience that removes distractions and lets your ideas to flow. It's cute, sharable and user-friendly. Most importantly, we are actively listening to the community to build the features you want next."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 95,
+                  "byteStart": 91
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Whether you’re here to find your voice or find your next favorite read, we’re building pckt for you. We’d love to have you as part of our growing community."
+          },
+          {
+            "$type": "blog.pckt.block.horizontalRule"
+          },
+          {
+            "$type": "blog.pckt.block.heading",
+            "level": 2,
+            "plaintext": "How to import your posts:"
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 1
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "facets": [
+                      {
+                        "index": {
+                          "byteEnd": 19,
+                          "byteStart": 10
+                        },
+                        "features": [
+                          {
+                            "uri": "https://pckt.blog",
+                            "$type": "blog.pckt.richtext.facet#link"
+                          }
+                        ]
+                      }
+                    ],
+                    "plaintext": "Log in to pckt.blog using your handle."
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "facets": [
+                      {
+                        "index": {
+                          "byteEnd": 9,
+                          "byteStart": 0
+                        },
+                        "features": [
+                          {
+                            "$type": "blog.pckt.richtext.facet#bold"
+                          }
+                        ]
+                      }
+                    ],
+                    "plaintext": "New here? Pick a name for your blog to get started."
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "facets": [
+                      {
+                        "index": {
+                          "byteEnd": 33,
+                          "byteStart": 10
+                        },
+                        "features": [
+                          {
+                            "$type": "blog.pckt.richtext.facet#bold"
+                          }
+                        ]
+                      }
+                    ],
+                    "plaintext": "Click the \"Import from WhiteWind\" button (found in the lower right, or at the bottom on mobile)."
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "facets": [
+                      {
+                        "index": {
+                          "byteEnd": 36,
+                          "byteStart": 27
+                        },
+                        "features": [
+                          {
+                            "$type": "blog.pckt.richtext.facet#bold"
+                          }
+                        ]
+                      }
+                    ],
+                    "plaintext": "Choose your blog and press \"Import.\""
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.blueskyEmbed",
+            "postRef": {
+              "cid": "bafyreif6ky724rlrgfqonf2jqjack3el37w4fd3dgzrvshbfgfaamqjl7u",
+              "uri": "at://did:plc:revjuqmkvrw6fnkxppqtszpv/app.bsky.feed.post/3mdq7tgxd2223"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.horizontalRule"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 43,
+                  "byteStart": 39
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "We can't wait to see what you share on pckt!"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 172,
+                  "byteStart": 162
+                },
+                "features": [
+                  {
+                    "did": "did:plc:revjuqmkvrw6fnkxppqtszpv",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Our community is growing every day, and your unique voice is exactly what the atmosphere needs. Once you’ve migrated your posts, feel free to tag us on Bluesky @pckt.blog so we can check out your new home and share your work with the rest of the neighborhood!"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Happy blogging !"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": ""
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 27,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "uri": "https://whtwnd.com/pckt.blog/3mdq4trxw222y",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "View this post on WhiteWind"
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3mfrry3uw2f4q",
+      "title": "Building Our Corner of the Open Social Web: pckt.cafe and More",
+      "content": {
+        "$type": "blog.pckt.content",
+        "items": [
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 21,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "uri": "https://pckt.blog/b/devlog/blogging-on-the-open-social-web-and-more-exciting-features-g9x55y6",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 148,
+                  "byteStart": 144
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 194,
+                  "byteStart": 190
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Just over a month ago, we announced our integration with the Atmosphere and we're already beginning to see the numerous benefits this brings to pckt. AT Protocol integration has helped turn pckt into an even more lively community. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 28,
+                  "byteStart": 20
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 42,
+                  "byteStart": 33
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 89,
+                  "byteStart": 75
+                },
+                "features": [
+                  {
+                    "uri": "https://read.pckt.blog",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 186,
+                  "byteStart": 172
+                },
+                "features": [
+                  {
+                    "uri": "https://leaflet.pub/reader",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "With the ability to discover and subscribe to blogs from across the web on read.pckt.blog, and the opportunity for your own blog to be discovered on other readers like the Leaflet reader. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 41,
+                  "byteStart": 37
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 109,
+                  "byteStart": 100
+                },
+                "features": [
+                  {
+                    "uri": "https://pds.pckt.cafe",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Just this week, we've announced that pckt will be hosting a Personal Data Server for new users with pckt.cafe, allowing for access to tools and communities across the open social web, while bringing users better data portability and ownership. More details to follow. "
+          },
+          {
+            "$type": "blog.pckt.block.heading",
+            "level": 2,
+            "plaintext": "Your New Home Base: pckt.cafe Personal Data Server (PDS)"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 20,
+                  "byteStart": 11
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Welcome to pckt.cafe ! "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "It's the perfect internet hangout for writers, bloggers, and artists. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 16,
+                  "byteStart": 9
+                },
+                "features": [
+                  {
+                    "uri": "https://pckt.blog/register",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 25,
+                  "byteStart": 21
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 109,
+                  "byteStart": 100
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "When you sign up for pckt blog, you will get the opportunity to claim a username that's part of our pckt.cafe personal data server. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 49,
+                  "byteStart": 48
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 63,
+                  "byteStart": 49
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  },
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 73,
+                  "byteStart": 63
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 149,
+                  "byteStart": 142
+                },
+                "features": [
+                  {
+                    "uri": "https://bsky.app",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 163,
+                  "byteStart": 151
+                },
+                "features": [
+                  {
+                    "uri": "https://germ.network",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 177,
+                  "byteStart": 165
+                },
+                "features": [
+                  {
+                    "uri": "https://stream.place",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "That means you will get to choose a handle like @your-name-here.pckt.cafe which will be usable to sign in across the atmosphere for apps like Bluesky, Germ Network, Stream.place, and any place built with AT Protocol. "
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "Bazaart_9D07B112-CF66-4AC9-B937-8BE4DED380A8.jpeg",
+              "src": "blob:bafkreiflkbncm6etao32thddwjbffc3lfesqx5y7q5n3ugyie5qywvfxke",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreiflkbncm6etao32thddwjbffc3lfesqx5y7q5n3ugyie5qywvfxke"
+                },
+                "size": 115278,
+                "$type": "blob",
+                "mimeType": "image/jpeg"
+              },
+              "align": "center"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 15,
+                  "byteStart": 5
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Your pckt.cafe handle will act as your identity across the open social web. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 98,
+                  "byteStart": 85
+                },
+                "features": [
+                  {
+                    "uri": "http://pds.pckt.cafe",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 131,
+                  "byteStart": 128
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "The data you create across the Atmosphere stays tied to your identity, hosted on our pds.pckt.cafe server. Your data belongs to you, and shouldn't be locked inside a single platform. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 26,
+                  "byteStart": 9
+                },
+                "features": [
+                  {
+                    "uri": "https://internethandle.org/",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 46,
+                  "byteStart": 32
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 272,
+                  "byteStart": 253
+                },
+                "features": [
+                  {
+                    "uri": "https://baileytownsend.dev/articles/host-a-pds-with-a-cloudflare-tunnel",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Using an Everything Handle like @you.pckt.cafe gives you the freedom to control your data. Since your identity belongs to you, your data can be moved to another personal data server at any time, or even be moved to one that you own and operate yourself with minimal effort. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 82,
+                  "byteStart": 56
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "The important takeaway is that your handle is your key. Your data moves with you !"
+          },
+          {
+            "$type": "blog.pckt.block.heading",
+            "level": 2,
+            "plaintext": "Discovery Across the Web: read.pckt.blog"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 27,
+                  "byteStart": 23
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 50,
+                  "byteStart": 36
+                },
+                "features": [
+                  {
+                    "uri": "https://read.pckt.blog",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 114,
+                  "byteStart": 110
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Take a look at our new read page at read.pckt.blog. It's a great place to discover posts from writers here on pckt and from the broader Atmosphere. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 12,
+                  "byteStart": 7
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 66,
+                  "byteStart": 62
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 95,
+                  "byteStart": 92
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 195,
+                  "byteStart": 182
+                },
+                "features": [
+                  {
+                    "uri": "https://standard.site",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "On the Local tab, you'll see posts from fellow writers in the pckt community. Switch to the All tab to explore posts from bloggers across the wider network. Any blog integrated with Standard.site will show here too, opening the door to even more voices and ideas. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Check it out and see what's being written: "
+          },
+          {
+            "src": "https://read.pckt.blog",
+            "$type": "blog.pckt.block.website",
+            "title": "Read on pckt",
+            "description": "Explore blog posts and articles from across the ATmosphere.",
+            "previewImage": "https://pckt-blog-media.s3.us-east-2.amazonaws.com/images/0ceaabbd-10d4-46d5-a18c-e3b32a756cfc/read-og-image-words.png"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 9,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 88,
+                  "byteStart": 84
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 158,
+                  "byteStart": 154
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Subscribe to any blog, no matter where the blog lives on the web, directly from the read page. New posts from your subscriptions will be displayed in the Subs tab, so you'll never miss a piece from your favorite bloggers. "
+          },
+          {
+            "$type": "blog.pckt.block.blueskyEmbed",
+            "postRef": {
+              "cid": "bafyreic7wr54q3dh3xeiw5dtnii7xuqw6szgh2fjj6hpm2qy6tzlsk2oza",
+              "uri": "at://did:plc:revjuqmkvrw6fnkxppqtszpv/app.bsky.feed.post/3mfeiit2dys2t"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 145,
+                  "byteStart": 141
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "While we think our own reader is really great, we also want to shout out a few other awesome places from the community where your posts from pckt will also be discoverable: "
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 1
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "facets": [
+                      {
+                        "index": {
+                          "byteEnd": 9,
+                          "byteStart": 0
+                        },
+                        "features": [
+                          {
+                            "uri": "https://potatonet.app",
+                            "$type": "blog.pckt.richtext.facet#link"
+                          },
+                          {
+                            "$type": "blog.pckt.richtext.facet#bold"
+                          }
+                        ]
+                      },
+                      {
+                        "index": {
+                          "byteEnd": 10,
+                          "byteStart": 9
+                        },
+                        "features": [
+                          {
+                            "$type": "blog.pckt.richtext.facet#bold"
+                          }
+                        ]
+                      },
+                      {
+                        "index": {
+                          "byteEnd": 13,
+                          "byteStart": 12
+                        },
+                        "features": [
+                          {
+                            "$type": "blog.pckt.richtext.facet#bold"
+                          }
+                        ]
+                      },
+                      {
+                        "index": {
+                          "byteEnd": 21,
+                          "byteStart": 13
+                        },
+                        "features": [
+                          {
+                            "did": "did:plc:gotnvwkr56ibs33l4hwgfoet",
+                            "$type": "blog.pckt.richtext.facet#didMention"
+                          }
+                        ]
+                      }
+                    ],
+                    "plaintext": "potatonet by @zeu.dev let's you discover blogs across the network. "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "src": "https://potatonet.app",
+            "$type": "blog.pckt.block.website",
+            "title": "potatonet",
+            "description": "Find your next read in the network",
+            "previewImage": "https://pckt-blog-media.s3.us-east-2.amazonaws.com/images/f6ca3f0d-6430-4add-8ba6-de9ee371bfbf/potatonet-og.png"
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 2
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "facets": [
+                      {
+                        "index": {
+                          "byteEnd": 9,
+                          "byteStart": 0
+                        },
+                        "features": [
+                          {
+                            "uri": "https://docs.surf",
+                            "$type": "blog.pckt.richtext.facet#link"
+                          },
+                          {
+                            "$type": "blog.pckt.richtext.facet#bold"
+                          }
+                        ]
+                      },
+                      {
+                        "index": {
+                          "byteEnd": 28,
+                          "byteStart": 13
+                        },
+                        "features": [
+                          {
+                            "did": "did:plc:ia2zdnhjaokf5lazhxrmj6eu",
+                            "$type": "blog.pckt.richtext.facet#didMention"
+                          }
+                        ]
+                      }
+                    ],
+                    "plaintext": "Docs.surf by @stevedylan.dev is a blast from the past with a Windows XP style index of blog posts on the open web."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "src": "https://docs.surf",
+            "$type": "blog.pckt.block.website",
+            "title": "Docs.surf",
+            "description": "Aggregator for publications and documents on the open web",
+            "previewImage": "https://pckt-blog-media.s3.us-east-2.amazonaws.com/images/eeffead8-2156-47af-91f6-0ad1277d856e/og.png"
+          },
+          {
+            "$type": "blog.pckt.block.orderedList",
+            "attrs": {
+              "start": 3
+            },
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "facets": [
+                      {
+                        "index": {
+                          "byteEnd": 10,
+                          "byteStart": 0
+                        },
+                        "features": [
+                          {
+                            "uri": "https://pub-search.waow.tech",
+                            "$type": "blog.pckt.richtext.facet#link"
+                          },
+                          {
+                            "$type": "blog.pckt.richtext.facet#bold"
+                          }
+                        ]
+                      },
+                      {
+                        "index": {
+                          "byteEnd": 11,
+                          "byteStart": 10
+                        },
+                        "features": [
+                          {
+                            "$type": "blog.pckt.richtext.facet#bold"
+                          }
+                        ]
+                      },
+                      {
+                        "index": {
+                          "byteEnd": 27,
+                          "byteStart": 14
+                        },
+                        "features": [
+                          {
+                            "did": "did:plc:xbtmt2zjwlrfegqvch7fboei",
+                            "$type": "blog.pckt.richtext.facet#didMention"
+                          }
+                        ]
+                      },
+                      {
+                        "index": {
+                          "byteEnd": 61,
+                          "byteStart": 57
+                        },
+                        "features": [
+                          {
+                            "$type": "blog.pckt.richtext.facet#bold"
+                          }
+                        ]
+                      }
+                    ],
+                    "plaintext": "Pub-search by @zzstoatzz.io is a great way to search for pckt blog posts and more.  "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "src": "https://pub-search.waow.tech",
+            "$type": "blog.pckt.block.website",
+            "title": "pub search",
+            "description": "search atproto publishing platforms",
+            "previewImage": "https://pckt-blog-media.s3.us-east-2.amazonaws.com/images/adef257d-0f5e-41bf-a3bd-a973f780ee30/og-image.png"
+          },
+          {
+            "$type": "blog.pckt.block.heading",
+            "level": 2,
+            "plaintext": "New Ways to Express Yourself: Photo Galleries "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 126,
+                  "byteStart": 122
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "While we love a good text focused blog, we think your photos deserve a home too. We have brought a new gallery feature to pckt that will allow you to share beautiful collections of images right on your blog. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "When galleries are added to the very top of your blog, they will display front and center on your blog's home page. Just make sure to not have any text above your gallery. We think this can give your blog some great personality.  "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Galleries can be included anywhere within your posts, so whether you've got a lot to say, or just want to share some pics, galleries will make a great addition to your posting capabilities. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 75,
+                  "byteStart": 71
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "These galleries are a great addition to the tools already available in pckt blog to help visually tell your stories, and craft a distinct aesthetic for your blog. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 8,
+                  "byteStart": 4
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "See pckt galleries in action: "
+          },
+          {
+            "$type": "blog.pckt.block.blueskyEmbed",
+            "postRef": {
+              "cid": "bafyreidziqvde32zw2uh3ta4ahkpje4gll5bc7jmot3nggygo4q26zsjvi",
+              "uri": "at://did:plc:v46ojbiop5ebs5h7gaomixcc/app.bsky.feed.post/3mel2xqb3sk2d"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.heading",
+            "level": 2,
+            "plaintext": "What's Next for pckt? "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 4,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "pckt isn't just a blogging platform, or a Personal Data Server, or just a reader. We're building a creative home in the open social web. A place where your words and pictures can extend to many interconnected platforms, traveling beyond just one singular website. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "We are building a community of bloggers without walled gardens. This is our space on the web, and it belongs to all of us who are building it together. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 166,
+                  "byteStart": 162
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "It has been amazing to see the support and encouragement we have already received from this community. Your energy makes us want to keep building and keep making pckt an even better place to write. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Looking forward, there is a lot we are excited about. We'd love to explore things like a recommendation system to help readers find great posts, more social features like comments, and eventually deeper curation features, like custom feeds that let you shape your own reading experience. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "There's a hundred other things we would like to see going forward, and we're excited to keep pouring our hearts into this project, making it into the best blogging experience that we can. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "We're building this together, and the best ideas often come from the community itself, and how they adapt the platform to be used in ways we haven't yet anticipated. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 77,
+                  "byteStart": 70
+                },
+                "features": [
+                  {
+                    "uri": "https://bsky.app/",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 88,
+                  "byteStart": 78
+                },
+                "features": [
+                  {
+                    "did": "did:plc:revjuqmkvrw6fnkxppqtszpv",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "If you have ideas, feedback, or just want to say hello, mention us on Bluesky @pckt.blog "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Until next time,"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 4,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "pckt"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3mg4pbiihvcwe",
+      "title": "Settling in, and looking ahead",
+      "content": {
+        "$type": "blog.pckt.content",
+        "items": [
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 53,
+                  "byteStart": 40
+                },
+                "features": [
+                  {
+                    "uri": "https://devlog.pckt.blog/building-our-corner-of-the-open-social-web-pcktcafe-and-more-21wfbg2",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Hey Bloggers ! A lot has happened since our last post. Which always seems to be the case... We've been hard at work crafting new features and refining existing ones."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 71,
+                  "byteStart": 50
+                },
+                "features": [
+                  {
+                    "uri": "https://brookie.blog/state-of-the-atmosphere-conf-2026-ts4pqge",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "By the way, it was so nice to meet many of you at Atmosphere Conference !  "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 34,
+                  "byteStart": 15
+                },
+                "features": [
+                  {
+                    "uri": "https://devlog.pckt.blog/building-our-corner-of-the-open-social-web-pcktcafe-and-more-21wfbg2/749/805",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 115,
+                  "byteStart": 102
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 123,
+                  "byteStart": 119
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Previously, we announced pckt.cafe, our very own Personal Data Server. We've already seen adoption by more than 10% of pckt bloggers, many of whom are stepping into the Atmosphere for the very first time. "
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "",
+              "src": "blob:bafkreihjknqmalcbeszurcwhxkfeebqv37jplk3xri6kx3e3x33oshfgtm",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreihjknqmalcbeszurcwhxkfeebqv37jplk3xri6kx3e3x33oshfgtm"
+                },
+                "size": 158231,
+                "$type": "blob",
+                "mimeType": "image/png"
+              },
+              "align": "center",
+              "width": "700",
+              "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2ODApLCBxdWFsaXR5ID0gNDAK/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8AAEQgABgAMAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A60I4JPmE+gOKcu4j5sfhRRQLqf/Z",
+              "naturalWidth": 1904,
+              "naturalHeight": 922
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 31,
+                  "byteStart": 17
+                },
+                "features": [
+                  {
+                    "uri": "https://read.pckt.blog",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 122,
+                  "byteStart": 118
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 189,
+                  "byteStart": 176
+                },
+                "features": [
+                  {
+                    "uri": "https://standard.site/",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "We also launched read.pckt.blog, which has become an essential tool for discovering and subscribing to blogs from the pckt community and across the wider Atmosphere, thanks to Standard.site. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 37,
+                  "byteStart": 22
+                },
+                "features": [
+                  {
+                    "uri": "https://devlog.pckt.blog/building-our-corner-of-the-open-social-web-pcktcafe-and-more-21wfbg2/3017/3062",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 123,
+                  "byteStart": 119
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "And finally, we added Photo Galleries, which have given bloggers a new way to share and express themselves visually on pckt. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 134,
+                  "byteStart": 125
+                },
+                "features": [
+                  {
+                    "uri": "https://pckt.blog/",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Since then, we've polished and unified many areas of the interface to create a smoother, more cohesive experience throughout pckt.blog."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 200,
+                  "byteStart": 196
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "We've redesigned our landing page, drawing inspiration from our original while removing much of the noise. It's easier than ever to jump into writing, discover trending posts, or learn more about pckt right from the very first page. "
+          },
+          {
+            "$type": "blog.pckt.block.blueskyEmbed",
+            "postRef": {
+              "cid": "bafyreifc4wkbj2bgjzqsfz5tlzecjj3g6lurho3ag5xvdd7je6ona2qemy",
+              "uri": "at://did:plc:revjuqmkvrw6fnkxppqtszpv/app.bsky.feed.post/3mlcrdlspps22"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "We've also introduced a variety of new features alongside these refinements: "
+          },
+          {
+            "$type": "blog.pckt.block.bulletList",
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "Our Supporter and Advocate plans now include custom domains and post analytics to keep track of top-performing posts. "
+                  },
+                  {
+                    "$type": "blog.pckt.block.image",
+                    "attrs": {
+                      "alt": "an analytics dashboard showing post stats for brookie.blog",
+                      "src": "blob:bafkreifvgfkpqb53dojml2bs25544c36eehpesjgtmxllpoorfz7fivlga",
+                      "blob": {
+                        "ref": {
+                          "$link": "bafkreifvgfkpqb53dojml2bs25544c36eehpesjgtmxllpoorfz7fivlga"
+                        },
+                        "size": 78358,
+                        "$type": "blob",
+                        "mimeType": "image/webp"
+                      },
+                      "align": "center",
+                      "width": "500",
+                      "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2ODApLCBxdWFsaXR5ID0gNDAK/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8AAEQgACAAMAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A7DvS9qKKAP/Z",
+                      "naturalWidth": 1920,
+                      "naturalHeight": 1251
+                    }
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "Media storage has been increased across the board. "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "pckt pricing tier showcasing media storage amounts",
+              "src": "blob:bafkreiao2io3vsi2vag6arempcu54bc472ytkuf5csmackmhtvqkoeoigu",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreiao2io3vsi2vag6arempcu54bc472ytkuf5csmackmhtvqkoeoigu"
+                },
+                "size": 65722,
+                "$type": "blob",
+                "mimeType": "image/webp"
+              },
+              "align": "center",
+              "width": "500",
+              "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2ODApLCBxdWFsaXR5ID0gNDAK/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8AAEQgABgAMAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A67OTyOh9aeKKKb3Ej//Z",
+              "naturalWidth": 1920,
+              "naturalHeight": 1028
+            }
+          },
+          {
+            "$type": "blog.pckt.block.bulletList",
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "Blogs can now have tiled background images."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.image",
+            "attrs": {
+              "alt": "screenshot of brookie.blog index page with a tiling background image",
+              "src": "blob:bafkreiccr2cblqj7a7yysbaranjeevb4j7kjzlb4w4x6njonm5an2x2h5q",
+              "blob": {
+                "ref": {
+                  "$link": "bafkreiccr2cblqj7a7yysbaranjeevb4j7kjzlb4w4x6njonm5an2x2h5q"
+                },
+                "size": 274040,
+                "$type": "blob",
+                "mimeType": "image/webp"
+              },
+              "align": "center",
+              "width": "500",
+              "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2ODApLCBxdWFsaXR5ID0gNDAK/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8AAEQgABwAMAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A6EWyMN9wCXA6hjTYkl8seScRY+QE84oopFH/2Q==",
+              "naturalWidth": 1920,
+              "naturalHeight": 1161
+            }
+          },
+          {
+            "$type": "blog.pckt.block.bulletList",
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "Alt-text support has been improved for images and galleries. "
+                  },
+                  {
+                    "$type": "blog.pckt.block.image",
+                    "attrs": {
+                      "alt": "",
+                      "src": "blob:bafkreibudsjbgx4tg3ccrpm2w6fkq4b2gefpt6xrcn5i6owb46ahm5kyzq",
+                      "blob": {
+                        "ref": {
+                          "$link": "bafkreibudsjbgx4tg3ccrpm2w6fkq4b2gefpt6xrcn5i6owb46ahm5kyzq"
+                        },
+                        "size": 15142,
+                        "$type": "blob",
+                        "mimeType": "image/webp"
+                      },
+                      "align": "center",
+                      "width": "500",
+                      "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2ODApLCBxdWFsaXR5ID0gNDAK/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8AAEQgABAAMAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A2dOkKQvhVPzdx7VQkbdIzHAySeKKKoR//9k=",
+                      "naturalWidth": 1920,
+                      "naturalHeight": 618
+                    }
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "Dashboard search makes finding your posts fast and effortless."
+                  },
+                  {
+                    "$type": "blog.pckt.block.image",
+                    "attrs": {
+                      "alt": "",
+                      "src": "blob:bafkreihy6lkyubsyitkpz3ex7ytx2gwhsjpl4zm3kcgacjwaa3qoombsuy",
+                      "blob": {
+                        "ref": {
+                          "$link": "bafkreihy6lkyubsyitkpz3ex7ytx2gwhsjpl4zm3kcgacjwaa3qoombsuy"
+                        },
+                        "size": 156894,
+                        "$type": "blob",
+                        "mimeType": "image/png"
+                      },
+                      "align": "center",
+                      "width": "500",
+                      "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1c2luZyBJSkcgSlBFRyB2ODApLCBxdWFsaXR5ID0gNDAK/9sAQwAUDg8SDw0UEhASFxUUGB4yIR4cHB49LC4kMklATEtHQEZFUFpzYlBVbVZFRmSIZW13e4GCgU5gjZeMfZZzfoF8/9sAQwEVFxceGh47ISE7fFNGU3x8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8fHx8/8AAEQgABQAMAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/aAAwDAQACEQMRAD8A68LnrUCi4Zn/AHyYDEAeX0H50UUAf//Z",
+                      "naturalWidth": 1378,
+                      "naturalHeight": 574
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 46,
+                  "byteStart": 32
+                },
+                "features": [
+                  {
+                    "uri": "https://read.pckt.blog/",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 187,
+                  "byteStart": 173
+                },
+                "features": [
+                  {
+                    "did": "did:plc:re3ebnp5v7ffagz6rb6xfei4",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "We've also continued to improve read.pckt.blog. An updated layout makes discovering new writers and posts across the Atmosphere even more enjoyable. We've added support for @standard.site Recommends to help surface and promote posts, a Hot Posts section for trending articles, and keyboard navigation to make our reader easier to explore. "
+          },
+          {
+            "$type": "blog.pckt.block.blueskyEmbed",
+            "postRef": {
+              "cid": "bafyreiaeellb4wjvml5ki4iv5frrhjdzse5ingnppzj7of57t4d7rwketu",
+              "uri": "at://did:plc:v46ojbiop5ebs5h7gaomixcc/app.bsky.feed.post/3mkgi62g52k2w"
+            }
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 13,
+                  "byteStart": 9
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 224,
+                  "byteStart": 219
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 229,
+                  "byteStart": 228
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Now that pckt's core features are settling in, we can begin to think about what's to come. How can we expand our social features, and make better connections in our community ? In what ways can we come together to make pckt feel more alive ? "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 15,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#italic"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Blogging cafés are the first things that come to mind. Shared spaces where multiple blogs can contribute. They could link blogs to one another and give multiple authors a place to post side by side."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "An obvious social enhancement will be comments. We definitely want to add discussion tools to blog posts, but we're still working out the best way to implement them."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 53,
+                  "byteStart": 49
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 152,
+                  "byteStart": 148
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Remember friend requests ? We'd like to think of pckt as a place to make new friends. In addition to subscribing to blogs, having a separate set of pckt friends could be something special."
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 43,
+                  "byteStart": 39
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 137,
+                  "byteStart": 127
+                },
+                "features": [
+                  {
+                    "did": "did:plc:revjuqmkvrw6fnkxppqtszpv",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "We are always thinking of ways to make pckt easier and more fun to use. Please float any ideas you may have our way on Bluesky @pckt.blog. We'd love to hear from you. As always, thank you for being here. We can't wait to see where the future takes us. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Keep on blogging, "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 4,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "blog.pckt.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "pckt"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3mmfdjmi2flfb",
+      "title": "Standard.site link cards are coming to Bluesky 👀",
+      "content": {
+        "$type": "blog.pckt.content",
+        "items": [
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "The Atmosphere keeps getting a little more blog shaped. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 25,
+                  "byteStart": 16
+                },
+                "features": [
+                  {
+                    "did": "did:plc:z72i7hdynmk6r22z27h6tvur",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 104,
+                  "byteStart": 90
+                },
+                "features": [
+                  {
+                    "did": "did:plc:re3ebnp5v7ffagz6rb6xfei4",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Starting today, @bsky.app will display enhanced link cards when you share a post from any @standard.site powered publication. These new cards will include additional publication details built directly into the post preview. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 63,
+                  "byteStart": 53
+                },
+                "features": [
+                  {
+                    "did": "did:plc:revjuqmkvrw6fnkxppqtszpv",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 77,
+                  "byteStart": 65
+                },
+                "features": [
+                  {
+                    "did": "did:plc:btxrwcaeyodrap5mnjw2fvmz",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 92,
+                  "byteStart": 79
+                },
+                "features": [
+                  {
+                    "did": "did:plc:pgjkomf37an4czloay5zeth6",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 108,
+                  "byteStart": 94
+                },
+                "features": [
+                  {
+                    "did": "did:plc:r2no5dzwjjkp4cysp43tqzxa",
+                    "$type": "blog.pckt.richtext.facet#didMention"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 137,
+                  "byteStart": 124
+                },
+                "features": [
+                  {
+                    "uri": "https://standard.site",
+                    "$type": "blog.pckt.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "This means when you share a post from platforms like @pckt.blog, @leaflet.pub, @offprint.app, @wordpress.org, or any future Standard.site publisher, Bluesky can display much richer information about the publication behind the post. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Instead of the generic link previews that are prevalent across the web that just show an image, title, and description, posts can now include things like: "
+          },
+          {
+            "$type": "blog.pckt.block.bulletList",
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "the publisher's icon"
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "theme colors from the blog"
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "publisher and author details "
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "a direct link to the publication"
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "prompts to subscribe to the blog "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "It makes blog posts feel more alive when shared across the Atmosphere. Instead of posts feeling like detached URLs, posts are able to have much more personality and better reflect the publication's actual identity. "
+          },
+          {
+            "ref": "at://did:plc:revjuqmkvrw6fnkxppqtszpv/blog.pckt.gallery/3mmuz5p3ooxjf",
+            "$type": "blog.pckt.block.gallery"
+          },
+          {
+            "$type": "blog.pckt.block.horizontalRule"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "If you've been along with us for a while, you know that we care deeply about atmospheric publishing. Standard.site exists to make posts easier to discover across many platforms. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "A blog post shouldn't be trapped inside one app. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Whether that post is published on pckt, Leaflet, Offprint, or somewhere else entirely, if it follows the Standard.site format, it can travel across readers, feeds, search engines, and future applications built on top of this standard. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Discovery no longer has to depend on a single centralized platform like Substack or Medium. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Standard.site posts are already being indexed and surfaced across a growing ecosystem of readers and discovery tools like:"
+          },
+          {
+            "src": "https://read.pckt.blog",
+            "$type": "blog.pckt.block.website",
+            "title": "Read on pckt",
+            "description": "Explore blog posts and articles from across the ATmosphere.",
+            "previewImage": "https://pckt-blog-media.s3.us-east-2.amazonaws.com/images/b7d1af91-b2af-43a1-a2a4-2c9e067bf5ed/read-og-image-words.png"
+          },
+          {
+            "src": "https://leaflet.pub/reader",
+            "$type": "blog.pckt.block.website",
+            "title": "Leaflet",
+            "description": "Read and publish on the Atmosphere",
+            "previewImage": "https://pckt-blog-media.s3.us-east-2.amazonaws.com/images/649afbff-1f7d-4f7f-b3c5-45402d5dac68/open-graph.png"
+          },
+          {
+            "src": "https://pub-search.waow.tech/",
+            "$type": "blog.pckt.block.website",
+            "title": "pub search",
+            "description": "search atproto publishing platforms",
+            "previewImage": "https://pckt-blog-media.s3.us-east-2.amazonaws.com/images/9e2f1715-7256-44ad-abe0-e2b19219be44/og-image.png"
+          },
+          {
+            "src": "https://standard-search.octet-stream.net",
+            "$type": "blog.pckt.block.website",
+            "title": "Standard Search",
+            "description": "A search engine for standard.site posts, indexing documents published on AT Protocol.",
+            "previewImage": "https://pckt-blog-media.s3.us-east-2.amazonaws.com/images/599768c2-0898-4b5e-86b9-15d59d80c552/search-og.png"
+          },
+          {
+            "$type": "blog.pckt.block.horizontalRule"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "The new Bluesky cards are a small feature on the surface, but they point towards a much larger picture. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "An ecosystem where long-form publishing can be much more open and connected. We can share community between many different apps and grow together rather than apart.  "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "As more people publish with Standard.site, and more developers build tools around it, writers and readers alike will benefit from better discovery and interoperability across the Atmosphere. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "With Bluesky, we're already exploring ideas like: "
+          },
+          {
+            "$type": "blog.pckt.block.bulletList",
+            "content": [
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "search experiences for Standard.site content"
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "indexes of posts on writer profiles"
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "the ability to recommend articles"
+                  }
+                ]
+              },
+              {
+                "$type": "blog.pckt.block.listItem",
+                "content": [
+                  {
+                    "$type": "blog.pckt.block.text",
+                    "plaintext": "subscribing to publications right from the app "
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "More than just a social network, the open social web is becoming a publishing network, where written works can be widely distributed in new and exciting ways. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "We're very excited about building the next generation of blogging. One that feels much more social, connected, and alive. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "Thank you for being with us along the way. "
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": "-pckt"
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": ""
+          },
+          {
+            "$type": "blog.pckt.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "app.offprint.content",
+  "defs": {
+    "main": {
+      "type": "object",
+      "required": [
+        "items"
+      ],
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "refs": [
+              "app.offprint.block.text",
+              "app.offprint.block.heading",
+              "app.offprint.block.blockquote",
+              "app.offprint.block.callout",
+              "app.offprint.block.bulletList",
+              "app.offprint.block.orderedList",
+              "app.offprint.block.taskList",
+              "app.offprint.block.codeBlock",
+              "app.offprint.block.horizontalRule",
+              "app.offprint.block.image",
+              "app.offprint.block.imageGrid",
+              "app.offprint.block.imageCarousel",
+              "app.offprint.block.imageDiff",
+              "app.offprint.block.webBookmark",
+              "app.offprint.block.webEmbed",
+              "app.offprint.block.button",
+              "app.offprint.block.mathBlock",
+              "app.offprint.block.blueskyPost"
+            ],
+            "type": "union"
+          },
+          "description": "Array of content blocks"
+        }
+      }
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1
+}

@@ -1,0 +1,28 @@
+{
+  "id": "blog.pckt.block.text",
+  "defs": {
+    "main": {
+      "type": "object",
+      "required": [
+        "plaintext"
+      ],
+      "properties": {
+        "facets": {
+          "type": "array",
+          "items": {
+            "ref": "blog.pckt.richtext.facet",
+            "type": "ref"
+          },
+          "description": "Facets for text formatting and features"
+        },
+        "plaintext": {
+          "type": "string",
+          "description": "The plain text content"
+        }
+      }
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1,
+  "description": "A text block containing plain text content with optional formatting via facets."
+}

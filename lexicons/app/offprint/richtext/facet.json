@@ -1,0 +1,138 @@
+{
+  "id": "app.offprint.richtext.facet",
+  "defs": {
+    "bold": {
+      "type": "object",
+      "properties": {}
+    },
+    "code": {
+      "type": "object",
+      "properties": {}
+    },
+    "link": {
+      "type": "object",
+      "required": [
+        "uri"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "main": {
+      "type": "object",
+      "required": [
+        "index",
+        "features"
+      ],
+      "properties": {
+        "index": {
+          "ref": "#byteSlice",
+          "type": "ref"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "refs": [
+              "#bold",
+              "#italic",
+              "#underline",
+              "#strikethrough",
+              "#code",
+              "#highlight",
+              "#link",
+              "#mention",
+              "#webMention"
+            ],
+            "type": "union"
+          }
+        }
+      }
+    },
+    "italic": {
+      "type": "object",
+      "properties": {}
+    },
+    "mention": {
+      "type": "object",
+      "required": [
+        "did"
+      ],
+      "properties": {
+        "did": {
+          "type": "string",
+          "format": "did"
+        },
+        "handle": {
+          "type": "string",
+          "format": "handle",
+          "description": "Optional cached handle for display"
+        }
+      }
+    },
+    "byteSlice": {
+      "type": "object",
+      "required": [
+        "byteStart",
+        "byteEnd"
+      ],
+      "properties": {
+        "byteEnd": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "End index (exclusive), zero-indexed byte offset in UTF-8 encoded text."
+        },
+        "byteStart": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Start index (inclusive), zero-indexed byte offset in UTF-8 encoded text."
+        }
+      }
+    },
+    "highlight": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "Optional highlight color (hex or CSS color)"
+        }
+      }
+    },
+    "underline": {
+      "type": "object",
+      "properties": {}
+    },
+    "webMention": {
+      "type": "object",
+      "required": [
+        "uri",
+        "title"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL being mentioned"
+        },
+        "title": {
+          "type": "string",
+          "description": "Page title for display",
+          "maxGraphemes": 100
+        },
+        "siteName": {
+          "type": "string",
+          "description": "Name of the website",
+          "maxGraphemes": 50
+        }
+      }
+    },
+    "strikethrough": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1
+}

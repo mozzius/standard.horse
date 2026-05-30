@@ -1,0 +1,19 @@
+{
+  "id": "app.offprint.block.mathBlock",
+  "defs": {
+    "main": {
+      "type": "object",
+      "required": [
+        "tex"
+      ],
+      "properties": {
+        "tex": {
+          "type": "string",
+          "description": "LaTeX/TeX source for the equation"
+        }
+      }
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1
+}

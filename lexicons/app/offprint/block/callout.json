@@ -1,0 +1,36 @@
+{
+  "id": "app.offprint.block.callout",
+  "defs": {
+    "main": {
+      "type": "object",
+      "required": [
+        "plaintext"
+      ],
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "Background color (CSS color value)"
+        },
+        "emoji": {
+          "type": "string",
+          "default": "\ud83d\udca1",
+          "description": "Emoji icon for the callout"
+        },
+        "facets": {
+          "type": "array",
+          "items": {
+            "ref": "app.offprint.richtext.facet",
+            "type": "ref"
+          },
+          "description": "Facets for text formatting"
+        },
+        "plaintext": {
+          "type": "string",
+          "description": "The callout text content"
+        }
+      }
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1
+}

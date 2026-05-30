@@ -1,0 +1,66 @@
+{
+  "id": "app.offprint.block.imageGrid",
+  "defs": {
+    "main": {
+      "type": "object",
+      "required": [
+        "images"
+      ],
+      "properties": {
+        "images": {
+          "type": "array",
+          "items": {
+            "ref": "#gridImage",
+            "type": "ref"
+          },
+          "required": true,
+          "maxLength": 6,
+          "minLength": 2,
+          "description": "Array of images in the grid (2-6)"
+        },
+        "caption": {
+          "type": "string",
+          "description": "Grid caption"
+        },
+        "gridRows": {
+          "type": "integer",
+          "maximum": 2,
+          "minimum": 1,
+          "description": "Number of rows in the grid"
+        },
+        "aspectRatio": {
+          "enum": [
+            "landscape",
+            "portrait",
+            "square",
+            "mosaic"
+          ],
+          "type": "string",
+          "description": "Aspect ratio mode"
+        }
+      }
+    },
+    "gridImage": {
+      "type": "object",
+      "properties": {
+        "alt": {
+          "type": "string",
+          "maxGraphemes": 300
+        },
+        "blob": {
+          "type": "blob",
+          "accept": [
+            "image/*"
+          ],
+          "maxSize": 1000000
+        },
+        "aspectRatio": {
+          "ref": "app.offprint.block.image#aspectRatio",
+          "type": "ref"
+        }
+      }
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1
+}

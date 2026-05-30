@@ -1,0 +1,34 @@
+{
+  "id": "blog.pckt.block.heading",
+  "defs": {
+    "main": {
+      "type": "object",
+      "required": [
+        "plaintext"
+      ],
+      "properties": {
+        "level": {
+          "type": "integer",
+          "maximum": 6,
+          "minimum": 1,
+          "description": "Heading level from 1 (most important) to 6 (least important)"
+        },
+        "facets": {
+          "type": "array",
+          "items": {
+            "ref": "blog.pckt.richtext.facet",
+            "type": "ref"
+          },
+          "description": "Facets for text formatting and features"
+        },
+        "plaintext": {
+          "type": "string",
+          "description": "The plain text content of the heading"
+        }
+      }
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1,
+  "description": "A heading block with hierarchical levels (1-6) for document structure."
+}

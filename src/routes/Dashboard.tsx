@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import { Link } from "react-router"
 import { useAuth } from "../auth/AuthProvider.tsx"
 import { blobImageUrl } from "../lib/bsky.ts"
-import { isMarkpubMarkdown } from "../lib/markpub.ts"
+import { detectProvider } from "../lib/providers/index.ts"
 import { errorMessage, useDocuments, usePublications } from "../lib/queries.ts"
 import {
   documentBelongsTo,
@@ -31,14 +31,23 @@ function PostRow({
   pubUrl: string | undefined
 }) {
   const url = documentUrl(pubUrl, doc.value.path)
-  // Only markpub posts are editable; flag others so the click isn't a dead end.
-  const readOnly = !!doc.value.content && !isMarkpubMarkdown(doc.value.content)
+  // Posts in a supported format are editable; show the format, or flag truly
+  // unknown content so the click isn't a dead end.
+  const provider = detectProvider(doc.value.content)
+  const readOnly = !!doc.value.content && !provider
   return (
     <Link to={`/post/${doc.rkey}`} className="post-row">
       <div>
         <h2 className="post-row__title">
           {doc.value.title || "Untitled"}
-          {readOnly && <span className="tag">read-only</span>}
+          {readOnly ? (
+            <span className="tag">read-only</span>
+          ) : (
+            provider &&
+            provider.id !== "markpub" && (
+              <span className="tag">{provider.label}</span>
+            )
+          )}
         </h2>
         {doc.value.description && (
           <p className="muted" style={{ margin: 0, maxWidth: "60ch" }}>

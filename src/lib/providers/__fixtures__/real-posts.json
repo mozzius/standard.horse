@@ -1,0 +1,632 @@
+{
+  "did": "did:plc:p2cp5gopk7mgjegy6wadk3ep",
+  "posts": [
+    {
+      "rkey": "3l75skpkywg2w",
+      "title": "Hello world",
+      "content": {
+        "text": {
+          "$type": "at.markpub.text",
+          "markdown": "New blog! In the grand blogging tradition, I have of course over-engineered this to hell and back - this is federated using the [AT Protocol](https://atproto.com) and [whtwnd](https://whtwnd.com). Blog records are stored on my PDS and rendered via a custom Next.js frontend.\n\nHonestly, there are worse ways to make a blog. So long as my PDS is around (and I'm on a Bluesky one currently, so chances are good) my data isn't going anywhere.\n\nI'm planning on writing up some of the more interesting stuff I've been up to at Bluesky - lots of pushing React Native to the limit! And hopefully as a space for more longform writing, which I've not really done before.\n\nHold on, lemme check images work:\n\n![dorsey](https://amanita.us-east.host.bsky.network/xrpc/com.atproto.sync.getBlob?did=did%3Aplc%3Ap2cp5gopk7mgjegy6wadk3ep&cid=bafkreicgt6pz3fwnpjs5lzc3qnfxgv4amc5yrwxfrl3dehrhiij33mg2w4)\n\nYep. Phew.\n\nAnyway, that's all. See you on the skyline!"
+        },
+        "$type": "at.markpub.markdown",
+        "flavor": "gfm"
+      }
+    },
+    {
+      "rkey": "3l772nawzvw2k",
+      "title": "a blog with zero posts",
+      "content": {
+        "text": {
+          "$type": "at.markpub.text",
+          "markdown": "> \"a blog with 0 blog posts is kinda like, performance art\"\n\\- [retr0.id](https://bsky.app/profile/did:plc:vwzwgnygau7ed7b7wt5ux7y2)\n\nFun fact, you can microblog on a normal sized blog. Nothing is stopping you."
+        },
+        "$type": "at.markpub.markdown",
+        "flavor": "gfm"
+      }
+    },
+    {
+      "rkey": "3l777nhz4h32w",
+      "title": "React Native, and “the native feel”",
+      "content": {
+        "text": {
+          "$type": "at.markpub.text",
+          "markdown": "When I joined Bluesky in March 2024, our [flagship app](https://bsky.app/download) was in a strange place. Written in React Native, it was a real \"native\" app on paper, yet it didn't *feel* native.\n\nThis is not uncommon, yet it’s hard to put into words what that means. Detractors will point the blame at React Native itself, which I think is unfair—React Native is uniquely placed to excel at this, unlike, say, Flutter. That said, feeling native does not come for free—it requires a lot of hard work and attention to detail.\n\nFor the past 6 months, we've undertaken various projects to improve the native feel, and people are starting to notice:\n\n![Jane Manchun Wong: This app certainly feels a lot more “native” compared to last year :)](https://amanita.us-east.host.bsky.network/xrpc/com.atproto.sync.getBlob?did=did%3Aplc%3Ap2cp5gopk7mgjegy6wadk3ep&cid=bafkreie475dkoxnibrnaapzakldx3is335xh7uwcbiasyh2e47ev2r3bwu)\n\n>Thanks [Jane](https://bsky.app/profile/wongmjane.com)!\n\nGetting here was no small task, and it took a lot of relatively small changes across all parts of the app.\n\n## Thinning out the borders\n\nComing from a web background, you might instinctively set the `borderWidth` to `1px` when you want a border. Surprisingly, that's wrong—you’re likely looking for `StyleSheet.hairlineWidth`! It may seem like a small change, but when your app has lots of borders—between posts, around quote-posts, around link cards—they add up. We changed *every single border* in the app to hairline width and it was an unexpectedly huge improvement. Nearly imperceptibly, the entire app became more detailed and precise and reduced the visual clutter.\n\n![Before/After: feeds screen](https://amanita.us-east.host.bsky.network/xrpc/com.atproto.sync.getBlob?did=did%3Aplc%3Ap2cp5gopk7mgjegy6wadk3ep&cid=bafkreih3t7xdcucpjzwsvrsxxpaby3a3xcazenziejgitd4i42auzsmmfe)\n\n![Before/After: notifications](https://amanita.us-east.host.bsky.network/xrpc/com.atproto.sync.getBlob?did=did%3Aplc%3Ap2cp5gopk7mgjegy6wadk3ep&cid=bafkreid34rdstrr6q3cfhj2txscurvaqnwlub4x2lgi7ift4nji2l57yfa)\n\nBeware though—you might be expecting 1px borders in unexpected places. We had a couple of places where we were absolutely positioning items with a 1px inset—to account for the border—which caused a gap when the border got thinner. So double-check after you replace them all!\n\n## Native sheets\n\nA distinctive characteristic of iOS apps is the \"sheet\" presentation—a modal view where the backdrop drops back a little. It feels slick, and *really* native—you don't see websites doing this.\n\nFor the post composer, we were originally absolutely positioning a view above the app with a manual fade/slide animation. It was fine, but didn't feel very special. We swapped it out with a real native sheet using React Native's built-in `<Modal>` component with `presentation=\"pageSheet\"`. This *greatly* improved the feel of the composer, and gained a new feature for free: swipe to dismiss!\n\nSadly, this was not without problems. First, it didn't work on Android. Trying to auto-focus the text input was straight-up failing, so we went back to the original implementation there—which was super easy, thanks to platform-split files. But there was also a lot of strange, awkward behaviour which made us reticent to use this in other places, and some of the more interesting features of native sheets are not available (medium/custom detents and swiping to dismiss without resistance come to mind).\n\n### Replacing React Native Bottom Sheet\n\nWe soon found ourselves with a reason to go further. Our standard `<Dialog>` component was using [React Native Bottom Sheet](https://github.com/gorhom/react-native-bottom-sheet), causing us a lot of issues. The worst offender was broken accessibility on Android, but the problems (and hacky fixes) just kept on piling up and up. We spent *months* tracking down a bug where dismissing a sheet wrong would cause the Android back button to stop working. Content in the bottom sheet requires special components, especially TextInput. For reasons I can't remember, we ended up using [Discord's fork](https://github.com/discord/react-native-bottom-sheet). RNBS is a very common library that you will likely find in most React Native apps but was causing us a huge amount of pain and generating a lot of complexity.\n\nIn just a couple of days, [Hailey](https://bsky.app/profile/did:plc:oisofpd7lj26yvgiivf3lxsi) sat down and implemented a completely native bottom-sheet implementation on both iOS and Android, seamlessly swapping out our existing implementation with minimal changes needed in terms of using the `<Dialog>`. This incredible engineering work massively improved the native feel of the app, fixed all our accessibility issues and various janky fixes that had accumulated in the JS-based sheet implementation, *and* added a feature that even the native sheets don't have out of the box—dynamically sizing the sheets based on content height. We haven't (yet?) published this implementation as a separate package, but [True Sheet](https://github.com/lodev09/react-native-true-sheet) is similar—I thoroughly recommend checking it out, especially if RNBS is giving you trouble.\n\nHere's a before and after comparison of the \"Add App Password\" dialog. Which one looks more native to you?\n\n![Comparison of the old and new add App Password dialogs](https://amanita.us-east.host.bsky.network/xrpc/com.atproto.sync.getBlob?did=did%3Aplc%3Ap2cp5gopk7mgjegy6wadk3ep&cid=bafkreididub2e2q6psfv42qurvxijv6hfbkhwcwuf6g7av2hwmezpn3uly)\n\nHuge props to Hailey for landing that one—I'm still in awe of how good our new sheets are.\n\n### Three things you should know about native sheets\n\n#### 1. Status bar colours\n\nWhen you open a sheet, make sure that the status bar style is set to `\"light\"`, otherwise the status bar won't be visible when the black background is revealed. We do this by keeping a count of the number of active sheets, and setting it to `\"light\"` if it's greater than zero. We also increment this count when opening a system sheet, like the image picker, since that has the same presentation!\n\n#### 2. React Navigation\n\nNative sheets can also be used via React Navigation—it lets you set the `presentation` of a screen to `formSheet` or `pageSheet`. This is powerful since you can nest a stack navigator *within* a sheet. I used this a bunch when I was working on [Graysky](https://graysky.app), and it's a great pattern. It's also super easy to do with Expo Router by setting a **group** to use sheet presentation.\n\n#### 3. iPad\n\nWe don't support iPad in the Bluesky app yet but be wary that iPad sheets can display very differently. For large iPads, custom detents are not supported, and the status bar needs to stay as-is since it doesn't reveal the background. The worst part is, `Platform.isPad` doesn't always help detect this change in behaviour since the iPad Mini will still display sheets like on iOS! I have yet to find a good answer for this; part of why we've never enabled iPad support.\n\n## Animations, animations, animations\n\nIt's a bit of a no-brainer that animations make apps feel more polished, but when it comes to React Native apps specifically, it's often one of the biggest factors in the elusive sense of \"feeling native\". SwiftUI apps naturally come with a lot of little animations, but in React Native you've got to do all of it by hand. This is a large contributing factor in what I'd call the \"webby\" feel of a lot of React Native apps.\n\nAnimations are a huge topic; I could talk about the new animation for when you like a post or the new swipe-to-dismiss interactions on the chat screen. That said, many low-hanging fruits are simple to take advantage of which can drastically improve the perceived quality of your app.\n\n### Layout animations\n\nUnlike React Native's `LayoutAnimation.configureNext()`, which is hard to fire correctly and can often start animating things unintentionally, [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)'s layout animations are very easy to use and slot naturally into your app.\n\nIf you want something to move around smoothly, it's as simple as:\n\n```tsx\n<Animated.View layout={LinearTransition} />\n```\n\nIf you want something to appear and disappear smoothly, you’d write:\n\n```tsx\n<Animated.View entering={FadeIn} exiting={FadeOut} />\n```\n\nSprinkling those across your app can hugely improve its feel. We use this in the composer, for example: if there's a problem with your post, you get a little banner at the top. The component structure looked somewhat like this (simplified):\n\n```tsx\n<Container>\n    <Header onSubmit={...} />\n    {error && <ErrorBanner error={error} />}\n    <ScrollView>\n        <TextInput />\n        <MediaPreview />\n        {/* etc */}\n    </ScrollView>\n</Container>\n```\n\nWhen an error happened, it would simply snap into place. This is somewhat fine for the banner, but pretty jarring for the rest of the content in the scrollview to suddenly snap down by 50 or so pixels.\n\nLayout animations to the rescue:\n\n```tsx\n<Container>\n    <Header onSubmit={...} />\n    {error && (\n        <Animated.View entering={FadeIn} exiting={FadeOut}>\n            <ErrorBanner error={error} />\n        </Animated.View>\n    )}\n    <Animated.ScrollView layout={LinearTransition}>\n        <TextInput />\n        <MediaPreview />\n        {/* etc */}\n    </Animated.ScrollView>\n</Container>\n```\n\nNow, the `ScrollView` smoothly slides down to make space for the banner, which fades in smoothly.\n\nReanimated's [LayoutAnimationConfig](https://docs.swmansion.com/react-native-reanimated/docs/layout-animations/layout-animation-config) component is very helpful for cases where you want elements to animate when things change, but not when the screen first appears.\n\n### Squishy buttons\n\nAnimations will often make something feel more polished, but what makes a particular impact in native apps is a feeling of tactility. Haptics is one part of that, but another is \"squishiness\". Used sparingly, a scale-on-press animation can make buttons feel very dynamic. We use these in a few places, most prominently on the bottom navigation tabs. Compared to the old `TouchableOpacity` animation, the app feels so much more alive!\n\n<blockquote class=\"bluesky-embed\" data-bluesky-uri=\"at://did:plc:p2cp5gopk7mgjegy6wadk3ep/app.bsky.feed.post/3l5r5gffbne2a\" data-bluesky-cid=\"bafyreidoev4obv2gmpxn3zylc753dhmejj6hnu4bm7lo2b53kjc2diq6ba\"><p lang=\"en\">you meet @bacon.bsky.social one time and all of a sudden all your buttons become squishy and native-feeling<br><br><a href=\"https://bsky.app/profile/did:plc:p2cp5gopk7mgjegy6wadk3ep/post/3l5r5gffbne2a?ref_src=embed\">[image or embed]</a></p>&mdash; Samuel (<a href=\"https://bsky.app/profile/did:plc:p2cp5gopk7mgjegy6wadk3ep?ref_src=embed\">@samuel.bsky.team</a>) <a href=\"https://bsky.app/profile/did:plc:p2cp5gopk7mgjegy6wadk3ep/post/3l5r5gffbne2a?ref_src=embed\">October 5, 2024 at 2:11 PM</a></blockquote>\n\nHere's the complete implementation of our `PressableScale` component. We can drop this into our higher-level `Button` component to replace its underlying `Pressable` to instantly make a button squishy!\n\n```tsx\nimport React from 'react'\nimport {Pressable, PressableProps, StyleProp, ViewStyle} from 'react-native'\nimport Animated, {\n  cancelAnimation,\n  runOnJS,\n  useAnimatedStyle,\n  useReducedMotion,\n  useSharedValue,\n  withTiming,\n} from 'react-native-reanimated'\n\nimport {isTouchDevice} from '#/lib/browser'\nimport {isNative} from '#/platform/detection'\n\nconst DEFAULT_TARGET_SCALE = isNative || isTouchDevice ? 0.98 : 1\n\nconst AnimatedPressable = Animated.createAnimatedComponent(Pressable)\n\nexport function PressableScale({\n  targetScale = DEFAULT_TARGET_SCALE,\n  children,\n  style,\n  onPressIn,\n  onPressOut,\n  ...rest\n}: {\n  targetScale?: number\n  style?: StyleProp<ViewStyle>\n} & Exclude<PressableProps, 'onPressIn' | 'onPressOut' | 'style'>) {\n  const reducedMotion = useReducedMotion()\n\n  const scale = useSharedValue(1)\n\n  const animatedStyle = useAnimatedStyle(() => ({\n    transform: [{scale: scale.value}],\n  }))\n\n  return (\n    <AnimatedPressable\n      accessibilityRole=\"button\"\n      onPressIn={e => {\n        'worklet'\n        if (onPressIn) {\n          runOnJS(onPressIn)(e)\n        }\n        cancelAnimation(scale)\n        scale.value = withTiming(targetScale, {duration: 100})\n      }}\n      onPressOut={e => {\n        'worklet'\n        if (onPressOut) {\n          runOnJS(onPressOut)(e)\n        }\n        cancelAnimation(scale)\n        scale.value = withTiming(1, {duration: 100})\n      }}\n      style={[!reducedMotion && animatedStyle, style]}\n      {...rest}>\n      {children}\n    </AnimatedPressable>\n  )\n}\n```\n\nThis made the bottom bar feel so much better—I highly recommend this if yours is feeling rather static.\n\n## Native navigation\n\nI touched on this briefly earlier, but leaning on React Navigation is a great way to get your app to feel more native. First off: use the native stack navigator. This needs no further explanation.\n\nNext native headers. We don't yet do this at Bluesky, but resist the temptation to roll your own headers—it's hard to perceive, but you lose a lot of subtle interactions when you do that. The easiest way to tell if headers are native (on iOS) is to long press the back button, which lets you quickly jump back through previous pages. Native headers unlock doing things like [dynamic blurry backdrops after you start scrolling](https://x.com/Baconbrix/status/1833467707083125222), which feels *extremely* native—it's a distinctive look of SwiftUI apps as it does that automatically.\n\nFinally, another thing we don't use at Bluesky but I wanted to give a quick shout-out to: Oskar Kwaśniewski's brand new [React Native Bottom Tabs](https://github.com/okwasniewski/react-native-bottom-tabs) library. This uses real native tab bars and is super easy to slot into React Navigation or Expo Router. If you want to go all-in on the native look (which is a good idea!) I highly recommend you check it out.\n\n### Beware of `fullScreenGestureEnabled`\n\n`fullScreenGestureEnabled` lets you swipe anywhere on the screen to go back. This feels really good, and a lot of other apps do it: Threads, Twitter (subsequently X), and Instagram, to name a few. React Navigation's implementation, however, leaves many things desired and has the significant drawback of changing the back animation to use the custom `simple_push` rather than the native one, which is far more janky. We ultimately decided to keep `fullScreenGestureEnabled` enabled for Bluesky, but it's a substantial trade-off and I hope we’ll find a better solution.\n\n## Conclusion\n\nThere’s no silver bullet for making your app \"feel native\". None of these changes moved the needle by themselves, but adding them all up makes a huge difference, as I hope you noticed over the past few months in the app. My one overarching piece of advice is: be curious. Look at other apps close, *really* close, ask yourself how they did *that*, and try and do it yourself. It's worth the effort, and it's a lot more fun than it sounds at first.\n\nAs for me, my next goal is improving the headers and navigation—I’m confident that that will bring a subtle, yet substantial improvement to the feel. \n\nAnd if you haven't already, [check out Bluesky](https://bsky.app/download) - it's only going to get more native-er!\n\n> Many many thanks to [Alice](https://alice.bsky.sh) for helping with copyediting and digging up old Android APKs to take screenshots of!\n"
+        },
+        "$type": "at.markpub.markdown",
+        "flavor": "gfm"
+      }
+    },
+    {
+      "rkey": "3l7dnil23ed23",
+      "title": "Bluesky post embeds in Next.js",
+      "content": {
+        "text": {
+          "$type": "at.markpub.text",
+          "markdown": "The way that Bluesky post embeds work doesn't mesh very nicely with React since it swaps out elements in the DOM that React is trying to keep track of, and I was having a lot of trouble getting it work with Next.js due to its fancy router. Luckily, the embed script is very simple, and you can simply reimplement it as a React component. The snippet doesn't do a whole lot—it swaps out the placeholder `blockquote` for an iframe, then listens to messages that the iframe sends up to the parent frame to set its height. This is because iframe content can't influence the size of the frame, so we have to set it manually.\n\nWith this component, all you need is the post URI - you can get this from the embed snippet we give you at [embed.bsky.app](https://embed.bsky.app) in the `data-bluesky-uri` attribute.\n\nThis uses Next.js and TailwindCSS, but it should be pretty obvious how to adapt it for your specific project.\n\n```tsx\n\"use client\";\n\nimport { useEffect, useId, useState } from \"react\";\nimport { usePathname } from \"next/navigation\";\n\nconst WEBSITE_URL = \"https://example.com\" // your website goes here\nconst EMBED_URL = \"https://embed.bsky.app\";\n\nexport function BlueskyPostEmbed({ uri }: { uri: string }) {\n  const id = useId();\n  const pathname = usePathname();\n  const [height, setHeight] = useState(0);\n\n  useEffect(() => {\n    const abortController = new AbortController();\n    const { signal } = abortController;\n    window.addEventListener(\n      \"message\",\n      (event) => {\n        if (event.origin !== EMBED_URL) {\n          return;\n        }\n\n        const iframeId = (event.data as { id: string }).id;\n        if (id !== iframeId) {\n          return;\n        }\n\n        const internalHeight = (event.data as { height: number }).height;\n        if (internalHeight && typeof internalHeight === \"number\") {\n          setHeight(internalHeight);\n        }\n      },\n      { signal },\n    );\n\n    return () => {\n      abortController.abort();\n    };\n  }, [id]);\n\n  const ref_url = WEBSITE_URL + pathname;\n\n  const searchParams = new URLSearchParams();\n  searchParams.set(\"id\", id);\n  searchParams.set(\"ref_url\", encodeURIComponent(ref_url));\n\n  const src = `${EMBED_URL}/embed/${uri.slice(\"at://\".length)}?${searchParams.toString()}`\n\n  return (\n    <div\n      className=\"flex max-w-[600px] w-full bluesky-embed\"\n      data-uri={uri}\n    >\n      <iframe\n        className=\"w-full block border-none flex-grow\"\n        style={{ height }}\n        data-bluesky-uri={uri}\n        src={src}\n        width=\"100%\"\n        frameBorder=\"0\"\n        scrolling=\"no\"\n      />\n    </div>\n  );\n}\n```\n\nHere it is in action:\n\n<blockquote class=\"bluesky-embed\" data-bluesky-uri=\"at://did:plc:p2cp5gopk7mgjegy6wadk3ep/app.bsky.feed.post/3l644ua33f526\" data-bluesky-cid=\"bafyreihj365zpnqw6heer6y7d7xwugkf54cohsxw625hizprxhpnztkbqq\"><p lang=\"en\">to write a blog post one must first invent a blogging protocol</p>&mdash; Samuel (<a href=\"https://bsky.app/profile/did:plc:p2cp5gopk7mgjegy6wadk3ep?ref_src=embed\">@samuel.bsky.team</a>) <a href=\"https://bsky.app/profile/did:plc:p2cp5gopk7mgjegy6wadk3ep/post/3l644ua33f526?ref_src=embed\">October 9, 2024 at 11:00 PM</a></blockquote>\n\nHope that helps somebody!"
+        },
+        "$type": "at.markpub.markdown",
+        "flavor": "gfm"
+      }
+    },
+    {
+      "rkey": "3ljlqmchv2b2a",
+      "title": "atproto by example part 1: records and views",
+      "content": {
+        "text": {
+          "$type": "at.markpub.text",
+          "markdown": "> Note: this blog post is aimed at a technical audience\n\nAT Protocol (hereafter referred to as “atproto”) is a groundbreaking new technology by Bluesky (the company) used to build Bluesky (the social app). At this point, a lot has been said about *why* this is being build and *how* it works at a high level, but I think it’s long overdue for someone to get their hands dirty and figure out how to build something from the ground up with it.\n\nThis post is *not* going to cover how it works as a whole from the top down. Instead, this series will attempt to build a bottom-up understanding, by explaining and implementing the nitty-gritty. atproto has many parts, many of which may seem strange in isolation, but they all fit together to form a cohesive whole. If you want to get a better understanding of how it works at a high level, I recommend Dan Abramov’s Web Without Walls talk - you’ll probably be pretty lost if you haven’t seen it, so consider it required watching.\n\nhttps://www.youtube.com/watch?v=F1sJW6nTP6E\n\nI am also *not* going to start from the absolute beginning. This should be considered a sequel to [Quick start guide to building applications on AT Protocol](https://atproto.com/guides/applications), which is the official guide to building an atproto demo app. We are going to take the Statusphere example app and extend it, using more advanced atproto concepts.\n\n## Understanding lexicon\n\nIn the statusphere example, we make a **lexicon** schema to describe records of type `xyz.statusphere.status`. It looks something like this:\n\n```json\n{\n  \"lexicon\": 1,\n  \"id\": \"xyz.statusphere.status\",\n  \"defs\": {\n    \"main\": {\n      \"type\": \"record\",\n      \"key\": \"tid\",\n      \"record\": {\n        \"type\": \"object\",\n        \"required\": [\"status\", \"createdAt\"],\n        \"properties\": {\n          \"status\": {\n            \"type\": \"string\",\n            \"minLength\": 1,\n            \"maxGraphemes\": 1,\n            \"maxLength\": 32\n          },\n          \"createdAt\": {\n            \"type\": \"string\",\n            \"format\": \"datetime\"\n          }\n        }\n      }\n    }\n  }\n}\n```\n\nIn summary, it describes a `record`, which is of type `object`. This object has two properties, a “status” which is a single grapheme long, and a “createdAt” date, both of which are required.\n\nThis schema describes the shape of records one might encounter on the network. An example might be:\n\n```json\n{\n  \"$type\": \"xyz.statusphere.status\",\n  \"status\": \"🦋\",\n  \"createdAt\": \"2025-03-03T18:43:46.740Z\"\n}\n```\n\nHere’s a question. Is this a valid `status` record?\n\n```json\n{\n  \"$type\": \"xyz.statusphere.status\",\n  \"status\": \"🦋\",\n  \"createdAt\": \"2025-03-03T18:43:46.740Z\",\n  \"comment\": \"a butterfly :)\",\n  \"labels\": {\n    \"$type\": \"com.atproto.label.defs#selfLabels\",\n    \"values\": [\n      { \"val\": \"graphic-media\" }\n    ]\n  }\n}\n```\n\nThe answer is yes! All records are **open unions**. This means that a record might have more content attached to it than described in the lexicon you have. It’s this way for a few reasons:\n\n1. **The lexicon might evolve in the future to have more fields**. Open unions allow forward compatibility - an app will only use the fields it knows about, but will still consider future records that might have more fields to be valid.\n2. **Extensibility**. Other developers might want to attach extra data to records that use your lexicon (although make sure you [namespace your fields](https://docs.bsky.app/blog/pinned-posts)!).\n3. **You don’t own the data**. All the data is out there, in the atmosphere, being published and owned by the end users. Lexicons merely describe the *minimum viable shape* of the data that your application will accept and consider valid.\n\nIn the above example, it could be that a future version of the statusphere app has added comments and self-labels. Your statusphere app however only needs the `status` and `createdAt` fields to be present (and match the format) for the object to be considered valid, even though there’s extra stuff in there - just ignore it and use the status.\n\nAnother case is when a field might have multiple variants, such as the embeds on Bluesky posts. You can see in the schema here, we define what kind of records you can use in the embed: images, video, etc:\n\nhttps://github.com/bluesky-social/atproto/blob/main/lexicons/app/bsky/feed/defs.json#L16-L25\n\nHowever, this is an open union, so there could be another kind of embed in there instead - and the post would still be valid. An example of this is when we added video embeds. We added the new record type to the union so that the new versions of the app would know about the new possible variant, but old apps already out there in the wild still wouldn’t know what it was. However, since it’s an open union, they can just ignore the strange new record and render the post without an embed.\n\n## Views\n\nLexicons can define more than records though. A helpful concept in atproto is “views” - records are the raw data type that’s out there in the real world but might be quite minimal, whereas views are processed data that your app may produce for ease of use. An example of this in `bsky.app` would be the difference between a `app.bsky.feed.post` record and a `app.bsky.feed.defs#postView` - a post record can be nothing but a text field and a date, whereas a `PostView` is a post record that has been processed by the Bluesky AppView and had helpful metadata attached, such as counting the number of likes and reposts, and attaching the author’s name and avatar.\n\nStatusphere statuses are pretty rough to work with directly! Already, we store them in the database in a non-lexicon format, since we need to save who it is by. Let’s describe a new object called a `#statusView`, which describes what a status might look like after processing.\n\n```json\n{\n  \"lexicon\": 1,\n  \"id\": \"xyz.statusphere.defs\",\n  \"defs\": {\n    \"statusView\": {\n      \"type\": \"object\",\n      \"required\": [\"uri\", \"status\", \"profile\", \"createdAt\"],\n      \"properties\": {\n        \"uri\": { \"type\": \"string\", \"format\": \"at-uri\" },\n        \"status\": {\n          \"type\": \"string\",\n          \"minLength\": 1,\n          \"maxGraphemes\": 1,\n          \"maxLength\": 32\n        },\n        \"createdAt\": { \"type\": \"string\", \"format\": \"datetime\" },\n        \"profile\": { \"type\": \"ref\", \"ref\": \"#profileView\" }\n      }\n    },\n    \"profileView\": {\n      \"type\": \"object\",\n      \"required\": [\"did\", \"handle\"],\n      \"properties\": {\n        \"did\": { \"type\": \"string\", \"format\": \"did\" },\n        \"handle\": { \"type\": \"string\", \"format\": \"handle\" }\n      }\n    }\n  }\n}\n```\n\nNote that:\n- these are not `\"type\": \"record\"`, they are `\"type\": \"object\"`. This means that we can generate a helper type using codegen, but it won’t generate the helper methods to save a record of this type to the network, like it would for a record - it’s purely for internal use.\n- We also have to define a `#profileView`, and reference it in the `profile` field. This is because lexicon doesn’t allow you to define nested objects.\n\nWe can then generate a StatusView from a status we get from the database like so:\n\n```ts\nimport { XyzStatusphereDefs } from '@statusphere/lexicon'\nimport { AppContext } from '#/context'\nimport { Status } from '#/db'\n\nexport async function statusToStatusView(\n  status: Status,\n  ctx: AppContext,\n): Promise<XyzStatusphereDefs.StatusView> {\n  return {\n    uri: status.uri,\n    status: status.status,\n    createdAt: status.createdAt,\n    profile: {\n      did: status.authorDid,\n      handle: await ctx.resolver\n        .resolveDidToHandle(status.authorDid)\n        .catch(() => 'invalid.handle'),\n    },\n  }\n}\n```\n\n## Queries and Procedures\n\nLexicon also allows you to define Queries and Procedures. This lets you automatically codegen API routes from your lexicons, on both frontend and backend. The Statusphere example doesn’t need to do this, because it’s a simple express app with APIs that use FormData and HTML. However, a more complex app might want a strict API contract between their internal services, or even between their services and external third-party services (like Bluesky feed generators). Lexicon lets you define these too! Let’s consider an API to fetch the list of most recent statuses. We can define parameters, like a limit for the number of statuses we want, and then define the API response. In this case, we can use our new `xyz.statusphere.defs#statusView`, which means our frontend can use the helpful extra metadata we added to the record!\n\n```json\n{\n  \"lexicon\": 1,\n  \"id\": \"xyz.statusphere.getStatuses\",\n  \"defs\": {\n    \"main\": {\n      \"type\": \"query\",\n      \"description\": \"Get a list of the most recent statuses on the network.\",\n      \"parameters\": {\n        \"type\": \"params\",\n        \"properties\": {\n          \"limit\": {\n            \"type\": \"integer\",\n            \"minimum\": 1,\n            \"maximum\": 100,\n            \"default\": 50\n          },\n        }\n      },\n      \"output\": {\n        \"encoding\": \"application/json\",\n        \"schema\": {\n          \"type\": \"object\",\n          \"required\": [\"statuses\"],\n          \"properties\": {\n            \"cursor\": { \"type\": \"string\" },\n            \"statuses\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": \"ref\",\n                \"ref\": \"xyz.statusphere.defs#statusView\"\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n```\n\nProcedures are a similar story - where queries are GET requests, procedures are POST requests. Let’s define one for sending statuses:\n\n```json\n{\n  \"lexicon\": 1,\n  \"id\": \"xyz.statusphere.sendStatus\",\n  \"defs\": {\n    \"main\": {\n      \"type\": \"procedure\",\n      \"description\": \"Send a status into the ATmosphere.\",\n      \"input\": {\n        \"encoding\": \"application/json\",\n        \"schema\": {\n          \"type\": \"object\",\n          \"required\": [\"status\"],\n          \"properties\": {\n            \"status\": {\n              \"type\": \"string\",\n              \"minLength\": 1,\n              \"maxGraphemes\": 1,\n              \"maxLength\": 32\n            }\n          }\n        }\n      },\n      \"output\": {\n        \"encoding\": \"application/json\",\n        \"schema\": {\n          \"type\": \"object\",\n          \"required\": [\"status\"],\n          \"properties\": {\n            \"status\": {\n              \"type\": \"ref\",\n              \"ref\": \"xyz.statusphere.defs#statusView\"\n            }\n          }\n        }\n      }\n    }\n  }\n}\n```\n\n## Code generation\n\nNow we have these shiny new lexicons, what can we do with them? The answer is the `@atproto/lex-cli` package, which allows code generation from lexicons into both frontend and backend code. This is how `@atproto/api` is generated from the lexicons, for example.\n\nIt’s worth noting at this point that I have refactored the Statusphere example into having a separate frontend and backend. The frontend now uses react/vite, and the backend is still express but now uses JSON APIs rather than sending HTML. Take a look:\n\nhttps://github.com/mozzius/statusphere-react\n\nYou’ll note that lexicons sit at the root of the monorepo. `pnpm lexgen` triggers the code generation, which uses `lex gen-api` to generate a client-side package in `@statusphere/lexicon`, and `lex gen-server` to generate backend code in `@statusphere/appview`. Let’s have a look what it generated from our new lexicons, and how it helps.\n\n### Client codegen\n\nI packaged the frontend codegen into `@statusphere/lexicon`, so it could be shared. In `/packages/client/src/lib/api.ts`, we create a `StatusphereAgent` which has the API routes we defined earlier. For example:\n\n```typescript\nconst {data} = agent.xyz.statusphere.getStatuses({limit: 10})\n```\n\nIf you’ve used `@atproto/api` before, you get it. Basically, we can add extra methods to the atproto agent, as defined by our custom lexicons.\n\n### Backend codegen\n\nHere’s where it gets interesting. `lex gen-server` generates a XRPC Server using the `@atproto/xrpc-server`. These are the matching backend routes for the agent on the frontend. We can define typesafe route handlers for each of our queries and procedures, then add them to our Express server. Here’s the pattern I used, which is similar to the Bluesky AppView (although feel free to plumb the data through differently).\n\n```typescript\n// src/index.ts\nimport express from 'express'\n// this is codegen'd by lex gen-server\nimport { createServer } from '#/lexicon'\nimport API from '#/api'\n\n// other setup stuff, such as the ingestor\n\nconst app = express()\napp.use(express.json())\napp.use(express.urlencoded({ extended: true }))\n\n// Create our XRPC server\nlet server = createServer({\n  validateResponse: env.isDevelopment,\n  payload: {\n    jsonLimit: 100 * 1024, // 100kb\n    textLimit: 100 * 1024, // 100kb\n    // no blobs\n    blobLimit: 0,\n  },\n})\n\nserver = API(server, ctx)\n\napp.use(server.xrpc.router)\n\n// add other routes, start up the server\n```\n\nThis is where we add all the individual route handlers to the Express server:\n\n```typescript\n// src/api/index.ts\nimport { AppContext } from '#/context'\nimport { Server } from '#/lexicons'\nimport getStatuses from './lexicons/getStatuses'\nimport getUser from './lexicons/getUser'\nimport sendStatus from './lexicons/sendStatus'\n\nexport default function (server: Server, ctx: AppContext) {\n  getStatuses(server, ctx)\n  sendStatus(server, ctx)\n  getUser(server, ctx)\n  return server\n}\n```\n\nAnd here’s an example of a route handler - in this case, for `xyz.statusphere.getStatuses`\n\n```typescript\n// src/api/lexicons/getStatuses.ts\nimport { AppContext } from '#/context'\nimport { Server } from '#/lexicons'\nimport { statusToStatusView } from '#/lib/hydrate'\n\nexport default function (server: Server, ctx: AppContext) {\n  server.xyz.statusphere.getStatuses({\n    handler: async ({ params }) => {\n      // Fetch data stored in our SQLite\n      const statuses = await ctx.db\n        .selectFrom('status')\n        .selectAll()\n        .orderBy('indexedAt', 'desc')\n        .limit(params.limit)\n        .execute()\n\n      return {\n        encoding: 'application/json',\n        body: {\n          statuses: await Promise.all(\n            statuses.map((status) => statusToStatusView(status, ctx)),\n          ),\n        },\n      }\n    },\n  })\n}\n```\n\nThis is super helpful for ensuring your frontend and backend are synced - the source of truth is coming from your lexicons. Adding a new route is a matter of defining a new lexicon, running codegen, and adding a new handler, which is super simple since it’s all already typesafe on frontend and backend.\n\n## Homework\n\nFork https://github.com/mozzius/statusphere-react and extend it with a new XRPC query! Maybe try adding a query to get the most recent status of a given user, or even get a user’s status history. Play around with adding more detailed lexicon view objects - for example, an `emojiStats` object which defines how many times an emoji has been posted.\n"
+        },
+        "$type": "at.markpub.markdown",
+        "flavor": "gfm"
+      }
+    },
+    {
+      "rkey": "3m3wtnioeuk26",
+      "title": "Getting Started with atproto and Expo",
+      "content": {
+        "$type": "pub.leaflet.content",
+        "pages": [
+          {
+            "$type": "pub.leaflet.pages.linearDocument",
+            "blocks": [
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 141,
+                        "byteStart": 115
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        },
+                        {
+                          "uri": "https://www.npmjs.com/package/@atproto/oauth-client-expo",
+                          "$type": "pub.leaflet.richtext.facet#link"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "This is a guide to getting started with AT Protocol development with Expo. We've recently published a new library, @atproto/oauth-client-expo, which greatly simplifies the process of integrating atproto OAuth into your Expo app."
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.header",
+                  "level": 2,
+                  "facets": [],
+                  "plaintext": "Installation"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 73,
+                        "byteStart": 50
+                      },
+                      "features": [
+                        {
+                          "uri": "https://github.com/bluesky-social/cookbook",
+                          "$type": "pub.leaflet.richtext.facet#link"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteEnd": 113,
+                        "byteStart": 98
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "We’re going to use the example application from bluesky-social/cookbook, which is is based on a create-expo-app template."
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.code",
+                  "language": "bash",
+                  "plaintext": "npx giget@latest gh:bluesky-social/cookbook/react-native-oauth my-atproto-app",
+                  "syntaxHighlightingTheme": "vitesse-black"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [],
+                  "plaintext": "Then install dependencies and install the app on your phone/simulator/emulator:"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.code",
+                  "language": "bash",
+                  "plaintext": "cd my-atproto-app\nbun i\nbun ios",
+                  "syntaxHighlightingTheme": "vitesse-black"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [],
+                  "plaintext": "You then should see the login screen. Yay!"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.image",
+                  "image": {
+                    "ref": {
+                      "$link": "bafkreigctss4z2g34j2vm7iouu5udfjotckwp6tws6lsuajr2fcwkkebvu"
+                    },
+                    "size": 4587294,
+                    "$type": "blob",
+                    "mimeType": "image/png"
+                  },
+                  "aspectRatio": {
+                    "width": 3773,
+                    "height": 2830
+                  }
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [],
+                  "plaintext": "However, we need to do a bit more work before we can log in. This is because we need to host our OAuth metadata file and replace the placeholder variables so that it points to our app."
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 51,
+                        "byteStart": 25
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "The OAuth metadata file (oauth-client-metadata.json) specifies what our app is, what permissions it will be asking for, and other details. This needs to be accessible on the web - luckily, we can use Expo Router API Routes for this!"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 22,
+                        "byteStart": 14
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "First, change app.json to enable API routes:"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.code",
+                  "language": "json",
+                  "plaintext": "\"web\": {\n  \"output\": \"server\"\n}",
+                  "syntaxHighlightingTheme": "vitesse-black"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 94,
+                        "byteStart": 57
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Then, go add an API route to deploy our metadata file at app/oauth-client-metadata.json+api.ts"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.code",
+                  "language": "typescript",
+                  "plaintext": "export function GET(request: Request) {\n  return Response.json(require(\"../oauth-client-metadata.json\"));\n}",
+                  "syntaxHighlightingTheme": "vitesse-black"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 123,
+                        "byteStart": 103
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Next, an awkward little step: the bundler will try and include some client only code, and fail. Change utils/oauthClient.ts to do some platform checks:"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.code",
+                  "language": "typescript",
+                  "plaintext": "import { ExpoOAuthClient } from \"@atproto/oauth-client-expo\";\nimport { Platform } from \"react-native\";\n\nexport const oauthClient = (\n  Platform.OS === \"web\" ? typeof window !== \"undefined\" : true\n)\n  ? new ExpoOAuthClient({\n      handleResolver: \"https://bsky.social\",\n      clientMetadata: require(\"../oauth-client-metadata.json\"),\n    })\n  : (null as ExpoOAuthClient);",
+                  "syntaxHighlightingTheme": "vitesse-black"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 83,
+                        "byteStart": 43
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteEnd": 116,
+                        "byteStart": 106
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteEnd": 288,
+                        "byteStart": 270
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "You can now export the server bundle using bunx expo export --platform web --no-ssg, then deploy it using eas deploy. It will ask you to configure a preview URL - choose a name, and remember it, because we’ll use it for our metadata. In this guide, I’m going to use atexample.expo.app - replace this with whatever you picked."
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.image",
+                  "image": {
+                    "ref": {
+                      "$link": "bafkreicxxypjbuyrbs2de3aqgxvwfsrsgxzvtpkvpzrbhzlzj7caamjtda"
+                    },
+                    "size": 66387,
+                    "$type": "blob",
+                    "mimeType": "image/png"
+                  },
+                  "aspectRatio": {
+                    "width": 1114,
+                    "height": 230
+                  }
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 98,
+                        "byteStart": 89
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteEnd": 110,
+                        "byteStart": 100
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteEnd": 129,
+                        "byteStart": 116
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteEnd": 154,
+                        "byteStart": 141
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteEnd": 159,
+                        "byteStart": 155
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#italic"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Now we have a domain name, we can tweak our metadata file to use it - you need to change client_id, client_uri, and redirect_uris. Note that redirect_uris must be the domain name in reverse notation."
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.code",
+                  "language": "json",
+                  "plaintext": "{\n  \"client_id\": \"https://atexample.expo.app/oauth-client-metadata.json\",\n  \"client_name\": \"React Native OAuth Client Demo\",\n  \"client_uri\": \"https://atexample.expo.app\",\n  \"redirect_uris\": [\"app.expo.atexample:/sign-in\"],\n  \"scope\": \"atproto account:email rpc:*?aud=did:web:api.bsky.app#bsky_appview\",\n  \"token_endpoint_auth_method\": \"none\",\n  \"response_types\": [\"code\"],\n  \"grant_types\": [\"authorization_code\", \"refresh_token\"],\n  \"application_type\": \"native\",\n  \"dpop_bound_access_tokens\": true\n}",
+                  "syntaxHighlightingTheme": "vitesse-black"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 35,
+                        "byteStart": 27
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteEnd": 57,
+                        "byteStart": 51
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "We then need to go back to app.json and change the scheme to include the reversed domain name. You can set multiple schemes if you want to use a different scheme for your deep links down the line."
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.code",
+                  "language": "jsonc",
+                  "plaintext": "{\n  \"expo\": {\n    \"name\": \"AT Example\",\n    \"slug\": \"atexample\",\n    \"scheme\": [\"atexample\", \"app.expo.atexample\"],\n    // etc etc\n  }\n}",
+                  "syntaxHighlightingTheme": "vitesse-black"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [],
+                  "plaintext": "Now the app will be able to receive the callback once the OAuth flow is completed. The final step is to deploy our updated metadata file, and we should be good to go!"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.code",
+                  "language": "bash",
+                  "plaintext": "bunx expo export --platform web --no-ssg\nbunx eas deploy --prod",
+                  "syntaxHighlightingTheme": "vitesse-black"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 153,
+                        "byteStart": 142
+                      },
+                      "features": [
+                        {
+                          "$type": "pub.leaflet.richtext.facet#code"
+                        },
+                        {
+                          "uri": "http://bsky.social",
+                          "$type": "pub.leaflet.richtext.facet#link"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Once deployed, we can try logging in. If you have an Atmosphere/Bluesky account, you can use that - otherwise, you can make an account on the bsky.social PDS. It will automatically detect where your data is hosted and take you straight there. If you self-host a PDS, it will authenticate directly with your PDS."
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.image",
+                  "image": {
+                    "ref": {
+                      "$link": "bafkreigmucgdj77noo753uvy5nufcyusfmabbkxzivwc354incyywpgea4"
+                    },
+                    "size": 4656350,
+                    "$type": "blob",
+                    "mimeType": "image/png"
+                  },
+                  "aspectRatio": {
+                    "width": 3773,
+                    "height": 2830
+                  }
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [],
+                  "plaintext": "Once you enter your password, you can see the permissions that the app is requesting. In our case, our metadata file specifies that the app wants to see what our account’s email is and let the app perform actions related to Bluesky on our behalf."
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.image",
+                  "image": {
+                    "ref": {
+                      "$link": "bafkreiguaipqktex2m7zciuh57do6mpnvtyrqlc4vo6zp26vcuktddp4by"
+                    },
+                    "size": 4982118,
+                    "$type": "blob",
+                    "mimeType": "image/png"
+                  },
+                  "aspectRatio": {
+                    "width": 3773,
+                    "height": 2830
+                  }
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [],
+                  "plaintext": "Press “Authorize”, and you’re in! You can see a very basic page that just pulls in your Bluesky name and profile picture."
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.image",
+                  "image": {
+                    "ref": {
+                      "$link": "bafkreidkfse75v7zdgvif7lprlfpmpx3bsjyvgqylgyirq3rulm3kgxvxy"
+                    },
+                    "size": 4668496,
+                    "$type": "blob",
+                    "mimeType": "image/png"
+                  },
+                  "aspectRatio": {
+                    "width": 3773,
+                    "height": 2830
+                  }
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [],
+                  "plaintext": "This is a great jumping-off point for making your own Atmosphere-connected application. Interoperate with Bluesky, or carve your own path and build the future of social."
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [],
+                  "plaintext": "Until next time!"
+                }
+              },
+              {
+                "$type": "pub.leaflet.pages.linearDocument#block",
+                "block": {
+                  "$type": "pub.leaflet.blocks.text",
+                  "facets": [],
+                  "plaintext": ""
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3mmxyhrveacfn",
+      "title": "Introducing standard.horse",
+      "content": {
+        "text": {
+          "$type": "at.markpub.text",
+          "markdown": "This is my first test of [standard.horse](https://standard.horse), so I'll keep it brief. This lets you manage your [standard.site](https://standard.site) publication if you're handrolling it like I am. It is very simple - it lets you edit your publication details & theme, and has a minimal document editor that supports Markdown (GFM).\n\nYou don't need to use this if you're using Leaflet/pckt/Offprint! This is purely for sickos like me who published their standard.site records by hand.\n\nThe [source code](https://github.com/mozzius/standard.horse) is available on GitHub, and I'll put it on Tangled whenever I figure out how to unbork my knot.\n\nSee you on the skyline!"
+        },
+        "$type": "at.markpub.markdown",
+        "flavor": "gfm",
+        "renderingRules": "markdown-it"
+      }
+    }
+  ]
+}

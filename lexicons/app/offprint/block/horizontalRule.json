@@ -1,0 +1,11 @@
+{
+  "id": "app.offprint.block.horizontalRule",
+  "defs": {
+    "main": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1
+}

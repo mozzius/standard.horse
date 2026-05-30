@@ -1,0 +1,33 @@
+{
+  "id": "blog.pckt.content",
+  "defs": {
+    "main": {
+      "type": "object",
+      "properties": {
+        "blob": {
+          "type": "blob",
+          "description": "Reference to external JSON blob containing content (extended mode, used when content > 20KB)"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "refs": [],
+            "type": "union",
+            "closed": false
+          },
+          "description": "Array of content blocks (inline mode, used when content ≤ 20KB)"
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "blob"
+          },
+          "description": "Array of blob references (full objects) used in the content (required in extended mode to prevent garbage collection)"
+        }
+      },
+      "description": "Hybrid content storage: inline for small content (≤20KB), blob for large content (>20KB)"
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1
+}

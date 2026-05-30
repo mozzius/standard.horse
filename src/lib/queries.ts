@@ -5,10 +5,11 @@
  * disabled until it's available.
  */
 
-import { getBlobCidString } from "@atproto/lex"
+import { getBlobCidString, type BlobRef } from "@atproto/lex"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useAuth } from "../auth/AuthProvider.tsx"
-import { markpubTextBlob, readMarkpubMarkdown } from "./markpub.ts"
+import { readMarkpubMarkdown } from "./markpub.ts"
+import { detectProvider } from "./providers/index.ts"
 import {
   createDocument,
   deleteDocument,
@@ -65,15 +66,19 @@ export function useDocuments() {
 
 export interface EditableDocument {
   entry: RecordEntry<DocumentRecord>
-  /** The post body as markdown, resolved from markpub content, a text blob, or
-   * the plaintext mirror — whichever is available. */
+  /** The post body as markdown, converted from whatever format it was stored in. */
   markdown: string
+  /** id of the provider that read this post; null if the format is unrecognised. */
+  providerId: string | null
+  /** Human labels for blocks/features dropped converting to markdown. */
+  lost: string[]
 }
 
 /**
- * Load a single document and resolve its body to markdown for the editor. The
- * blob/plaintext fallback lives in the queryFn so react-query owns the whole
- * async load (and caches it under the same key as a plain document fetch).
+ * Load a single document and convert its body to markdown for the editor. The
+ * content's `$type` selects a provider (markpub/leaflet/pckt/offprint); the
+ * provider does the conversion (fetching a body blob if needed) inside the
+ * queryFn so react-query owns the whole async load.
  */
 export function useEditableDocument(rkey: string | undefined) {
   const { client, did } = useAuth()
@@ -83,8 +88,8 @@ export function useEditableDocument(rkey: string | undefined) {
     enabled: !!client && !!rkey,
     // Seed instantly from the documents-list cache (e.g. arriving from the
     // dashboard) so the editor paints before the per-record fetch resolves.
-    // Inline markpub bodies are complete here; a blob-backed body is refined by
-    // the queryFn once it loads.
+    // markpub bodies are inline so convert synchronously; block formats wait
+    // for the full load (their conversion may need a blob fetch).
     placeholderData: () => {
       if (!rkey) return undefined
       const list = qc.getQueryData<RecordEntry<DocumentRecord>[]>(
@@ -92,38 +97,50 @@ export function useEditableDocument(rkey: string | undefined) {
       )
       const entry = list?.find((d) => d.rkey === rkey)
       if (!entry) return undefined
+      const provider = detectProvider(entry.value.content)
       const markdown =
-        readMarkpubMarkdown(entry.value.content) ??
-        entry.value.textContent ??
-        ""
-      return { entry, markdown }
+        provider?.id === "markpub"
+          ? (readMarkpubMarkdown(entry.value.content) ?? "")
+          : ""
+      return { entry, markdown, providerId: provider?.id ?? null, lost: [] }
     },
     queryFn: async () => {
       const c = client!
       const entry = await getDocument(c, rkey!)
-      const v = entry.value
-
-      let md = readMarkpubMarkdown(v.content)
-      if (md == null) {
-        // Fall back to a markdown blob, or the plaintext mirror.
-        const blob = markpubTextBlob(v.content)
-        if (blob && did) {
-          try {
-            const cid = getBlobCidString(blob)
+      const provider = detectProvider(entry.value.content)
+      if (!provider) {
+        // Unrecognised (or absent) content — show the plaintext mirror.
+        return {
+          entry,
+          markdown: entry.value.textContent ?? "",
+          providerId: null,
+          lost: [],
+        }
+      }
+      const { markdown, lost } = await provider.toMarkdown(
+        entry.value.content,
+        {
+          did,
+          fetchBlob: async (ref: BlobRef) => {
+            const cid = getBlobCidString(ref)
             const res = await c.getBlob(
               did as Parameters<typeof c.getBlob>[0],
               cid as Parameters<typeof c.getBlob>[1],
             )
-            md = new TextDecoder().decode(res.body as Uint8Array)
-          } catch {
-            md = v.textContent ?? ""
-          }
-        } else {
-          md = v.textContent ?? ""
-        }
-      }
-      return { entry, markdown: md }
+            return res.body as Uint8Array
+          },
+        },
+      )
+      return { entry, markdown, providerId: provider.id, lost }
     },
+  })
+}
+
+/** Upload an image file as a blob, returning its ref (for in-post images). */
+export function useUploadImage() {
+  const { client } = useAuth()
+  return useMutation({
+    mutationFn: (file: File) => uploadImageBlob(client!, file),
   })
 }
 

@@ -1,0 +1,2483 @@
+{
+  "handle": "offprint.app",
+  "did": "did:plc:pgjkomf37an4czloay5zeth6",
+  "posts": [
+    {
+      "rkey": "3mhwzjidibf23",
+      "title": "Offprint: The Open Beta",
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "Offprint is a publishing platform built for the open social web. Your content lives in your AT Protocol repository, travels with your identity, and stays yours regardless of what any platform decides to do next."
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 2,
+            "plaintext": "Why we built this"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "Most publishing platforms treat your content as their asset. Your writing lives on their servers, governed by their rules, subject to their business decisions. If the platform changes direction, your archive goes with it."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "We wanted to build something that works differently."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "With Offprint, your publications and documents are stored on the AT Protocol network. Your readers follow you through your handle. If you ever move to a different platform, your content and your audience come with you. There is no export step."
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 2,
+            "plaintext": "Your publication"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "Every Offprint publication starts with a name, a subdomain, and a theme. We implemented color palette presets because most writers do not want to think about design, they just want something that looks intentional. You can have something that looks like yours before you write a single word."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "For those who want to go further, there is a full design editor. You pick a background and accent color, choose how the palette harmonizes from there, and adjust anything you disagree with. The goal was to make it feel like the publication has a personality rather than just a color scheme."
+          },
+          {
+            "$type": "app.offprint.block.image",
+            "image": {
+              "ref": {
+                "$link": "bafkreifmo5h4ewxmlqdb3526nag43trpbdatghswiyirfrfotijkrwv5wa"
+              },
+              "size": 910042,
+              "$type": "blob",
+              "mimeType": "image/jpeg"
+            },
+            "alignment": "center",
+            "aspectRatio": {
+              "width": 3040,
+              "height": 2080
+            }
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 2,
+            "plaintext": "Writing"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "The editor covers the basics you would expect, headings, lists, blockquotes, code blocks, and some things you probably would not think to ask for until you need them, like image grids, carousels, and side-by-side diffs."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "Documents auto-save throughout. You can draft, schedule, or publish immediately. Versioning with snapshots is there if you need to go back."
+          },
+          {
+            "$type": "app.offprint.block.imageGrid",
+            "images": [
+              {
+                "image": {
+                  "ref": {
+                    "$link": "bafkreibl6z5b2julqisjemg2fk65ook522bl624s76hqaaqhbwdondfcji"
+                  },
+                  "size": 887934,
+                  "$type": "blob",
+                  "mimeType": "image/jpeg"
+                },
+                "aspectRatio": {
+                  "width": 3040,
+                  "height": 2080
+                }
+              },
+              {
+                "image": {
+                  "ref": {
+                    "$link": "bafkreicxukylh3i2xpzxilvocrpq4ufz6mu65wzapves47hx73yq32gysi"
+                  },
+                  "size": 1018748,
+                  "$type": "blob",
+                  "mimeType": "image/jpeg"
+                },
+                "aspectRatio": {
+                  "width": 3040,
+                  "height": 2080
+                }
+              }
+            ],
+            "gridRows": 1,
+            "aspectRatio": "mosaic"
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 2,
+            "plaintext": "Newsletters"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "We looked at connecting to existing newsletter services. The economics did not make sense for writers just starting out, and asking people to wire up a third-party account before they had even published felt like the wrong first step."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "So we built it into the Pro plan. Newsletters send on publish, subscribers are managed inside Offprint, no additional fees, no message limits."
+          },
+          {
+            "$type": "app.offprint.block.imageGrid",
+            "images": [
+              {
+                "image": {
+                  "ref": {
+                    "$link": "bafkreifmhjcpurs2nuswub3ecjal35lesujfq3d4lg7aril5lo7757wn7a"
+                  },
+                  "size": 757150,
+                  "$type": "blob",
+                  "mimeType": "image/jpeg"
+                },
+                "aspectRatio": {
+                  "width": 3040,
+                  "height": 2080
+                }
+              },
+              {
+                "image": {
+                  "ref": {
+                    "$link": "bafkreicrwpicn5hw5fqr26dmoqlnrowcu5cjcmhzzpimc7ke57xfprcncu"
+                  },
+                  "size": 909382,
+                  "$type": "blob",
+                  "mimeType": "image/jpeg"
+                },
+                "aspectRatio": {
+                  "width": 3040,
+                  "height": 2080
+                }
+              }
+            ],
+            "gridRows": 1,
+            "aspectRatio": "mosaic"
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 2,
+            "plaintext": "Built on open standards"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 49,
+                  "byteStart": 42
+                },
+                "features": [
+                  {
+                    "uri": "https://leaflet.pub/",
+                    "$type": "app.offprint.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 63,
+                  "byteStart": 54
+                },
+                "features": [
+                  {
+                    "uri": "https://pckt.blog/",
+                    "$type": "app.offprint.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "When we started building, developers from Leaflet and pckt.blog were doing the same thing on AT Protocol, each with similar schemas defined independently. We all got together to align on a shared foundation rather than fragment the ecosystem."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 30,
+                  "byteStart": 17
+                },
+                "features": [
+                  {
+                    "uri": "https://standard.site/",
+                    "$type": "app.offprint.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 47,
+                  "byteStart": 36
+                },
+                "features": [
+                  {
+                    "uri": "https://atproto.com/blog/",
+                    "$type": "app.offprint.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 71,
+                  "byteStart": 57
+                },
+                "features": [
+                  {
+                    "uri": "https://toni.org/blog/",
+                    "$type": "app.offprint.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "That work became Standard.site. The AT Protocol team and Toni Schneider, Bluesky's new interim CEO, has since adopted the standard for their own blogs. Adoption has continued to grow from there."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "The practical effect is straightforward. Content published on Offprint is indexed and discoverable by every platform that implements the standard. Your writing can surface in places we did not build, reaching audiences we did not anticipate."
+          },
+          {
+            "$type": "app.offprint.block.horizontalRule"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 40,
+                  "byteStart": 31
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Offprint is available today in open beta. Sign in with any AT Protocol account, from providers like Bluesky, Blacksky, Tangled, npmx, pckt.cafe, Margin, or your own self-hosted Personal Data Server."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 68,
+                  "byteStart": 59
+                },
+                "features": [
+                  {
+                    "did": "did:plc:ghebqfyuybtwlr7ti2ubf6gr",
+                    "$type": "app.offprint.richtext.facet#mention",
+                    "handle": "bunnn.ee"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 84,
+                  "byteStart": 71
+                },
+                "features": [
+                  {
+                    "did": "did:plc:bpotnohnlgcj3fbmp7ugx4en",
+                    "$type": "app.offprint.richtext.facet#mention",
+                    "handle": "youronly.one"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 101,
+                  "byteStart": 86
+                },
+                "features": [
+                  {
+                    "did": "did:plc:6ayddqghxhciedbaofoxkcbs",
+                    "$type": "app.offprint.richtext.facet#mention",
+                    "handle": "tynanpurdy.com"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 116,
+                  "byteStart": 103
+                },
+                "features": [
+                  {
+                    "did": "did:plc:xbtmt2zjwlrfegqvch7fboei",
+                    "$type": "app.offprint.richtext.facet#mention",
+                    "handle": "zzstoatzz.io"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Thank you to everyone who tested early builds of Offprint: @bunnn.ee,  @youronly.one, @tynanpurdy.com, @zzstoatzz.io to name a few."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 33,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#italic"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "This took longer than we planned. But we're glad it is out."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 29,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "uri": "https://offprint.app/?utm_source=open-beta-article",
+                    "$type": "app.offprint.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Start writing on Offprint →"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3mide5lxtay23",
+      "title": "v0.1.0 — Foundation",
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.bulletList",
+            "children": [
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 26,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "AT Protocol Authentication: Sign in with any AT Protocol service (Bluesky, etc.)"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 20,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Publication Creation: Create and manage a branded publication space"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 15,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Document Editor: Rich text editing with TipTap"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 13,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Media Library: Upload and manage images and files"
+                }
+              }
+            ]
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3mideh4rj4v23",
+      "title": "v0.2.0 — Publishing, Social & Analytics",
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.bulletList",
+            "children": [
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 18,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Article Publishing: Full publish workflow with visibility settings (public/unlisted), scheduling, tags, and audience targeting"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 14,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Article Covers: Upload custom cover images for articles"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 16,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Bluesky Composer: Post directly to Bluesky from Offprint with embedded images and quote previews"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 22,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Text Selection Sharing: Select text in an article to share it as a highlighted quote with a direct URL"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 20,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Dynamic Social Cards: Auto-generated Open Graph images for articles and quotes with reading time and title"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 12,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Share Center: Centralized sharing page with Bluesky composer, copy-to-clipboard links, and heading anchor links"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 13,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Invite System: Invite-based access with email notifications, approval workflow, and invite waves"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 19,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Analytics Dashboard: ClickHouse-powered analytics showing article views and engagement"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 22,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Rich Article Rendering: Syntax highlighting, code blocks with copy buttons, task lists, callouts, and image grids with mosaic layout"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 20,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Publication Settings: Domain management, growth, and general settings sections"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 14,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "SEO Management: Publication verification and per-article meta tag optimization"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 12,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Theme System: Publication theme support with customizable styling (no ui)"
+                }
+              }
+            ]
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3midexeyqaw23",
+      "title": "v0.3.0 — Mobile Navigation & Polish",
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.bulletList",
+            "children": [
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 17,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Mobile Navigation: Slide-out menu with backdrop and scroll lock for a native mobile feel"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 17,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Publication Icons: Upload, edit, and remove publication icons from settings"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 16,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Mobile UX Polish: Responsive fixes for article lists, buttons, forms, and iOS ghost text sizing"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 27,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Server-Side Rendering Fixes: Improved SSR compatibility for faster initial page loads"
+                }
+              }
+            ]
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3midf2pscwd23",
+      "title": "v0.4.0 — Rich Editor & Mobile Polish",
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.bulletList",
+            "children": [
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 22,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Web Bookmarks & Embeds: Paste a URL to get a rich link preview card, or embed external content with iframe support and screenshot fallbacks inside editor"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 21,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteEnd": 36,
+                        "byteStart": 23
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#code"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteEnd": 71,
+                        "byteStart": 56
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#code"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Editor Block Movement: alt + up/down to reorder blocks; shift + cmd + v for plain-text paste"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 16,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Link Bubble Menu: Hover over links to preview, edit, or remove them without leaving the editor"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 23,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Text & Highlight Colors: Color pickers in the formatting toolbar for text and background highlights"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 25,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Mobile Formatting Toolbar: Optimized toolbar for mobile editing"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 19,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Draft Preview Links: Share preview links for unpublished drafts"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 19,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Toast Notifications: Global feedback system for actions across the app"
+                }
+              }
+            ]
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3midffnl4vm23",
+      "title": "v0.5.0 — Newsletter Subscriptions & Stats Dashboard",
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.bulletList",
+            "children": [
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 17,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Newsletter System: Full subscriber management with import, email confirmation, and unsubscribe workflows"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 15,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Email Campaigns: Send newsletters to your subscribers when you publish, with template support and email alias configuration"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 19,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Analytics Dashboard: Substack-style stats overview with interactive charts, timeframe filtering, and cumulative growth tracking"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 18,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Image Paste & Crop: Drag-and-drop and clipboard image support in the editor, plus a built-in cropping modal"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 14,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Markdown Paste: Paste markdown content and it auto-converts to rich editor blocks"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 29,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "AT Protocol Sync Verification: Manual sync button and verification settings so you can confirm your content is in sync"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 14,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "\"Edited\" Badge: Articles with unpublished changes now show an edited indicator"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 21,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Cloudflare R2 Storage: Media files served from Cloudflare R2 for faster, more reliable delivery"
+                }
+              }
+            ]
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3midfldkhxo23",
+      "title": "v0.6.0 — Email Newsletters & Testing",
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.bulletList",
+            "children": [
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 26,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Newsletter Email Rendering: Re-designed email layouts that include your publication's brand, with support for all editor block types"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 21,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Image Transformations: Cloudflare-powered image optimization for emails so newsletters load fast in every inbox"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 22,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Analytics Improvements: New impressions stat card and trending indicators on the analytics dashboard"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 27,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "AT Protocol Sync Foundation: Refactor backend scaffolding for syncing documents, publications, and subscriptions to AT Protocol remotes"
+                }
+              }
+            ]
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3midfpqhqc523",
+      "title": "v0.7.0 — Design Editor, Billing & Subscriptions",
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.bulletList",
+            "children": [
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 25,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Publication Design Editor: Full-screen theme customizer with live preview, auto-generated color palettes, and custom font selection to make your publication truly yours"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 19,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Pro Plans & Billing: Free and Pro tiers with Stripe-powered billing and plan history"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 25,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "AT Protocol Subscriptions: Readers can subscribe to publications directly through the AT Protocol — free and built on open standards"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 20,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Subscriber Dashboard: Redesigned subscribers view with separate ATP and Email tabs and identity resolution"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 25,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Account Settings Overhaul: Unified settings page with billing history, profile editing, and app preferences"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 14,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Custom Domains: Domain onboarding UI with DNS verification and status tracking"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 15,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Welcome Overlay: Optional subscribe/welcome prompt on publication homepages to convert visitors into subscribers"
+                }
+              }
+            ]
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3midfvkyy2z23",
+      "title": "v1.0.0 — Open Beta",
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.bulletList",
+            "children": [
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 21,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Per-Article Analytics: Drill into individual article performance with subscriber sources, UTM attribution, and email engagement tracking"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 23,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Email Subscriber Limits: Pro plans now include up to 1,500 email subscribers with clear usage visualization in your dashboard"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 11,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Legal Pages: AT Protocol-specific terms of service, privacy policy, and cookie policy"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 15,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Timezone Picker: Expanded timezone selection with more global regions"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 23,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Image Upload Guardrails: Validation for uploads (2 MB max, JPG/PNG) with clear error messages"
+                }
+              }
+            ]
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3midfz6jtdd23",
+      "title": "v1.1.0 — RSS & Open Graph Theming",
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.bulletList",
+            "children": [
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 9,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "RSS Feeds: Per-publication RSS feeds with auto-discovery, so readers can follow your work in any feed reader"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 24,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Themed Open Graph Images: Your publication's theme now carries through to social preview cards, giving shared links a branded look"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 21,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Analytics Performance: Article analytics load faster with intelligent caching"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 14,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Publishing Fix: Title and subtitle changes now save correctly when publishing immediately after editing"
+                }
+              }
+            ]
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3miwuonxvaj23",
+      "title": "v1.2.0 — Editor Blocks & Image Optimization",
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.bulletList",
+            "children": [
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 16,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Math/LaTeX Block: Write equations directly in the editor with KaTeX rendering and live preview"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 16,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Button/CTA Block: Add call-to-action buttons with customizable text, links, and optional captions — also available when pasting a URL"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 19,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Cmd+K Link Shortcut: Select text and press Cmd+K to quickly create a link, just like Google Docs"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 18,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Image Optimization: Uploaded images are automatically resized (max 2000px), compressed, and non-transparent PNGs/GIFs are converted to JPEG — upload limit increased to 5 MB"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 17,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Custom Domain Fix: Verified custom domains no longer disappear from settings — a new \"Verified domains\" section shows domains ready to be set as primary"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 21,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Newsletter Visibility: Unlisted articles no longer accidentally send newsletter emails — emails are only sent when an article is set to public"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 19,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "OAuth Token Refresh: Fixed a critical issue where token refresh failures could permanently lock users out of AT Protocol features until reauthenticated"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 30,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteEnd": 108,
+                        "byteStart": 91
+                      },
+                      "features": [
+                        {
+                          "did": "did:plc:hlchta7bwmobyum375ltycg5",
+                          "$type": "app.offprint.richtext.facet#mention",
+                          "handle": "mrpowershell.com"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "PowerShell Syntax Highlighting: Code blocks now support PowerShell syntax highlighting for @mrpowershell.com "
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 9,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Stability: Graceful handling of AT Protocol auth failures during publish, patch operation errors, and theme color defaults"
+                }
+              }
+            ]
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3mjhbddzscy23",
+      "title": "Custom domains now work with Cloudflare and CDNs",
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "If you use a custom domain on Offprint, SSL certificates now provision and renew correctly regardless of whether your domain is behind Cloudflare, Fastly, or any other CDN."
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 2,
+            "plaintext": "The problem we were asking people to live with"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "When you connected a custom domain, Offprint used Let's Encrypt to issue an SSL certificate. The way that worked was straightforward: Let's Encrypt would make an HTTP request to your domain, our server would respond with a verification file, and the certificate would be issued."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "This fell apart the moment anything sat between your domain and our server. Cloudflare's proxy is the most common case. With the orange cloud enabled, Let's Encrypt reached Cloudflare instead of us. The verification failed. No certificate."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "Our answer was to tell people to disable the proxy. That worked, but it meant giving up DDoS protection, caching, and Cloudflare's analytics."
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 2,
+            "plaintext": "What we changed"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "Instead of verifying certificates over HTTP, Offprint now verifies them through DNS. The difference matters because DNS resolution happens at a layer that CDNs and proxies do not touch."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 187,
+                  "byteStart": 157
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#code"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Here is what that looks like. When you add a custom domain, Offprint generates a unique ID for your domain. You add a single DNS record, a CNAME that points _acme-challenge.yourdomain.com to that ID on our DNS zone. When it is time to issue or renew a certificate, our server creates a temporary record on our side of that chain. Let's Encrypt follows the CNAME, finds the record, and issues the certificate."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "Your proxy status, CDN configuration, and firewall rules are all irrelevant to this process. The certificate just works."
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 2,
+            "plaintext": "What this means if you already have a custom domain"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "Your current certificate is still valid. Nothing breaks today. When it comes up for renewal in the next 60 days, the new method takes over."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 110,
+                  "byteStart": 95
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#code"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Your domain settings page now shows a third DNS record alongside the existing ones. Adding the _acme-challenge CNAME before your next renewal ensures a smooth transition. It takes about a minute."
+          },
+          {
+            "$type": "app.offprint.block.callout",
+            "color": "rgb(251 146 60 / 0.2)",
+            "emoji": "⛅",
+            "plaintext": "If you had Cloudflare's proxy disabled because we told you to, you can re-enable it."
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 2,
+            "plaintext": "Setting up the new ACME record"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "If you already have a custom domain, or you are adding one for the first time, here is how to add the SSL record."
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 3,
+            "plaintext": "Step 1: Find your DNS records in Offprint"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 31,
+                  "byteStart": 11
+                },
+                "features": [
+                  {
+                    "uri": "https://offprint.app/publish/settings?utm_source=system&utm_medium=article&utm_campaign=acme-ssl-announcement",
+                    "$type": "app.offprint.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 190,
+                  "byteStart": 175
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#code"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Go to your publication settings and open the custom domain section. You will see three DNS records listed. The new one is the ACME record at the bottom, a CNAME starting with _acme-challenge."
+          },
+          {
+            "$type": "app.offprint.block.image",
+            "image": {
+              "ref": {
+                "$link": "bafkreifveav64zpkox4s5ej3v2jqwacmebm6b7t2kushvah42yubmtul4m"
+              },
+              "size": 161294,
+              "$type": "blob",
+              "mimeType": "image/jpeg"
+            },
+            "alignment": "center",
+            "aspectRatio": {
+              "width": 2000,
+              "height": 1250
+            }
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 3,
+            "plaintext": "Step 2: Add the CNAME in your DNS provider"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "Log into your DNS provider (Cloudflare, Namecheap, Google Domains, or wherever you manage DNS) and add a new CNAME record."
+          },
+          {
+            "$type": "app.offprint.block.bulletList",
+            "children": [
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 5,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Type: CNAME"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 5,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteEnd": 41,
+                        "byteStart": 6
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#code"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteEnd": 83,
+                        "byteStart": 68
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#code"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Name: _acme-challenge.blog.yourdomain.com (some providers only need _acme-challenge as the name, without your domain appended)"
+                }
+              },
+              {
+                "content": {
+                  "$type": "app.offprint.block.text",
+                  "facets": [
+                    {
+                      "index": {
+                        "byteEnd": 7,
+                        "byteStart": 0
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#bold"
+                        }
+                      ]
+                    },
+                    {
+                      "index": {
+                        "byteEnd": 96,
+                        "byteStart": 66
+                      },
+                      "features": [
+                        {
+                          "$type": "app.offprint.richtext.facet#code"
+                        }
+                      ]
+                    }
+                  ],
+                  "plaintext": "Target: The value shown in your Offprint settings, something like a7x9k2m4p1n3.acme.offprint.app"
+                }
+              }
+            ]
+          },
+          {
+            "$type": "app.offprint.block.image",
+            "image": {
+              "ref": {
+                "$link": "bafkreib2rsr2y7furj4hc7e4t5u32itbrpcxksqjouz2fc6v62r3fr4iei"
+              },
+              "size": 130332,
+              "$type": "blob",
+              "mimeType": "image/jpeg"
+            },
+            "alignment": "center",
+            "aspectRatio": {
+              "width": 2000,
+              "height": 856
+            }
+          },
+          {
+            "$type": "app.offprint.block.callout",
+            "emoji": "💡",
+            "plaintext": "If you are using Cloudflare, the proxy can be enabled or disabled, up to you. This record does not receive any traffic, so it should be fine with it enabled (as it is by default)."
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 3,
+            "plaintext": "Step 3: Re-enable Cloudflare proxy (if applicable)"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 108,
+                  "byteStart": 93
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#code"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "If you previously disabled Cloudflare's proxy on your main domain CNAME (the one pointing to to.offprint.app), you can now turn it back on. The orange cloud is safe to enable."
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 3,
+            "plaintext": "Step 4: Verify in Offprint"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "Back in your domain settings, click the verify button. Offprint will check all three records and confirm that your domain is ready for automatic SSL provisioning."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 11,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "That is it. Certificates will provision and renew on their own from here."
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 2,
+            "plaintext": "For the curious"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "We went with DNS-01 challenges exclusively rather than keeping HTTP-01 as a fallback. A fallback would reintroduce the same problem for anyone who had not added the new record yet. One consistent method is simpler to reason about and simpler to troubleshoot."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 269,
+                  "byteStart": 257
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#code"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "The infrastructure side was relatively clean. Our server runs Caddy, which uses CertMagic for certificate management. CertMagic already knows how to follow CNAME chains when resolving challenge domains. We added the Cloudflare DNS module, pointed it at our offprint.app DNS zone, and the rest followed from there."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "We also cleaned up the domain setup flow in the dashboard. The Cloudflare-specific warnings and error messages are gone. The UI now shows three DNS records: one for routing, one for ownership verification, and one for SSL. No special-case guidance for specific providers."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "One new DNS record, and it just works. That is how it should have been from the start."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    },
+    {
+      "rkey": "3mmqsgq4art23",
+      "title": "Your writing, now native to Bluesky",
+      "content": {
+        "$type": "app.offprint.content",
+        "items": [
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 93,
+                  "byteStart": 80
+                },
+                "features": [
+                  {
+                    "uri": "https://standard.site/?ref=offprint.app",
+                    "$type": "app.offprint.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 109,
+                  "byteStart": 95
+                },
+                "features": [
+                  {
+                    "did": "did:plc:re3ebnp5v7ffagz6rb6xfei4",
+                    "$type": "app.offprint.richtext.facet#mention",
+                    "handle": "standard.site"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 141,
+                  "byteStart": 134
+                },
+                "features": [
+                  {
+                    "uri": "https://leaflet.pub/?ref=offprint.app",
+                    "$type": "app.offprint.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 155,
+                  "byteStart": 143
+                },
+                "features": [
+                  {
+                    "did": "did:plc:btxrwcaeyodrap5mnjw2fvmz",
+                    "$type": "app.offprint.richtext.facet#mention",
+                    "handle": "leaflet.pub"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 170,
+                  "byteStart": 161
+                },
+                "features": [
+                  {
+                    "uri": "https://pckt.blog/?ref=offprint.app",
+                    "$type": "app.offprint.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 182,
+                  "byteStart": 172
+                },
+                "features": [
+                  {
+                    "did": "did:plc:revjuqmkvrw6fnkxppqtszpv",
+                    "$type": "app.offprint.richtext.facet#mention",
+                    "handle": "pckt.blog"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Building an open standard only works if others build on it too. When we started Standard.site (@standard.site) alongside the teams at Leaflet (@leaflet.pub) and Pckt.blog (@pckt.blog), that felt like a bet worth making. "
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 14,
+                  "byteStart": 7
+                },
+                "features": [
+                  {
+                    "uri": "https://bsky.social/about?ref=offprint.app",
+                    "$type": "app.offprint.richtext.facet#link"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 60,
+                  "byteStart": 45
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#code"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Today, Bluesky is officially integrating the site.standard.* lexicons. We are glad the bet paid off."
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 2,
+            "plaintext": "A bit of history"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 52,
+                  "byteStart": 41
+                },
+                "features": [
+                  {
+                    "uri": "https://atproto.com/?ref=offprint.app",
+                    "$type": "app.offprint.richtext.facet#link"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "When we started building Offprint on the AT Protocol, we were not the only ones. The teams behind Leaflet and Pckt.blog were working toward the same thing independently. Each of us had arrived at similar schemas on our own, which was encouraging, but it also meant we were headed toward a fragmented ecosystem where content on one platform would be invisible to another."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "We got together and decided to align. Some approaches were combined, some were set aside. The result was Standard.site, a shared set of open lexicons that define what a publication is, what a document contains, and how readers connect to both."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "The idea was that any platform could implement it without being constrained by it. We just had to build something worth implementing."
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 2,
+            "plaintext": "What does this mean?"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "When you share an Offprint article on Bluesky, you will now get an enhanced link card. Not a plain URL preview. A card that shows your publication name, your icon, your article title, an estimated reading time pulled directly from the content, and themed call to action button based on your publication theme."
+          },
+          {
+            "$type": "app.offprint.block.image",
+            "image": {
+              "ref": {
+                "$link": "bafkreibrgok7aulr3caci7v77gamexfb45wjkfgoy3cqtetxhtytsbcvh4"
+              },
+              "size": 178621,
+              "$type": "blob",
+              "mimeType": "image/png"
+            },
+            "alignment": "center",
+            "aspectRatio": {
+              "width": 1536,
+              "height": 808
+            }
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "Your publication is recognized as a publication. Your writing shows up in the feed looking like the work you put into it."
+          },
+          {
+            "$type": "app.offprint.block.image",
+            "image": {
+              "ref": {
+                "$link": "bafkreibpdx4mu4grqnplpepdmz22o4zb4zy6xm3fydl7gxle4nxdoyu7m4"
+              },
+              "size": 42137,
+              "$type": "blob",
+              "mimeType": "image/jpeg"
+            },
+            "alignment": "center",
+            "aspectRatio": {
+              "width": 1536,
+              "height": 480
+            }
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 50,
+                  "byteStart": 0
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "This is what the protocol is supposed to feel like. Your content living in your repository, recognized natively across the network, without any extra steps on your part."
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 2,
+            "plaintext": "What you need to know"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "This rolls out in phases. The first phase, landing now, detects Standard.site records on shared links and uses them to render enhanced previews in the Bluesky post composer and feed."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "For Offprint writers, nothing changes on your end. Your publications and documents already sync to the protocol. Offprint handles the verification tags and record references automatically. Share your work the same way you always have."
+          },
+          {
+            "$type": "app.offprint.block.heading",
+            "level": 2,
+            "plaintext": "Under the hood"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "For those curious about what is actually happening, here is the short version."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 51,
+                  "byteStart": 37
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#code"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 203,
+                  "byteStart": 181
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#code"
+                  }
+                ]
+              },
+              {
+                "index": {
+                  "byteEnd": 261,
+                  "byteStart": 236
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#code"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Bluesky has added a new field called associatedRefs to their external post embed record. When you share an Offprint article, the embed includes two references: one pointing to your site.standard.document record and one pointing to your site.standard.publication record. When Bluesky hydrates that post in the feed, it fetches those records and uses them to construct the enhanced link card."
+          },
+          {
+            "code": "{\n  \"$type\": \"app.bsky.embed.external\",\n  \"external\": {\n    \"uri\": \"https://yourname.offprint.app/a/your-article\",\n    \"title\": \"Your Article Title\",\n    \"associatedRefs\": [\n      {\n        \"uri\": \"at://did:plc:xxx/site.standard.document/abc\",\n        \"cid\": \"bafyrei...\"\n      },\n      {\n        \"uri\": \"at://did:plc:xxx/site.standard.publication/xyz\",\n        \"cid\": \"bafyrei...\"\n      }\n    ]\n  }\n}",
+            "$type": "app.offprint.block.codeBlock",
+            "language": "json"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 35,
+                  "byteStart": 27
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#code"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "Verification works through <link /> tags embedded in the page head. Bluesky fetches the URL being shared, finds the tags referencing your AT Protocol records, and confirms they match. Offprint handles all of this automatically."
+          },
+          {
+            "$type": "app.offprint.block.callout",
+            "emoji": "☝🏽",
+            "plaintext": "One thing worth noting: Bluesky is not launching with live-updating link cards. The data present when a post is written is what gets rendered. It is a reasonable limitation to ship with while they work through the moderation implications."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "facets": [
+              {
+                "index": {
+                  "byteEnd": 85,
+                  "byteStart": 35
+                },
+                "features": [
+                  {
+                    "$type": "app.offprint.richtext.facet#bold"
+                  }
+                ]
+              }
+            ],
+            "plaintext": "This is one of those moments where the open web actually delivers on what it promises. We are glad to have been part of building the foundation that made it possible."
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": "If you are not on Offprint yet, now is a good time."
+          },
+          {
+            "href": "https://offprint.app",
+            "text": "Start writing →",
+            "$type": "app.offprint.block.button",
+            "alignment": "left"
+          },
+          {
+            "$type": "app.offprint.block.text",
+            "plaintext": ""
+          }
+        ]
+      }
+    }
+  ]
+}

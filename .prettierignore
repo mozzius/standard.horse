@@ -1,3 +1,5 @@
 lexicons.json
 lexicons/
 pnpm-lock.yaml
+# Captured real-world records used as test fixtures — kept verbatim.
+src/lib/providers/__fixtures__/

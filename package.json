@@ -8,13 +8,16 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "lex:install": "lex install site.standard.publication site.standard.document",
+    "lex:ci": "lex install --ci",
+    "lex:install": "lex install",
     "lex:build": "lex build --index-file --override",
     "gen:og": "node scripts/gen-og.mjs",
-    "postinstall": "lex build --index-file --override",
-    "prebuild": "lex build --index-file --override",
+    "postinstall": "pnpm lex:ci",
+    "prebuild": "pnpm lex:build",
     "format:check": "prettier --check .",
-    "format:fix": "prettier --write ."
+    "format:fix": "prettier --write .",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "keywords": [],
   "author": "Samuel Newman <mozzius@protonmail.com>",
@@ -45,6 +48,7 @@
     "@resvg/resvg-js": "^2.6.2",
     "@rolldown/plugin-babel": "^0.2.3",
     "@types/babel__core": "^7.20.5",
+    "@types/mdast": "^4.0.4",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",
@@ -52,6 +56,7 @@
     "prettier": "^3.8.3",
     "satori": "^0.26.0",
     "typescript": "^6.0.3",
-    "vite": "^8.0.14"
+    "vite": "^8.0.14",
+    "vitest": "^4.1.7"
   }
 }

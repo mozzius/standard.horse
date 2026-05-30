@@ -1,0 +1,28 @@
+{
+  "id": "app.offprint.block.codeBlock",
+  "defs": {
+    "main": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The code content"
+        },
+        "language": {
+          "type": "string",
+          "description": "Programming language for syntax highlighting"
+        },
+        "showLineNumbers": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to display line numbers"
+        }
+      }
+    }
+  },
+  "$type": "com.atproto.lexicon.schema",
+  "lexicon": 1
+}
