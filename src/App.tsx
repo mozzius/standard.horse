@@ -66,6 +66,41 @@ function Masthead() {
   )
 }
 
+function Footer() {
+  return (
+    <footer className="footer">
+      <div className="container footer__inner">
+        <span>
+          © {new Date().getFullYear()}{" "}
+          <a
+            href="https://bsky.app/profile/samuel.fm"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Samuel Newman
+          </a>
+        </span>
+        <span className="footer__spacer" />
+        <a
+          href="https://bsky.app/profile/standard.horse"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Bluesky
+        </a>
+        /
+        <a
+          href="https://github.com/mozzius/standard.horse"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub
+        </a>
+      </div>
+    </footer>
+  )
+}
+
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { status } = useAuth()
   const location = useLocation()
@@ -130,6 +165,7 @@ export function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
+      <Footer />
     </div>
   )
 }

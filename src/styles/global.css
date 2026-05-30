@@ -180,6 +180,32 @@ select {
   border: 1px solid var(--rule);
 }
 
+/* ---- Footer ---- */
+.footer {
+  border-top: 3px double var(--rule-strong);
+  background: var(--paper);
+}
+.footer__inner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 16px 24px;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.footer__spacer {
+  flex: 1;
+}
+.footer a {
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.footer a:hover {
+  color: var(--accent);
+}
+
 /* ---- Buttons ---- */
 .btn {
   display: inline-flex;

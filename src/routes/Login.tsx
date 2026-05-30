@@ -1,3 +1,4 @@
+import { track } from "@plausible-analytics/tracker"
 import { useState } from "react"
 import { useAuth } from "../auth/AuthProvider.tsx"
 
@@ -13,9 +14,11 @@ export function Login() {
     setSubmitting(true)
     setLocalError(null)
     try {
+      track("Login attempt", {})
       await signIn(handle)
       // signIn redirects away; if we get here the user likely cancelled.
     } catch (err) {
+      track("Login failure", {})
       setLocalError(err instanceof Error ? err.message : "Sign in failed")
       setSubmitting(false)
     }
