@@ -32,6 +32,7 @@ import {
   documentUrl,
   interpolatePath,
   nextTid,
+  PATH_RKEY_TOKEN,
   templatizePath,
   type DocumentRecord,
 } from "../lib/repo.ts"
@@ -161,6 +162,26 @@ export function PostEditor() {
     return best
   }, [isNew, publication, allDocs])
 
+  // Likewise infer the URL path shape (e.g. "/<rkey>" vs "/post/<rkey>") from
+  // sibling posts: templatize each sibling's path against its own rkey and take
+  // the most common shape. Only paths that actually contain the rkey count
+  // (slug-based paths can't be templated for a new post).
+  const siblingPathTemplate = useMemo(() => {
+    if (!isNew || !publication || !allDocs) return null
+    const counts = new Map<string, number>()
+    for (const d of allDocs) {
+      if (!documentBelongsTo(publication, d.value.site)) continue
+      if (!d.value.path) continue
+      const tmpl = templatizePath(d.value.path, d.rkey)
+      if (!tmpl.includes(PATH_RKEY_TOKEN)) continue
+      counts.set(tmpl, (counts.get(tmpl) ?? 0) + 1)
+    }
+    let best: string | null = null
+    let most = 0
+    for (const [t, c] of counts) if (c > most) ((best = t), (most = c))
+    return best
+  }, [isNew, publication, allDocs])
+
   // The format this post is read from / written in. New posts: the dropdown
   // selection, else the sibling default, else markpub. Existing posts: whatever
   // provider read them (null = an unrecognised format → read-only below).
@@ -207,6 +228,15 @@ export function PostEditor() {
     }
   }, [editableDoc, rkey, body])
 
+  // For a new post, adopt the publication's inferred path shape once it loads
+  // (unless the user has already opened the dialog and set one themselves).
+  const pathSeededRef = useRef(false)
+  useEffect(() => {
+    if (!isNew || pathSeededRef.current || !siblingPathTemplate) return
+    pathSeededRef.current = true
+    setPathTemplate(siblingPathTemplate)
+  }, [isNew, siblingPathTemplate])
+
   const cmExtensions = useMemo(
     () => [markdown({ codeLanguages: languages }), EditorView.lineWrapping],
     [],
@@ -237,13 +267,14 @@ export function PostEditor() {
     const coverChanged = coverFile !== null || coverRemoved
 
     if (!existing) {
+      const basePath = siblingPathTemplate ?? DEFAULT_PATH_TEMPLATE
       return (
         coverChanged ||
         title.trim() !== "" ||
         body !== "" ||
         description.trim() !== "" ||
         tagList.length > 0 ||
-        pathTemplate.trim() !== DEFAULT_PATH_TEMPLATE
+        pathTemplate.trim() !== basePath
       )
     }
 
@@ -268,6 +299,7 @@ export function PostEditor() {
     rkey,
     coverFile,
     coverRemoved,
+    siblingPathTemplate,
   ])
 
   /** Insert markdown at the cursor (or append if the editor isn't mounted). */
@@ -707,7 +739,10 @@ export function PostEditor() {
           <div className="editor-pane">
             <div className="editor-pane__head">Preview</div>
             <article className="prose">
-              <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={mdComponents}
+              >
                 {body || "*Nothing written yet.*"}
               </ReactMarkdown>
             </article>
@@ -731,7 +766,11 @@ export function PostEditor() {
             <input
               className="input"
               value={pathTemplate}
-              onChange={(e) => setPathTemplate(e.target.value)}
+              onChange={(e) => {
+                // A manual edit wins over the inferred sibling default.
+                pathSeededRef.current = true
+                setPathTemplate(e.target.value)
+              }}
               placeholder={DEFAULT_PATH_TEMPLATE}
               spellCheck={false}
               autoCapitalize="none"
