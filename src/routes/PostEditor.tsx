@@ -211,20 +211,21 @@ export function PostEditor() {
   useEffect(() => {
     if (!editableDoc || !rkey) return
     const v = editableDoc.entry.value
+    const md = editableDoc.markdown.trim()
     if (seededUriRef.current !== editableDoc.entry.uri) {
       seededUriRef.current = editableDoc.entry.uri
-      seededBodyRef.current = editableDoc.markdown
+      seededBodyRef.current = md
       setTitle(v.title ?? "")
       setDescription(v.description ?? "")
       setTags((v.tags ?? []).join(", "))
       setPathTemplate(templatizePath(v.path, rkey))
-      setBody(editableDoc.markdown)
+      setBody(md)
     } else if (
-      editableDoc.markdown !== seededBodyRef.current &&
-      body === seededBodyRef.current
+      md !== seededBodyRef.current &&
+      body.trim() === seededBodyRef.current
     ) {
-      seededBodyRef.current = editableDoc.markdown
-      setBody(editableDoc.markdown)
+      seededBodyRef.current = md
+      setBody(md)
     }
   }, [editableDoc, rkey, body])
 
@@ -270,13 +271,16 @@ export function PostEditor() {
       .filter(Boolean)
 
     const coverChanged = coverFile !== null || coverRemoved
+    // CodeMirror can carry a trailing newline the converted body doesn't, so
+    // compare (and save) the trimmed body — trailing whitespace is meaningless.
+    const bodyText = body.trim()
 
     if (!existing) {
       const basePath = siblingPathTemplate ?? DEFAULT_PATH_TEMPLATE
       return (
         coverChanged ||
         title.trim() !== "" ||
-        body !== "" ||
+        bodyText !== "" ||
         description.trim() !== "" ||
         tagList.length > 0 ||
         pathTemplate.trim() !== basePath
@@ -291,7 +295,7 @@ export function PostEditor() {
       title.trim() !== (existing.title ?? "") ||
       description.trim() !== (existing.description ?? "") ||
       pathTemplate.trim() !== basePath ||
-      body !== seededBodyRef.current ||
+      bodyText !== seededBodyRef.current ||
       JSON.stringify(tagList) !== JSON.stringify(baseTags)
     )
   }, [
@@ -364,9 +368,12 @@ export function PostEditor() {
       .map((t) => t.trim())
       .filter(Boolean)
 
+    // Trim trailing/leading whitespace from the editor body before converting.
+    const cleanBody = body.trim()
+
     // Convert the edited markdown into the active format's content object,
     // reattaching existing/uploaded image blobs by CID.
-    const content = activeProvider.fromMarkdown(body, {
+    const content = activeProvider.fromMarkdown(cleanBody, {
       did,
       previousContent: existing?.content,
       uploadedImages: uploadedImagesRef.current,
@@ -385,7 +392,7 @@ export function PostEditor() {
       path: interpolatePath(pathTemplate, docRkey),
       content,
       coverImage: existing?.coverImage,
-      textContent: markdownToPlaintext(body) || undefined,
+      textContent: markdownToPlaintext(cleanBody) || undefined,
       publishedAt: existing?.publishedAt ?? l.currentDatetimeString(),
       updatedAt: existing ? l.currentDatetimeString() : undefined,
     }
