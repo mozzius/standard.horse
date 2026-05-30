@@ -26,7 +26,7 @@ converts to/from each format via a _provider_ (`src/lib/providers/`):
 - **Writing** converts the Markdown back into the chosen format. New posts pick a
   format from a dropdown that defaults to whatever the publication's existing
   posts use; the URL-path shape is likewise inferred from sibling posts.
-- **Images** are rendered as `![alt](<bsky-cdn-url>)`; on save the CID is matched
+- **Images** are rendered as `![alt](<CID>)`; on save the CID is matched
   back to a real blob ref (from this session's uploads or the post's previous
   content) so existing images survive without re-uploading. markpub has no blob
   slot, so in-post image upload is disabled there.
