@@ -1,4 +1,7 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { jsonToLex, lexToJson } from "@atproto/lex"
+import { QueryClient } from "@tanstack/react-query"
+import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister"
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client"
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { BrowserRouter } from "react-router"
@@ -28,14 +31,43 @@ const queryClient = new QueryClient({
   },
 })
 
+// Persist the dashboard's data to localStorage so it paints instantly on a
+// return visit (then refetches in the background). The cache holds atproto
+// records whose blob refs are CID instances — plain JSON.stringify mangles
+// those into "[object Object]", so we round-trip through lexToJson/jsonToLex,
+// which serialise CIDs to `{ $link }` and revive them on the way back.
+const persister = createSyncStoragePersister({
+  storage: window.localStorage,
+  key: "standard.horse:rq-cache",
+  serialize: (client) => JSON.stringify(lexToJson(client as never)),
+  deserialize: (cached) => jsonToLex(JSON.parse(cached)) as never,
+})
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{
+        persister,
+        maxAge: 1000 * 60 * 60 * 24, // 24h; older snapshots are discarded
+        // Bump when the cache's shape changes to invalidate old snapshots.
+        buster: "v1",
+        dehydrateOptions: {
+          // Only persist the dashboard's list queries — not the per-document
+          // editor query (large, and its markdown conversion is cheap to redo)
+          // and not transient/failed queries.
+          shouldDehydrateQuery: (query) =>
+            query.state.status === "success" &&
+            (query.queryKey[0] === "publications" ||
+              query.queryKey[0] === "documents"),
+        },
+      }}
+    >
       <BrowserRouter>
         <AuthProvider>
           <App />
         </AuthProvider>
       </BrowserRouter>
-    </QueryClientProvider>
+    </PersistQueryClientProvider>
   </StrictMode>,
 )
