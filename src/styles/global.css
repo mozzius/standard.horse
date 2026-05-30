@@ -40,6 +40,7 @@ body,
    shift horizontally as the scrollbar appears/disappears. */
 html {
   scrollbar-gutter: stable;
+  background-color: var(--paper);
 }
 
 body {
@@ -161,6 +162,7 @@ select {
   font-size: 0.78rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  min-height: 42px;
 }
 .masthead__nav a {
   color: var(--ink-soft);

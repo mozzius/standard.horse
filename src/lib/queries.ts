@@ -6,6 +6,7 @@
  */
 
 import { getBlobCidString, type BlobRef } from "@atproto/lex"
+import { track } from "@plausible-analytics/tracker"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useAuth } from "../auth/AuthProvider.tsx"
 import { readMarkpubMarkdown } from "./markpub.ts"
@@ -162,8 +163,12 @@ export function usePutPublication() {
       if (vars.iconFile) icon = await uploadImageBlob(client!, vars.iconFile)
       await putPublication(client!, vars.rkey, { ...vars.value, icon })
     },
-    onSuccess: () =>
-      qc.invalidateQueries({ queryKey: queryKeys.publications(did) }),
+    onSuccess: (_data, { rkey }) => {
+      track("Publication Updated", {
+        props: { uri: `at://${did}/site.standard.publication/${rkey}` },
+      })
+      qc.invalidateQueries({ queryKey: queryKeys.publications(did) })
+    },
   })
 }
 
@@ -191,9 +196,15 @@ export function useSaveDocument() {
       else await putDocument(client!, vars.rkey, value)
       return { rkey: vars.rkey }
     },
-    onSuccess: (_data, vars) => {
+    onSuccess: ({ rkey }, { isNew }) => {
+      const uri = `at://${did}/site.standard.document/${rkey}`
+      if (isNew) {
+        track("Document Created", { props: { uri } })
+      } else {
+        track("Document Updated", { props: { uri } })
+      }
       qc.invalidateQueries({ queryKey: queryKeys.documents(did) })
-      qc.invalidateQueries({ queryKey: queryKeys.document(did, vars.rkey) })
+      qc.invalidateQueries({ queryKey: queryKeys.document(did, rkey) })
     },
   })
 }
@@ -204,6 +215,9 @@ export function useDeleteDocument() {
   return useMutation({
     mutationFn: (rkey: string) => deleteDocument(client!, rkey),
     onSuccess: (_data, rkey) => {
+      track("Document Deleted", {
+        props: { uri: `at://${did}/site.standard.document/${rkey}` },
+      })
       qc.invalidateQueries({ queryKey: queryKeys.documents(did) })
       qc.removeQueries({ queryKey: queryKeys.document(did, rkey) })
     },
