@@ -4,17 +4,17 @@ import {
 } from "@atproto/oauth-client-browser"
 
 /**
- * Granular OAuth scopes. Reads (getRecord/listRecords) are public and need no
- * scope; we only request write access to the two collections this app edits,
- * plus image-blob uploads for publication icons & cover images.
- *
- * Omitting `?action` on a `repo:` scope grants create + update + delete.
+ * OAuth scopes. Reads (getRecord/listRecords) are public and need no scope. For
+ * writes we include standard.site's published permission set
+ * (`site.standard.authFull`) rather than hand-listing `repo:` scopes — it grants
+ * repo access to the publication/document/subscription/recommend collections.
+ * It doesn't cover blob uploads or the base session scope, so `atproto` and
+ * `blob:image/*` (publication icons & cover/in-post images) stay explicit.
  */
 export const SCOPE = [
   "atproto",
   "blob:image/*",
-  "repo:site.standard.publication",
-  "repo:site.standard.document",
+  "include:site.standard.authFull",
 ].join(" ")
 
 /**

@@ -74,8 +74,14 @@ in with a handle whose account already has a `site.standard.publication` record.
 Requested scopes (writes only — reads are public XRPC):
 
 ```
-atproto blob:image/* repo:site.standard.publication repo:site.standard.document
+atproto blob:image/* include:site.standard.authFull
 ```
+
+`include:site.standard.authFull` pulls in standard.site's published permission
+set (repo access to its publication/document/subscription/recommend
+collections) instead of hand-listing `repo:` scopes. `blob:image/*` (icon &
+cover/in-post image uploads) and the base `atproto` scope aren't part of that
+set, so they stay explicit.
 
 - **Development** uses an atproto _loopback_ client. The OAuth server serves
   hard-coded metadata for `http://localhost`, but honours the `redirect_uri` and
