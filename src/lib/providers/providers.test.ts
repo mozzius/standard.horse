@@ -26,9 +26,6 @@ function fakeBlob(cid: string): BlobRef {
     size: 1,
   } as unknown as BlobRef
 }
-function cdnUrl(cid: string): string {
-  return `https://cdn.bsky.app/img/feed_fullsize/plain/${DID}/${cid}`
-}
 
 const blockProviders: ContentProvider[] = [
   leafletProvider,
@@ -144,7 +141,8 @@ describe("image preserve-by-CID (session upload)", () => {
     [cid, { ref, width: 800, height: 600, mimeType: "image/png", alt: "pic" }],
   ])
   const ctx: WriteCtx = { did: DID, uploadedImages: uploaded }
-  const md = `![pic](${cdnUrl(cid)})`
+  // The markdown src for a blob image is the bare CID.
+  const md = `![pic](${cid})`
 
   it("leaflet reattaches the blob with aspect ratio", () => {
     const content = leafletProvider.fromMarkdown(md, ctx) as any
@@ -166,10 +164,10 @@ describe("image preserve-by-CID (session upload)", () => {
     expect(content.items[0].blob).toBe(ref)
   })
 
-  it("round-trips back to a CDN url containing the CID", async () => {
+  it("round-trips back to a src containing the CID", async () => {
     const content = leafletProvider.fromMarkdown(md, ctx)
     const { markdown } = await leafletProvider.toMarkdown(content, readCtx)
-    expect(markdown).toContain(cid)
+    expect(markdown).toContain(`(${cid})`)
   })
 })
 

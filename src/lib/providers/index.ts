@@ -18,7 +18,7 @@ export type {
   UploadedImage,
   WriteCtx,
 } from "./types.ts"
-export { cidFromUrl } from "./mdast.ts"
+export { cidFromSrc } from "./mdast.ts"
 
 /** All providers, markpub first (the default for new posts). */
 export const providers: ContentProvider[] = [

@@ -16,7 +16,7 @@ import {
 } from "./facets.ts"
 import {
   blobCid,
-  imageMarkdownUrl,
+  imageBlobSrc,
   mdastToMarkdown,
   parseMarkdown,
   resolveMarkdownImage,
@@ -58,11 +58,7 @@ const facetsOf = (o: Obj) => o.facets as Facet[] | undefined
 
 // ---- read: pckt content → markdown ----
 
-function blockToMdast(
-  block: Obj,
-  lost: Set<string>,
-  did: string | null,
-): RootContent[] {
+function blockToMdast(block: Obj, lost: Set<string>): RootContent[] {
   const text = (o: Obj) =>
     facetsToPhrasing((o.plaintext as string) ?? "", facetsOf(o), SCHEMA, lost)
 
@@ -102,7 +98,7 @@ function blockToMdast(
     case B("image"): {
       const attrs = (block.attrs as Obj) ?? {}
       const url = attrs.blob
-        ? imageMarkdownUrl(did, attrs.blob as never)
+        ? imageBlobSrc(attrs.blob as never)
         : (attrs.src as string) || ""
       return url
         ? [
@@ -116,9 +112,9 @@ function blockToMdast(
         : []
     }
     case B("bulletList"):
-      return [listToMdast(block, false, lost, did)]
+      return [listToMdast(block, false, lost)]
     case B("orderedList"):
-      return [listToMdast(block, true, lost, did)]
+      return [listToMdast(block, true, lost)]
     case B("taskList"):
       return [taskListToMdast(block, lost)]
     default:
@@ -129,26 +125,17 @@ function blockToMdast(
   }
 }
 
-function listToMdast(
-  list: Obj,
-  ordered: boolean,
-  lost: Set<string>,
-  did: string | null,
-): List {
+function listToMdast(list: Obj, ordered: boolean, lost: Set<string>): List {
   const items = (list.content as Obj[]) ?? []
   return {
     type: "list",
     ordered,
     start: ordered ? ((list.start as number) ?? undefined) : undefined,
-    children: items.map((it) => listItemToMdast(it, lost, did)),
+    children: items.map((it) => listItemToMdast(it, lost)),
   }
 }
 
-function listItemToMdast(
-  item: Obj,
-  lost: Set<string>,
-  did: string | null,
-): MdListItem {
+function listItemToMdast(item: Obj, lost: Set<string>): MdListItem {
   const children: RootContent[] = []
   for (const block of (item.content as Obj[]) ?? []) {
     if (block.$type === B("text"))
@@ -162,9 +149,9 @@ function listItemToMdast(
         ),
       })
     else if (block.$type === B("bulletList"))
-      children.push(listToMdast(block, false, lost, did))
+      children.push(listToMdast(block, false, lost))
     else if (block.$type === B("orderedList"))
-      children.push(listToMdast(block, true, lost, did))
+      children.push(listToMdast(block, true, lost))
   }
   return { type: "listItem", children: children as never }
 }
@@ -328,7 +315,7 @@ export const pcktProvider: ContentProvider = {
       }
     }
     const out: RootContent[] = []
-    for (const block of items) out.push(...blockToMdast(block, lost, ctx.did))
+    for (const block of items) out.push(...blockToMdast(block, lost))
     return { markdown: mdastToMarkdown(out), lost: [...lost] }
   },
 

@@ -16,7 +16,7 @@ import {
   type FacetSchema,
 } from "./facets.ts"
 import {
-  imageMarkdownUrl,
+  imageBlobSrc,
   mdastToMarkdown,
   parseMarkdown,
   resolveMarkdownImage,
@@ -59,11 +59,7 @@ const facetsOf = (o: Obj) => o.facets as Facet[] | undefined
 
 // ---- read: offprint content → markdown ----
 
-function blockToMdast(
-  block: Obj,
-  lost: Set<string>,
-  did: string | null,
-): RootContent[] {
+function blockToMdast(block: Obj, lost: Set<string>): RootContent[] {
   if (block.textAlign && block.textAlign !== "left") lost.add("text alignment")
   const text = (o: Obj) =>
     facetsToPhrasing((o.plaintext as string) ?? "", facetsOf(o), SCHEMA, lost)
@@ -125,7 +121,7 @@ function blockToMdast(
         lost.add("images")
         return []
       }
-      const url = imageMarkdownUrl(did, block.blob as never)
+      const url = imageBlobSrc(block.blob as never)
       return url
         ? [
             {
@@ -338,7 +334,7 @@ export const offprintProvider: ContentProvider = {
     const lost = new Set<string>()
     const items = (c.items as Obj[]) ?? []
     const out: RootContent[] = []
-    for (const block of items) out.push(...blockToMdast(block, lost, ctx.did))
+    for (const block of items) out.push(...blockToMdast(block, lost))
     return { markdown: mdastToMarkdown(out), lost: [...lost] }
   },
 

@@ -22,7 +22,7 @@ import {
   type FacetSchema,
 } from "./facets.ts"
 import {
-  imageMarkdownUrl,
+  imageBlobSrc,
   mdastToMarkdown,
   parseMarkdown,
   resolveMarkdownImage,
@@ -72,7 +72,6 @@ function blockToMdast(
   inner: Obj,
   alignment: string | undefined,
   lost: Set<string>,
-  did: string | null,
 ): RootContent[] {
   if (alignment && !alignment.endsWith("textAlignLeft"))
     lost.add("text alignment")
@@ -112,7 +111,7 @@ function blockToMdast(
     case B("horizontalRule"):
       return [{ type: "thematicBreak" }]
     case B("image"): {
-      const url = imageMarkdownUrl(did, inner.image as never)
+      const url = imageBlobSrc(inner.image as never)
       // mdast images are phrasing content — a block image is a lone-image para.
       return url
         ? [
@@ -126,9 +125,9 @@ function blockToMdast(
         : []
     }
     case B("unorderedList"):
-      return [listToMdast(inner, false, lost, did)]
+      return [listToMdast(inner, false, lost)]
     case B("orderedList"):
-      return [listToMdast(inner, true, lost, did)]
+      return [listToMdast(inner, true, lost)]
     default:
       if (inner.$type && LOSS_LABELS[inner.$type as string])
         lost.add(LOSS_LABELS[inner.$type as string])
@@ -137,31 +136,22 @@ function blockToMdast(
   }
 }
 
-function listToMdast(
-  list: Obj,
-  ordered: boolean,
-  lost: Set<string>,
-  did: string | null,
-): List {
+function listToMdast(list: Obj, ordered: boolean, lost: Set<string>): List {
   const items = (list.children as Obj[]) ?? []
   return {
     type: "list",
     ordered,
     start: ordered ? ((list.startIndex as number) ?? undefined) : undefined,
-    children: items.map((it) => listItemToMdast(it, lost, did)),
+    children: items.map((it) => listItemToMdast(it, lost)),
   }
 }
 
-function listItemToMdast(
-  item: Obj,
-  lost: Set<string>,
-  did: string | null,
-): MdListItem {
+function listItemToMdast(item: Obj, lost: Set<string>): MdListItem {
   const content = item.content as Obj | undefined
   const children: RootContent[] = []
   if (content) {
     if (content.$type === B("image")) {
-      const url = imageMarkdownUrl(did, content.image as never)
+      const url = imageBlobSrc(content.image as never)
       if (url)
         children.push({
           type: "paragraph",
@@ -182,9 +172,9 @@ function listItemToMdast(
     }
   }
   if (Array.isArray(item.children) && item.children.length)
-    children.push(listToMdast({ children: item.children }, false, lost, did))
+    children.push(listToMdast({ children: item.children }, false, lost))
   else if (item.orderedListChildren)
-    children.push(listToMdast(item.orderedListChildren as Obj, true, lost, did))
+    children.push(listToMdast(item.orderedListChildren as Obj, true, lost))
   const li: MdListItem = { type: "listItem", children: children as never }
   if (typeof item.checked === "boolean") li.checked = item.checked
   return li
@@ -328,14 +318,7 @@ export const leafletProvider: ContentProvider = {
     for (const b of blocks) {
       const inner = b.block as Obj
       if (!inner) continue
-      out.push(
-        ...blockToMdast(
-          inner,
-          b.alignment as string | undefined,
-          lost,
-          ctx.did,
-        ),
-      )
+      out.push(...blockToMdast(inner, b.alignment as string | undefined, lost))
     }
     return { markdown: mdastToMarkdown(out), lost: [...lost] }
   },

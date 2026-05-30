@@ -3,17 +3,18 @@
  * an mdast tree, serialise blocks back to markdown, and the image-blob handling
  * that lets existing images survive a markdown round-trip without re-uploading.
  *
- * Images are rendered to markdown as `![alt](cdn-url)` where the URL is a
- * Bluesky CDN link encoding the blob CID. On the way back, that CID is matched
- * against blobs harvested from the post's previous content (or images uploaded
- * this editing session), so the original blob ref is reattached verbatim.
+ * A blob-backed image is rendered to markdown as `![alt](<cid>)` — the raw
+ * blob CID, which is unambiguously an atproto blob reference (not a real URL).
+ * On the way back, that CID is matched against blobs harvested from the post's
+ * previous content (or images uploaded this session), so the original blob ref
+ * is reattached verbatim. The editor turns the CID into a displayable URL only
+ * for the preview.
  */
 
 import { getBlobCidString, type BlobRef } from "@atproto/lex"
 import type { Image, Root, RootContent } from "mdast"
 import { remark } from "remark"
 import remarkGfm from "remark-gfm"
-import { cdnImageUrl } from "../bsky.ts"
 import type { WriteCtx } from "./types.ts"
 
 const processor = remark().use(remarkGfm)
@@ -97,18 +98,18 @@ export function harvestImages(content: unknown): Map<string, HarvestedImage> {
   return out
 }
 
-/** Build the markdown image URL we emit for a stored image blob. */
-export function imageMarkdownUrl(did: string | null, ref: BlobRef): string {
-  const cid = blobCid(ref)
-  if (!cid || !did) return ""
-  return cdnImageUrl(did, cid, "feed_fullsize")
+/** The markdown image src we emit for a stored image blob: its bare CID. */
+export function imageBlobSrc(ref: BlobRef): string {
+  return blobCid(ref) ?? ""
 }
 
-/** Pull the blob CID out of a Bluesky CDN URL we previously emitted. */
-export function cidFromUrl(url: string): string | null {
-  // …/img/<preset>/plain/<did>/<cid>[@jpeg]
-  const m = url.match(/\/plain\/[^/]+\/([^/?@]+)/)
-  return m ? m[1] : null
+/**
+ * Read a blob CID out of a markdown image src. A blob image's src is the bare
+ * CID we emit — CIDv1 base32 (`bafy…`/`bafk…`) or CIDv0 base58 (`Qm…`). Anything
+ * else is an external image URL, returned as null so it's left untouched.
+ */
+export function cidFromSrc(src: string): string | null {
+  return /^(baf[a-z2-7]+|Qm[1-9A-HJ-NP-Za-km-z]{44})$/.test(src) ? src : null
 }
 
 export type ResolvedImage =
@@ -135,7 +136,7 @@ export function resolveMarkdownImage(
   const url = node.url
   if (!url) return null
   const alt = node.alt || undefined
-  const cid = cidFromUrl(url)
+  const cid = cidFromSrc(url)
   if (cid) {
     const up = ctx.uploadedImages?.get(cid)
     if (up)

@@ -10,7 +10,7 @@ import { useAuth } from "../auth/AuthProvider.tsx"
 import { blobImageUrl, cdnImageUrl } from "../lib/bsky.ts"
 import { markdownToPlaintext } from "../lib/markdown.ts"
 import {
-  cidFromUrl,
+  cidFromSrc,
   defaultProvider,
   detectProvider,
   providerById,
@@ -242,17 +242,22 @@ export function PostEditor() {
     [],
   )
 
-  // Preview renderer: swap a just-uploaded image's CDN URL (which 404s until
-  // the blob is committed to the record) for its local object-URL preview.
+  // Preview renderer: an image src is a bare blob CID, which isn't loadable.
+  // Resolve it to a displayable URL — the local object-URL for this session's
+  // uploads (the CDN can't serve a blob until it's committed to the record),
+  // otherwise the bsky CDN. External (non-CID) srcs pass through untouched.
   const mdComponents = useMemo<Components>(
     () => ({
       img({ node: _node, src, alt, ...rest }) {
-        const cid = typeof src === "string" ? cidFromUrl(src) : null
-        const local = cid ? previewUrlsRef.current.get(cid) : undefined
-        return <img {...rest} src={local ?? src} alt={alt ?? ""} />
+        const cid = typeof src === "string" ? cidFromSrc(src) : null
+        const display = cid
+          ? (previewUrlsRef.current.get(cid) ??
+            (did ? cdnImageUrl(did, cid, "feed_fullsize") : src))
+          : src
+        return <img {...rest} src={display} alt={alt ?? ""} />
       },
     }),
-    [],
+    [did],
   )
 
   // Derive dirtiness by diffing form state against the loaded record — no
@@ -338,8 +343,8 @@ export function PostEditor() {
           alt,
         })
         previewUrlsRef.current.set(cid, URL.createObjectURL(file))
-        const url = did ? cdnImageUrl(did, cid, "feed_fullsize") : ""
-        insertAtCursor(`![${alt}](${url})`)
+        // The src is the bare blob CID; the preview resolves it to a URL.
+        insertAtCursor(`![${alt}](${cid})`)
       },
       onError: (e) => setFormError(errorMessage(e, "Failed to upload image.")),
     })
