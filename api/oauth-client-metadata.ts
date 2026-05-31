@@ -1,9 +1,14 @@
-import { SCOPE } from "../src/auth/scope.ts"
-
 export const config = { runtime: "edge" }
 
 /** The canonical production domain — prod never reflects the request Host. */
 const PROD_HOST = "standard.horse"
+
+/**
+ * Mirror of `SCOPE` in `src/auth/scope.ts`. Inlined deliberately: Vercel's edge
+ * bundler can't resolve an import across the `api/` ↔ `src/` boundary, so this
+ * is a copy — kept in lockstep with the canonical value by the sibling test.
+ */
+const SCOPE = "atproto blob:image/* include:site.standard.authFull"
 
 /**
  * Serve the atproto OAuth client metadata document, with `client_id` /
