@@ -129,6 +129,7 @@ export function PostEditor() {
     restoredAt,
     stale,
     hydrated,
+    baselineTick,
   } = state
   const setField = (field: keyof EditorFields, value: string) =>
     dispatch({ type: "set", field, value })
@@ -391,6 +392,8 @@ export function PostEditor() {
     coverFile,
     coverRemoved,
     siblingPathTemplate,
+    // seededBodyRef is a ref the memo can't watch; recompute when it's moved.
+    baselineTick,
   ])
 
   // Mirror the editor's working state into localStorage so nothing typed is lost
@@ -424,6 +427,10 @@ export function PostEditor() {
       savedAt: at,
     }
     const write = () => {
+      // Bail if a newer write superseded this one, or a save/discard cleared the
+      // draft underneath us (clearDraftState nulls flushRef) — otherwise a
+      // debounced write could resurrect a draft we just cleared on save.
+      if (flushRef.current !== write) return
       saveDraft(currentKey, payload)
       dispatch({ type: "markSaved", at })
     }
@@ -588,7 +595,15 @@ export function PostEditor() {
         onSuccess: () => {
           clearDraftState()
           if (isNew) navigate(`/post/${docRkey}`, { replace: true })
-          else dispatch({ type: "clearCover" })
+          else {
+            // Rebaseline the body to what we just saved so isDirty clears
+            // immediately — the document refetch (which would otherwise update
+            // this) is async, and round-tripping the body back from the stored
+            // format isn't guaranteed to be identical anyway.
+            seededBodyRef.current = cleanBody
+            dispatch({ type: "rebaseline" })
+            dispatch({ type: "clearCover" })
+          }
         },
       },
     )

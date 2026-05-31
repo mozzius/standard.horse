@@ -43,6 +43,13 @@ export interface EditorState extends EditorFields {
    * had a chance to restore.
    */
   hydrated: boolean
+  /**
+   * Bumped whenever the body's clean baseline (`seededBodyRef`) is moved without
+   * the body itself changing — i.e. on save. The `isDirty` memo reads that ref,
+   * which it can't list as a dependency, so this gives it something to recompute
+   * on. Without it, saving wouldn't clear the dirty state.
+   */
+  baselineTick: number
 }
 
 export type EditorAction =
@@ -56,6 +63,8 @@ export type EditorAction =
   | { type: "clearCover" }
   // Initial seed/restore has run — draft persistence may begin.
   | { type: "hydrated" }
+  // The body's clean baseline moved (on save) — force an isDirty recompute.
+  | { type: "rebaseline" }
   // Seed text inputs from the server record (no draft restored).
   | { type: "seed"; fields: EditorFields }
   // Adopt a richer body when a list-cache placeholder upgrades to the full load.
@@ -87,6 +96,7 @@ export function initEditorState(selectedPubRkey: string | null): EditorState {
     restoredAt: null,
     stale: false,
     hydrated: false,
+    baselineTick: 0,
   }
 }
 
@@ -111,6 +121,8 @@ export function editorReducer(
       return { ...state, coverFile: null, coverRemoved: false }
     case "hydrated":
       return state.hydrated ? state : { ...state, hydrated: true }
+    case "rebaseline":
+      return { ...state, baselineTick: state.baselineTick + 1 }
     case "seed":
       return { ...state, ...action.fields }
     case "adoptBody":
