@@ -1,0 +1,3 @@
+# Test files must not be deployed — anything under api/ otherwise becomes a
+# Serverless/Edge Function, and these import vitest (not a runtime dep).
+*.test.ts

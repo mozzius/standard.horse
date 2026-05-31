@@ -1,4 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [{ "source": "/((?!.*\\.).*)", "destination": "/index.html" }]
+  "rewrites": [
+    {
+      "source": "/oauth-client-metadata.json",
+      "destination": "/api/oauth-client-metadata"
+    },
+    { "source": "/((?!.*\\.).*)", "destination": "/index.html" }
+  ]
 }

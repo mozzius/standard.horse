@@ -88,12 +88,36 @@ set, so they stay explicit.
   `scope` query params we encode into the client_id — so you still get the exact
   granular scopes above on the consent screen. The dev server binds `127.0.0.1`
   because loopback clients must use an IP origin, not `localhost`.
-- **Production** must host a client metadata document at the app origin. Edit
-  [`public/oauth-client-metadata.json`](./public/oauth-client-metadata.json) so
-  every URL points at your real domain, deploy it, and the app loads it via
-  `BrowserOAuthClient.load({ clientId: '<origin>/oauth-client-metadata.json' })`.
-  The filename is deliberate: atproto's consent screen hides the raw client_id
+- **Production & previews** serve the client metadata document _dynamically_
+  from an edge function ([`api/oauth-client-metadata.ts`](./api/oauth-client-metadata.ts)),
+  rewritten to the magic path `/oauth-client-metadata.json` in
+  [`vercel.json`](./vercel.json). atproto requires the document's `client_id` to
+  equal the URL it was fetched from and every `redirect_uri` to share that
+  origin, so a static file can only describe one domain — no good for Vercel
+  preview deployments, which each get their own `*.vercel.app` origin. The
+  function therefore binds those URLs to the origin it's served from:
+  - **production** (`VERCEL_ENV=production`) is locked to `standard.horse`; any
+    other Host (including the bare `*.vercel.app` production URL) gets a 404 so
+    `client_id` can never mismatch. Change `PROD_HOST` if you fork this.
+  - **preview** reflects the deployment's own `*.vercel.app` origin, so each
+    preview is a valid, self-consistent OAuth client (you re-consent per preview
+    domain — expected).
+
+  The app loads it via
+  `BrowserOAuthClient.load({ clientId: '<origin>/oauth-client-metadata.json' })`;
+  the filename is deliberate — atproto's consent screen hides the raw client_id
   URL when it ends in exactly `/oauth-client-metadata.json`.
+
+  Two deploy-time gotchas:
+  - **Deployment Protection breaks the flow.** The atproto auth server fetches
+    the metadata document server-to-server, so previews must be publicly
+    reachable — if Vercel Authentication / password protection is on, that fetch
+    401s and login fails. Disable protection for previews (or use a bypass).
+  - **Production must be reached via `standard.horse`.** Since prod 404s the
+    metadata on any other Host, start the flow on the canonical domain. If your
+    production deployment's `*.vercel.app` URL is reachable, add a redirect to
+    the apex for _that exact host_ (don't use a broad `standard-horse.*` pattern
+    — it would also catch preview hosts and break their metadata fetch).
 
 Handle resolution uses `bsky.social` by default (it will see handles + IPs).
 Self-hosters can point `HANDLE_RESOLVER` in `src/auth/client.ts` at their PDS.
