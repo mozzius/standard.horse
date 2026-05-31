@@ -522,6 +522,15 @@ export function PostEditor() {
     dispatch({ type: "revert", fields })
   }
 
+  /** Confirm, then discard — used by the toolbar button and the restore banner. */
+  function onDiscard() {
+    const message = existing
+      ? "Discard your unsaved changes and revert to the published version?"
+      : "Discard this draft? Everything you’ve written here will be lost."
+    if (!window.confirm(message)) return
+    discardDraft()
+  }
+
   /** Reset draft state after the post is written to (or removed from) the PDS. */
   function clearDraftState() {
     if (currentKey) clearDraft(currentKey)
@@ -751,6 +760,21 @@ export function PostEditor() {
             {statusText}
           </span>
         )}
+        {isDirty && (
+          <button
+            type="button"
+            className="btn btn--ghost"
+            onClick={onDiscard}
+            disabled={saving}
+            title={
+              existing
+                ? "Discard unsaved changes and revert to the published version"
+                : "Discard this draft"
+            }
+          >
+            Discard
+          </button>
+        )}
         <button
           type="submit"
           form="post-form"
@@ -772,11 +796,7 @@ export function PostEditor() {
               "The published version has changed since — saving will overwrite it. "}
             It’s only stored in this browser until you{" "}
             {isNew ? "publish" : "save"}.{" "}
-            <button
-              type="button"
-              className="link-button"
-              onClick={discardDraft}
-            >
+            <button type="button" className="link-button" onClick={onDiscard}>
               Discard draft
             </button>
           </p>
