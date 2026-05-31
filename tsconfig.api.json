@@ -1,0 +1,11 @@
+{
+  // Vercel serverless/edge functions in `api/` run in a Node-ish runtime, not
+  // the browser — so they're typechecked separately from `src` with Node globals
+  // (`process`) available, instead of leaking those into browser code.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM"],
+    "types": ["node"]
+  },
+  "include": ["api"]
+}
