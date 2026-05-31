@@ -128,6 +128,7 @@ export function PostEditor() {
     savedAt,
     restoredAt,
     stale,
+    hydrated,
   } = state
   const setField = (field: keyof EditorFields, value: string) =>
     dispatch({ type: "set", field, value })
@@ -285,6 +286,7 @@ export function PostEditor() {
           },
         })
       }
+      dispatch({ type: "hydrated" })
     } else if (
       md !== seededBodyRef.current &&
       body.trim() === seededBodyRef.current
@@ -311,9 +313,11 @@ export function PostEditor() {
     if (!isNew || newSeededRef.current || !did || !publication) return
     newSeededRef.current = true
     const draft = loadDraft(draftKey(did, { newPub: publication.rkey }))
-    if (!draft) return
-    uploadedImagesRef.current = deserializeImages(draft.images)
-    dispatch({ type: "restoreDraft", draft, stale: false })
+    if (draft) {
+      uploadedImagesRef.current = deserializeImages(draft.images)
+      dispatch({ type: "restoreDraft", draft, stale: false })
+    }
+    dispatch({ type: "hydrated" })
   }, [isNew, did, publication])
 
   const cmExtensions = useMemo(
@@ -397,7 +401,10 @@ export function PostEditor() {
   const baseCid = editableDoc?.entry.cid ?? null
   const flushRef = useRef<(() => void) | null>(null)
   useEffect(() => {
-    if (!currentKey) return
+    // Stay paused until the record's loaded and seeded/restored — otherwise the
+    // empty initial form reads as "clean" and would clear a saved draft before
+    // it gets restored on refresh.
+    if (!hydrated || !currentKey) return
     if (!isDirty) {
       flushRef.current = null
       clearDraft(currentKey)
@@ -424,6 +431,7 @@ export function PostEditor() {
     const t = setTimeout(write, 600)
     return () => clearTimeout(t)
   }, [
+    hydrated,
     currentKey,
     isDirty,
     title,

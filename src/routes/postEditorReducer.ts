@@ -36,6 +36,13 @@ export interface EditorState extends EditorFields {
   restoredAt: number | null
   /** the server record changed since the restored draft was based on it. */
   stale: boolean
+  /**
+   * Whether the initial seed/restore has run. Draft persistence stays paused
+   * until this flips true, so the empty initial form (while the record is still
+   * loading) can't be mistaken for "clean" and wipe a saved draft before it's
+   * had a chance to restore.
+   */
+  hydrated: boolean
 }
 
 export type EditorAction =
@@ -47,6 +54,8 @@ export type EditorAction =
   | { type: "removeCover" }
   // After a save: keep the (now-committed) cover, drop the pending edit.
   | { type: "clearCover" }
+  // Initial seed/restore has run — draft persistence may begin.
+  | { type: "hydrated" }
   // Seed text inputs from the server record (no draft restored).
   | { type: "seed"; fields: EditorFields }
   // Adopt a richer body when a list-cache placeholder upgrades to the full load.
@@ -77,6 +86,7 @@ export function initEditorState(selectedPubRkey: string | null): EditorState {
     savedAt: null,
     restoredAt: null,
     stale: false,
+    hydrated: false,
   }
 }
 
@@ -99,6 +109,8 @@ export function editorReducer(
       return { ...state, coverFile: null, coverRemoved: true }
     case "clearCover":
       return { ...state, coverFile: null, coverRemoved: false }
+    case "hydrated":
+      return state.hydrated ? state : { ...state, hydrated: true }
     case "seed":
       return { ...state, ...action.fields }
     case "adoptBody":
