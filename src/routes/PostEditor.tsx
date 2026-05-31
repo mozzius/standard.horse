@@ -2,12 +2,20 @@ import { getBlobCidString, l } from "@atproto/lex"
 import { markdown } from "@codemirror/lang-markdown"
 import { languages } from "@codemirror/language-data"
 import CodeMirror, { EditorView } from "@uiw/react-codemirror"
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useReducer, useRef } from "react"
 import ReactMarkdown, { type Components } from "react-markdown"
 import { Link, useNavigate, useParams, useSearchParams } from "react-router"
 import remarkGfm from "remark-gfm"
 import { useAuth } from "../auth/AuthProvider.tsx"
 import { blobImageUrl, cdnImageUrl } from "../lib/bsky.ts"
+import {
+  clearDraft,
+  deserializeImages,
+  draftKey,
+  loadDraft,
+  saveDraft,
+  serializeImages,
+} from "../lib/drafts.ts"
 import { markdownToPlaintext } from "../lib/markdown.ts"
 import {
   cidFromSrc,
@@ -36,6 +44,21 @@ import {
   templatizePath,
   type DocumentRecord,
 } from "../lib/repo.ts"
+import {
+  editorReducer,
+  initEditorState,
+  type EditorFields,
+} from "./postEditorReducer.ts"
+
+/** A coarse "x ago" label for the draft status; refreshed on each re-render. */
+function relativeTime(ts: number): string {
+  const s = Math.round((Date.now() - ts) / 1000)
+  if (s < 10) return "just now"
+  if (s < 60) return `${s}s ago`
+  const m = Math.round(s / 60)
+  if (m < 60) return `${m}m ago`
+  return `${Math.round(m / 60)}h ago`
+}
 
 /** Read an image file's pixel dimensions (for the stored aspect ratio). */
 async function readImageSize(
@@ -83,11 +106,34 @@ export function PostEditor() {
   } = useDeleteDocument()
   const { mutate: uploadImage, isPending: uploadingImage } = useUploadImage()
 
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [tags, setTags] = useState("")
-  const [pathTemplate, setPathTemplate] = useState(DEFAULT_PATH_TEMPLATE)
-  const [body, setBody] = useState("")
+  // All mutable form state lives in one reducer; see postEditorReducer.ts. We
+  // destructure for reads and dispatch named actions for writes. `setField` is a
+  // shorthand for the common text-input case.
+  const [state, dispatch] = useReducer(
+    editorReducer,
+    searchParams.get("pub"),
+    initEditorState,
+  )
+  const {
+    title,
+    description,
+    tags,
+    pathTemplate,
+    body,
+    coverFile,
+    coverRemoved,
+    selectedPubRkey,
+    selectedProviderId,
+    formError,
+    savedAt,
+    restoredAt,
+    stale,
+    hydrated,
+    baselineTick,
+  } = state
+  const setField = (field: keyof EditorFields, value: string) =>
+    dispatch({ type: "set", field, value })
+
   const pathDialogRef = useRef<HTMLDialogElement>(null)
   // The live CodeMirror view, so we can insert uploaded images at the cursor.
   const viewRef = useRef<EditorView | null>(null)
@@ -104,9 +150,8 @@ export function PostEditor() {
   }, [])
 
   // Cover image: a newly-picked file to upload, or a flag to drop the existing
-  // one. Otherwise the document's existing coverImage blob is kept.
-  const [coverFile, setCoverFile] = useState<File | null>(null)
-  const [coverRemoved, setCoverRemoved] = useState(false)
+  // one (both in the reducer). Otherwise the document's existing coverImage is
+  // kept.
   const coverObjectUrl = useMemo(
     () => (coverFile ? URL.createObjectURL(coverFile) : null),
     [coverFile],
@@ -117,9 +162,10 @@ export function PostEditor() {
     }
   }, [coverObjectUrl])
 
-  // Synchronous form validation only; save/delete failures are derived from the
-  // mutations above.
-  const [formError, setFormError] = useState<string | null>(null)
+  // `formError` is synchronous form validation only; save/delete failures are
+  // derived from the mutations above. The draft-status fields (`savedAt` drives
+  // the "saved locally" pill, `restoredAt` the recovery banner, `stale` the
+  // server-changed warning) also live in the reducer.
   const saveError =
     formError ??
     (saveErr
@@ -129,11 +175,8 @@ export function PostEditor() {
         : null)
 
   // For a new post the target publication is user-selectable, defaulting to
-  // ?pub=<rkey>. For an existing post it's fixed to whichever publication its
-  // `site` points at.
-  const [selectedPubRkey, setSelectedPubRkey] = useState<string | null>(
-    searchParams.get("pub"),
-  )
+  // ?pub=<rkey> (the reducer's initial `selectedPubRkey`). For an existing post
+  // it's fixed to whichever publication its `site` points at.
   const publication = useMemo(() => {
     if (!publications.length) return null
     if (existing?.site) {
@@ -145,6 +188,14 @@ export function PostEditor() {
       publications.find((p) => p.rkey === selectedPubRkey) ?? publications[0]
     )
   }, [publications, existing, selectedPubRkey])
+
+  // localStorage key for this post's draft: the rkey for an existing post, or a
+  // per-target-publication "new" slot for an unsaved one.
+  const currentKey = useMemo(() => {
+    if (!did) return null
+    if (rkey) return draftKey(did, rkey)
+    return draftKey(did, { newPub: publication?.rkey ?? null })
+  }, [did, rkey, publication])
 
   // New posts default to whatever richtext format the other posts in the target
   // publication use, so a post lands in a format the blog's reader understands.
@@ -183,11 +234,9 @@ export function PostEditor() {
   }, [isNew, publication, allDocs])
 
   // The format this post is read from / written in. New posts: the dropdown
-  // selection, else the sibling default, else markpub. Existing posts: whatever
-  // provider read them (null = an unrecognised format → read-only below).
-  const [selectedProviderId, setSelectedProviderId] = useState<string | null>(
-    null,
-  )
+  // selection (`selectedProviderId` in the reducer), else the sibling default,
+  // else markpub. Existing posts: whatever provider read them (null = an
+  // unrecognised format → read-only below).
   const activeProvider = useMemo(() => {
     if (isNew)
       return (
@@ -214,20 +263,39 @@ export function PostEditor() {
     const md = editableDoc.markdown.trim()
     if (seededUriRef.current !== editableDoc.entry.uri) {
       seededUriRef.current = editableDoc.entry.uri
+      // The server body is always the dirty-comparison baseline, even when a
+      // local draft supersedes it in the inputs — so isDirty (and the "saved
+      // locally" status) reflect the draft differing from what's on the PDS.
       seededBodyRef.current = md
-      setTitle(v.title ?? "")
-      setDescription(v.description ?? "")
-      setTags((v.tags ?? []).join(", "))
-      setPathTemplate(templatizePath(v.path, rkey))
-      setBody(md)
+      const draft = did ? loadDraft(draftKey(did, rkey)) : null
+      if (draft) {
+        uploadedImagesRef.current = deserializeImages(draft.images)
+        dispatch({
+          type: "restoreDraft",
+          draft,
+          stale: draft.baseCid !== editableDoc.entry.cid,
+        })
+      } else {
+        dispatch({
+          type: "seed",
+          fields: {
+            title: v.title ?? "",
+            description: v.description ?? "",
+            tags: (v.tags ?? []).join(", "),
+            pathTemplate: templatizePath(v.path, rkey),
+            body: md,
+          },
+        })
+      }
+      dispatch({ type: "hydrated" })
     } else if (
       md !== seededBodyRef.current &&
       body.trim() === seededBodyRef.current
     ) {
       seededBodyRef.current = md
-      setBody(md)
+      dispatch({ type: "adoptBody", body: md })
     }
-  }, [editableDoc, rkey, body])
+  }, [editableDoc, rkey, body, did])
 
   // For a new post, adopt the publication's inferred path shape once it loads
   // (unless the user has already opened the dialog and set one themselves).
@@ -235,8 +303,23 @@ export function PostEditor() {
   useEffect(() => {
     if (!isNew || pathSeededRef.current || !siblingPathTemplate) return
     pathSeededRef.current = true
-    setPathTemplate(siblingPathTemplate)
+    setField("pathTemplate", siblingPathTemplate)
   }, [isNew, siblingPathTemplate])
+
+  // For a new post, restore a local draft once the target publication resolves
+  // (the draft is keyed by it). Runs once; new posts have no server baseline, so
+  // any restored content simply reads as dirty/unsaved.
+  const newSeededRef = useRef(false)
+  useEffect(() => {
+    if (!isNew || newSeededRef.current || !did || !publication) return
+    newSeededRef.current = true
+    const draft = loadDraft(draftKey(did, { newPub: publication.rkey }))
+    if (draft) {
+      uploadedImagesRef.current = deserializeImages(draft.images)
+      dispatch({ type: "restoreDraft", draft, stale: false })
+    }
+    dispatch({ type: "hydrated" })
+  }, [isNew, did, publication])
 
   const cmExtensions = useMemo(
     () => [markdown({ codeLanguages: languages }), EditorView.lineWrapping],
@@ -309,13 +392,77 @@ export function PostEditor() {
     coverFile,
     coverRemoved,
     siblingPathTemplate,
+    // seededBodyRef is a ref the memo can't watch; recompute when it's moved.
+    baselineTick,
   ])
+
+  // Mirror the editor's working state into localStorage so nothing typed is lost
+  // before it reaches the PDS. Debounced; when the form matches the server record
+  // (or is empty) the draft is dropped instead. The image map is keyed by blob
+  // CID and serialized via lexToJson so restored uploads still save correctly.
+  // `flushRef` holds the pending write so we can flush it on tab close.
+  const baseCid = editableDoc?.entry.cid ?? null
+  const flushRef = useRef<(() => void) | null>(null)
+  useEffect(() => {
+    // Stay paused until the record's loaded and seeded/restored — otherwise the
+    // empty initial form reads as "clean" and would clear a saved draft before
+    // it gets restored on refresh.
+    if (!hydrated || !currentKey) return
+    if (!isDirty) {
+      flushRef.current = null
+      clearDraft(currentKey)
+      dispatch({ type: "markClean" })
+      return
+    }
+    const at = Date.now()
+    const payload = {
+      title,
+      description,
+      tags,
+      pathTemplate,
+      body,
+      providerId: activeProvider?.id ?? null,
+      images: serializeImages(uploadedImagesRef.current),
+      baseCid,
+      savedAt: at,
+    }
+    const write = () => {
+      // Bail if a newer write superseded this one, or a save/discard cleared the
+      // draft underneath us (clearDraftState nulls flushRef) — otherwise a
+      // debounced write could resurrect a draft we just cleared on save.
+      if (flushRef.current !== write) return
+      saveDraft(currentKey, payload)
+      dispatch({ type: "markSaved", at })
+    }
+    flushRef.current = write
+    const t = setTimeout(write, 600)
+    return () => clearTimeout(t)
+  }, [
+    hydrated,
+    currentKey,
+    isDirty,
+    title,
+    description,
+    tags,
+    pathTemplate,
+    body,
+    activeProvider,
+    baseCid,
+  ])
+
+  // Close the debounce window: write any pending draft synchronously when the
+  // page is being hidden/unloaded.
+  useEffect(() => {
+    const onHide = () => flushRef.current?.()
+    window.addEventListener("pagehide", onHide)
+    return () => window.removeEventListener("pagehide", onHide)
+  }, [])
 
   /** Insert markdown at the cursor (or append if the editor isn't mounted). */
   function insertAtCursor(text: string) {
     const view = viewRef.current
     if (!view) {
-      setBody((b) => (b ? `${b}\n\n${text}` : text))
+      dispatch({ type: "appendBody", text })
       return
     }
     const { from, to } = view.state.selection.main
@@ -328,10 +475,10 @@ export function PostEditor() {
 
   /** Upload an image file and insert a markdown image referencing its blob. */
   async function handleImageFile(file: File) {
-    setFormError(null)
+    dispatch({ type: "setFormError", message: null })
     if (!file.type.startsWith("image/")) return
     if (file.size > 1_000_000) {
-      setFormError("Images must be under 1MB.")
+      dispatch({ type: "setFormError", message: "Images must be under 1MB." })
       return
     }
     const { width, height } = await readImageSize(file)
@@ -350,16 +497,60 @@ export function PostEditor() {
         // The src is the bare blob CID; the preview resolves it to a URL.
         insertAtCursor(`![${alt}](${cid})`)
       },
-      onError: (e) => setFormError(errorMessage(e, "Failed to upload image.")),
+      onError: (e) =>
+        dispatch({
+          type: "setFormError",
+          message: errorMessage(e, "Failed to upload image."),
+        }),
     })
+  }
+
+  /** Forget the restored local draft and revert the form to the server record. */
+  function discardDraft() {
+    if (currentKey) clearDraft(currentKey)
+    flushRef.current = null
+    uploadedImagesRef.current = new Map()
+    const fields: EditorFields =
+      existing && rkey
+        ? {
+            title: existing.title ?? "",
+            description: existing.description ?? "",
+            tags: (existing.tags ?? []).join(", "),
+            pathTemplate: templatizePath(existing.path, rkey),
+            body: seededBodyRef.current,
+          }
+        : {
+            title: "",
+            description: "",
+            tags: "",
+            pathTemplate: siblingPathTemplate ?? DEFAULT_PATH_TEMPLATE,
+            body: "",
+          }
+    dispatch({ type: "revert", fields })
+  }
+
+  /** Confirm, then discard — used by the toolbar button and the restore banner. */
+  function onDiscard() {
+    const message = existing
+      ? "Discard your unsaved changes and revert to the published version?"
+      : "Discard this draft? Everything you’ve written here will be lost."
+    if (!window.confirm(message)) return
+    discardDraft()
+  }
+
+  /** Reset draft state after the post is written to (or removed from) the PDS. */
+  function clearDraftState() {
+    if (currentKey) clearDraft(currentKey)
+    flushRef.current = null
+    dispatch({ type: "draftCleared" })
   }
 
   function onSave(e: React.FormEvent) {
     e.preventDefault()
-    setFormError(null)
+    dispatch({ type: "setFormError", message: null })
     if (!publication || !activeProvider) return
     if (!title.trim()) {
-      setFormError("A headline is required.")
+      dispatch({ type: "setFormError", message: "A headline is required." })
       return
     }
 
@@ -402,10 +593,16 @@ export function PostEditor() {
       { isNew, rkey: docRkey, value, coverFile, coverRemoved },
       {
         onSuccess: () => {
+          clearDraftState()
           if (isNew) navigate(`/post/${docRkey}`, { replace: true })
           else {
-            setCoverFile(null)
-            setCoverRemoved(false)
+            // Rebaseline the body to what we just saved so isDirty clears
+            // immediately — the document refetch (which would otherwise update
+            // this) is async, and round-tripping the body back from the stored
+            // format isn't guaranteed to be identical anyway.
+            seededBodyRef.current = cleanBody
+            dispatch({ type: "rebaseline" })
+            dispatch({ type: "clearCover" })
           }
         },
       },
@@ -416,7 +613,10 @@ export function PostEditor() {
     if (!rkey) return
     if (!window.confirm("Delete this post? This cannot be undone.")) return
     deleteDocument(rkey, {
-      onSuccess: () => navigate("/", { replace: true }),
+      onSuccess: () => {
+        clearDraftState()
+        navigate("/", { replace: true })
+      },
     })
   }
 
@@ -498,6 +698,19 @@ export function PostEditor() {
   // markpub can't reference image blobs, so in-post upload is disabled there.
   const canUploadImages = !!activeProvider?.supportsImages
 
+  // Save-status pill: make it unambiguous whether the visible text is only in
+  // this browser ("Draft saved locally") or actually written to the PDS.
+  const statusKind = saving ? "saving" : isDirty ? "local" : "saved"
+  const statusText = saving
+    ? "Saving…"
+    : isDirty
+      ? savedAt
+        ? `Draft saved locally · ${relativeTime(savedAt)}`
+        : "Editing…"
+      : existing
+        ? "Saved to your PDS"
+        : null
+
   return (
     <div className="container">
       <div className="toolbar">
@@ -529,7 +742,9 @@ export function PostEditor() {
           <select
             className="select"
             value={publication?.rkey ?? ""}
-            onChange={(e) => setSelectedPubRkey(e.target.value)}
+            onChange={(e) =>
+              dispatch({ type: "selectPublication", rkey: e.target.value })
+            }
             title="Which publication to publish to"
           >
             {publications.map((p) => (
@@ -543,7 +758,9 @@ export function PostEditor() {
           <select
             className="select"
             value={activeProvider?.id ?? defaultProvider.id}
-            onChange={(e) => setSelectedProviderId(e.target.value)}
+            onChange={(e) =>
+              dispatch({ type: "selectProvider", id: e.target.value })
+            }
             title="Richtext format to save this post in"
           >
             {providers.map((p) => (
@@ -552,6 +769,26 @@ export function PostEditor() {
               </option>
             ))}
           </select>
+        )}
+        {statusText && (
+          <span className={`save-status save-status--${statusKind}`}>
+            {statusText}
+          </span>
+        )}
+        {isDirty && (
+          <button
+            type="button"
+            className="btn btn--ghost"
+            onClick={onDiscard}
+            disabled={saving}
+            title={
+              existing
+                ? "Discard unsaved changes and revert to the published version"
+                : "Discard this draft"
+            }
+          >
+            Discard
+          </button>
         )}
         <button
           type="submit"
@@ -564,6 +801,22 @@ export function PostEditor() {
       </div>
 
       {saveError && <div className="error-banner">{saveError}</div>}
+
+      {restoredAt !== null && (
+        <div className="admonition admonition--warn" role="note">
+          <p className="admonition__title">Restored unsaved changes</p>
+          <p style={{ margin: 0 }}>
+            We recovered a local draft from {relativeTime(restoredAt)}.{" "}
+            {stale &&
+              "The published version has changed since — saving will overwrite it. "}
+            It’s only stored in this browser until you{" "}
+            {isNew ? "publish" : "save"}.{" "}
+            <button type="button" className="link-button" onClick={onDiscard}>
+              Discard draft
+            </button>
+          </p>
+        </div>
+      )}
 
       {lost.length > 0 && (
         <div className="admonition admonition--warn" role="note">
@@ -595,7 +848,7 @@ export function PostEditor() {
           }}
           placeholder="Headline"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => setField("title", e.target.value)}
         />
 
         <div className="row" style={{ marginBottom: 16 }}>
@@ -607,7 +860,7 @@ export function PostEditor() {
             <input
               className="input"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => setField("description", e.target.value)}
             />
           </label>
           <label
@@ -618,7 +871,7 @@ export function PostEditor() {
             <input
               className="input"
               value={tags}
-              onChange={(e) => setTags(e.target.value)}
+              onChange={(e) => setField("tags", e.target.value)}
             />
           </label>
         </div>
@@ -646,13 +899,15 @@ export function PostEditor() {
                 onChange={(e) => {
                   const f = e.target.files?.[0] ?? null
                   if (f && f.size > 1_000_000) {
-                    setFormError("Cover image must be under 1MB.")
+                    dispatch({
+                      type: "setFormError",
+                      message: "Cover image must be under 1MB.",
+                    })
                     e.target.value = ""
                     return
                   }
-                  setFormError(null)
-                  setCoverRemoved(false)
-                  setCoverFile(f)
+                  dispatch({ type: "setFormError", message: null })
+                  dispatch({ type: "pickCover", file: f })
                 }}
               />
               {coverPreviewUrl && (
@@ -660,10 +915,7 @@ export function PostEditor() {
                   type="button"
                   className="btn btn--ghost"
                   style={{ alignSelf: "flex-start" }}
-                  onClick={() => {
-                    setCoverFile(null)
-                    setCoverRemoved(true)
-                  }}
+                  onClick={() => dispatch({ type: "removeCover" })}
                 >
                   Remove cover
                 </button>
@@ -740,7 +992,7 @@ export function PostEditor() {
                 value={body}
                 height="100%"
                 extensions={cmExtensions}
-                onChange={setBody}
+                onChange={(value) => setField("body", value)}
                 onCreateEditor={(view) => {
                   viewRef.current = view
                 }}
@@ -781,7 +1033,7 @@ export function PostEditor() {
               onChange={(e) => {
                 // A manual edit wins over the inferred sibling default.
                 pathSeededRef.current = true
-                setPathTemplate(e.target.value)
+                setField("pathTemplate", e.target.value)
               }}
               placeholder={DEFAULT_PATH_TEMPLATE}
               spellCheck={false}

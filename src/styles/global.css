@@ -368,6 +368,47 @@ select {
   font-size: 0.85em;
 }
 
+/* Inline text button (e.g. "Discard draft" inside an admonition). */
+.link-button {
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.link-button:hover {
+  text-decoration: none;
+}
+
+/* ---- Draft save status ---- */
+.save-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+.save-status::before {
+  font-size: 0.7em;
+}
+/* Local-only: printer's-red dot — the "not yet on your PDS" warning state. */
+.save-status--local {
+  color: var(--ink-soft);
+}
+.save-status--local::before {
+  content: "●";
+  color: var(--accent);
+}
+/* Committed to the PDS. */
+.save-status--saved::before {
+  content: "✓";
+}
+
 .divider-rule {
   border-top: 1px solid var(--rule);
 }
